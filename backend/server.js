@@ -16,10 +16,33 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// var validateEmail = function(email) {
+//   var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+//   return re.test(email)
+// };
+
+//to validate the email when signing up/in
+const validateEmail = (email) => {
+  const re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  return re.test(email);
+};
 const UserSchema = new mongoose.Schema({
   username: {
     type: String,
     unique: true,
+    required: true,
+  },
+  email: {
+    type: String,
+    trim: true,
+    lowercase: true,
+    unique: true,
+    required: "Email address is required",
+    validate: [validateEmail, "Please fill a valid email address"],
+    match: [
+      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+      "Please fill a valid email address",
+    ],
   },
   password: {
     type: String,
@@ -29,9 +52,90 @@ const UserSchema = new mongoose.Schema({
     type: String,
     default: () => crypto.randomBytes(128).toString("hex"),
   },
+  location: {
+    type: String,
+  },
+  name: {
+    type: String,
+    trim: true,
+    minlength: 2,
+  },
+  memberSince: {
+    type: Date,
+    default: () => newDate(),
+  },
+  bio: {
+    type: String,
+    trim: true,
+    minlength: 10,
+    maxlength: 250,
+  },
+  linkedIn: {
+    type: String,
+  },
+  github: {
+    type: String,
+  },
+  // techStack: {
+
+  // }
+  // profileImage: {
+  //   data: Buffer,
+  //   contentType: String,
+  // },
 });
 
 const User = mongoose.model("User", UserSchema);
+
+//To create an add.
+const AddSchema = new mongoose.Schema({
+  title: {
+    type: String,
+  },
+  description: {
+    type: String,
+    minlength: 30,
+    maxlength: 400,
+    trim: true,
+  },
+  budget: {
+    type: Number,
+  },
+  currency: {
+    type: String,
+    enum: ["SEK", "EUR", "USD", "NOK", "GBP", "DKK", "CNY"],
+  },
+  category: {
+    type: String,
+    enum: [
+      "Frontend",
+      "Backend",
+      "Graphics and Design",
+      "Fullstack",
+      "App Developer",
+      "Chatbots",
+      "Project Lead",
+      "QA",
+      "Legal Consulting",
+      "Financial Consulting",
+      "Analytics",
+      "Game Developer",
+    ],
+  },
+  // time: {
+  //   type: Date,
+  // },
+  // createdAt: {
+  //   type: Date,
+  //   default: () => newDate(),
+  // },
+  typeOf: {
+    type: String,
+    enum: ["Looking for", "Join"],
+  },
+});
+
+const Add = mongoose.model("Add", AddSchema);
 
 const authenticateUser = async (req, res, next) => {
   const accessToken = req.header("Authorization");
@@ -63,8 +167,20 @@ app.get("/", (req, res) => {
   res.send("Hello world");
 });
 
+//All these keys & values are available but not required when signed in
+// REQUIRED: username, password, email
 app.post("/signup", async (req, res) => {
-  const { username, password } = req.body;
+  const {
+    username,
+    password,
+    email,
+    location,
+    name,
+    memberSince,
+    bio,
+    linkedIn,
+    github,
+  } = req.body;
 
   try {
     const salt = bcrypt.genSaltSync();
@@ -76,6 +192,13 @@ app.post("/signup", async (req, res) => {
     const newUser = await new User({
       username,
       password: bcrypt.hashSync(password, salt),
+      email,
+      location,
+      name,
+      memberSince,
+      bio,
+      linkedIn,
+      github,
     }).save();
 
     res.status(201).json({
@@ -83,6 +206,13 @@ app.post("/signup", async (req, res) => {
         id: newUser._id,
         username: newUser.username,
         accessToken: newUser.accessToken,
+        email: newUser.email,
+        location: newUser.location,
+        name: newUser.name,
+        memberSince: newUser.memberSince,
+        bio: newUser.bio,
+        linkedIn: newUser.linkedIn,
+        github: newUser.github,
       },
       success: true,
     });
@@ -101,12 +231,6 @@ app.post("/signup", async (req, res) => {
       });
     }
   }
-});
-
-//endpoint prepared to get data that can be displayed for a logged in user
-app.get("/userprofile", authenticateUser);
-app.get("/userprofile", (req, res) => {
-  res.json({ message: "This is your profile!" });
 });
 
 app.post("/signin", async (req, res) => {
@@ -137,6 +261,61 @@ app.post("/signin", async (req, res) => {
       error: error,
       success: false,
     });
+  }
+});
+
+//endpoint prepared to get data that can be displayed for a logged in user
+app.get("/userprofile", authenticateUser);
+app.get("/userprofile", (req, res) => {
+  res.json({ message: "This is your profile!" });
+});
+
+//Post a new add
+app.post("/adds", async (req, res) => {
+  const {
+    title,
+    description,
+    budget,
+    currency,
+    category,
+    // time,
+    // createdAt,
+    typeOf,
+  } = req.body;
+  try {
+    const newAdd = await new Add({
+      title,
+      description,
+      budget,
+      currency,
+      category,
+      // time,
+      // createdAt,
+      typeOf,
+    }).save();
+    res.status(201).json({ response: newAdd, success: true });
+  } catch (error) {
+    res.status(400).json({ response: error, success: false });
+  }
+});
+
+//Updates the user info that are edited. Ignores the other key & values with the $set operator
+app.patch("/userprofile/:id/edit", async (req, res) => {
+  const updatedUserInfo = req.body;
+  const { id } = req.params;
+  try {
+    const updatedUser = await User.findOneAndUpdate(
+      id,
+      { $set: updatedUserInfo },
+      { new: true }
+    );
+    if (updatedUser) {
+      res.status(200).json({ response: updatedUser, success: true });
+    } else {
+      res.status(404).json({ response: "Member not found", success: false });
+    }
+  } catch (error) {
+    res.status(400).json({ response: error, success: false });
   }
 });
 
