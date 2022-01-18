@@ -25,10 +25,11 @@ const AddForm = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        info,
+        ...info,
+        typeOf,
       }),
     };
-
+    console.log(info, "info");
     fetch(API_URL("adds"), options)
       .then((res) => res.json())
       .then((data) => {
@@ -83,23 +84,27 @@ const AddForm = () => {
           id="title"
           type="text"
           value={info.title}
-          onChange={(e) => setInfo(e.target.value)}
+          onChange={(e) => setInfo({ ...info, title: e.target.value })}
         ></input>
 
-        <label htmlFor="currency">Category:</label>
-        <select>
-          <option value={info.category}>Frontend</option>
-          <option value={info.category}>Backend</option>
-          <option value={info.category}>Graphics and Design</option>
-          <option value={info.category}>Fullstack</option>
-          <option value={info.category}>App Developer</option>
-          <option value={info.category}>Chatbots</option>
-          <option value={info.category}>Project Lead</option>
-          <option value={info.category}>QA</option>
-          <option value={info.category}>Legal Consulting</option>
-          <option value={info.category}>Financial Consulting</option>
-          <option value={info.category}>Analytics</option>
-          <option value={info.category}>Game Developer</option>
+        <label htmlFor="category">Category:</label>
+        <select
+          value={info.category}
+          onChange={(e) => setInfo({ ...info, category: e.target.value })}
+        >
+          <option hidden>Category</option>
+          <option value="Frontend">Frontend</option>
+          <option value="Backend">Backend</option>
+          <option value="Graphics and Design">Graphics and Design</option>
+          <option value="Fullstack">Fullstack</option>
+          <option value="App Developer">App Developer</option>
+          <option value="Chatbots">Chatbots</option>
+          <option value="Project Lead">Project Lead</option>
+          <option value="QA">QA</option>
+          <option value="Legal Consulting">Legal Consulting</option>
+          <option value="Financial Consulting">Financial Consulting</option>
+          <option value="Analytics">Analytics</option>
+          <option value="Game Developer">Game Developer</option>
         </select>
 
         <label htmlFor="description">Description: </label>
@@ -108,7 +113,7 @@ const AddForm = () => {
           type="text"
           value={info.description}
           autoComplete="off"
-          onChange={(e) => setInfo(e.target.value)}
+          onChange={(e) => setInfo({ ...info, description: e.target.value })}
         />
 
         <label htmlFor="password">Budget: </label>
@@ -116,17 +121,21 @@ const AddForm = () => {
           id="budget"
           type="number"
           value={info.budget}
-          onChange={(e) => setInfo(e.target.value)}
+          onChange={(e) => setInfo({ ...info, budget: e.target.value })}
         ></input>
         <label htmlFor="currency">Currency:</label>
-        <select>
-          <option value={info.currency}>SEK</option>
-          <option value={info.currency}>EUR</option>
-          <option value={info.currency}>USD</option>
-          <option value={info.currency}>NOK</option>
-          <option value={info.currency}>GBP</option>
-          <option value={info.currency}>DKK</option>
-          <option value={info.currency}>CNY</option>
+        <select
+          value={info.currency}
+          onChange={(e) => setInfo({ ...info, currency: e.target.value })}
+        >
+          <option hidden>currency</option>
+          <option value="SEK">SEK</option>
+          <option value="EUR">EUR</option>
+          <option value="USD">USD</option>
+          <option value="NOK">NOK</option>
+          <option value="GBP">GBP</option>
+          <option value="DKK">DKK</option>
+          <option value="CNY">CNY</option>
         </select>
         <button type="submit">Submit</button>
       </form>

@@ -348,7 +348,10 @@ app.get("/adds", async (req, res) => {
   try {
     const allAdds = await Add.find()
       .sort({ createdAt: "desc" })
-      .populate("user");
+      .populate("user", {
+        username: 1,
+        email: 1,
+      });
     res.status(201).json({ response: allAdds, success: true });
   } catch (error) {
     res.status(400).json({ error: "No adds found!", success: false });
