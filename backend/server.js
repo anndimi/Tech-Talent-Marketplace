@@ -1,8 +1,10 @@
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
-import crypto from "crypto";
+// import crypto from "crypto";
 import bcrypt from "bcrypt";
+import { UserSchema } from "./Schemas/user";
+import { AddSchema } from "./Schemas/add";
 
 const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/auth";
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -22,132 +24,16 @@ const validateEmail = (email) => {
   return re.test(email);
 };
 
-const UserSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    unique: true,
-    required: true,
-  },
-  email: {
-    type: String,
-    trim: true,
-    lowercase: true,
-    unique: true,
-    required: "Email address is required",
-    validate: [validateEmail, "Please fill a valid email address"],
-    match: [
-      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-      "Please fill a valid email address",
-    ],
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  accessToken: {
-    type: String,
-    default: () => crypto.randomBytes(128).toString("hex"),
-  },
-  location: {
-    type: String,
-  },
-  name: {
-    type: String,
-    trim: true,
-    minlength: 2,
-  },
-  memberSince: {
-    // type: Date,
-    // default: () => new Date(),
-    type: Number,
-    default: () => Date.now(),
-  },
-  bio: {
-    type: String,
-    trim: true,
-    minlength: 10,
-    maxlength: 250,
-  },
-  linkedIn: {
-    type: String,
-  },
-  github: {
-    type: String,
-  },
-  // myAdds: {
-  //   type: mongoose.Schema.Types.ObjectID,
-  //   ref: "Add",
-  // },
-  // techStack: {
-
-  // }
-  // profileImage: {
-  //   data: Buffer,
-  //   contentType: String,
-  // },
-
-  // addsCreated: [{ type: Schema.Types.ObjectId, ref: "Add" }],
-});
-
 const User = mongoose.model("User", UserSchema);
-
-//To create an add.
-const AddSchema = new mongoose.Schema({
-  title: {
-    type: String,
-  },
-  description: {
-    type: String,
-    minlength: 30,
-    maxlength: 400,
-    trim: true,
-  },
-  budget: {
-    type: Number,
-  },
-  currency: {
-    type: String,
-    enum: ["SEK", "EUR", "USD", "NOK", "GBP", "DKK", "CNY"],
-  },
-  category: {
-    type: String,
-    enum: [
-      "Frontend",
-      "Backend",
-      "Graphics and Design",
-      "Fullstack",
-      "App Developer",
-      "Chatbots",
-      "Project Lead",
-      "QA",
-      "Legal Consulting",
-      "Financial Consulting",
-      "Analytics",
-      "Game Developer",
-    ],
-  },
-  time: {
-    type: Date,
-  },
-  createdAt: {
-    type: Number,
-    default: () => Date.now(),
-  },
-  typeOf: {
-    type: String,
-    enum: ["Looking for", "Join"],
-  },
-});
-
 const Add = mongoose.model("Add", AddSchema);
 
 const authenticateUser = async (req, res, next) => {
   const accessToken = req.header("Authorization");
-
   try {
     const user = await User.findOne({ accessToken });
 
     if (user) {
+      req.user = user;
       next();
     } else {
       res.status(401).json({
@@ -238,9 +124,8 @@ app.post("/signup", async (req, res) => {
 });
 
 app.post("/signin", async (req, res) => {
-  const { username, password } = req.body;
-
   try {
+    const { username, password, email } = req.body;
     const user = await User.findOne({ username });
 
     if (user && bcrypt.compareSync(password, user.password)) {
@@ -248,6 +133,7 @@ app.post("/signin", async (req, res) => {
         response: {
           userId: user._id,
           username: user.username,
+          email: user.email,
           accessToken: user.accessToken,
         },
         success: true,
@@ -275,6 +161,7 @@ app.get("/userprofile", (req, res) => {
 });
 
 //Post a new add
+app.post("/adds", authenticateUser);
 app.post("/adds", async (req, res) => {
   const {
     title,
@@ -296,6 +183,7 @@ app.post("/adds", async (req, res) => {
       time,
       createdAt,
       typeOf,
+      user: req.user,
     }).save();
     res.status(201).json({ response: newAdd, success: true });
   } catch (error) {
@@ -328,7 +216,11 @@ app.get("/adds/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
-    const singleAdd = await Add.findById(id);
+    const singleAdd = await Add.findById(id).populate("user", {
+      username: 1,
+      email: 1,
+    });
+
     res.status(201).json({ response: singleAdd, success: true });
   } catch (error) {
     res.status(400).json({ error: "Invalid add ID", success: false });
