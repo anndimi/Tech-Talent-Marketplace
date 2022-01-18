@@ -4,11 +4,13 @@ import { Provider } from "react-redux";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 
 import user from "./reducers/user";
+import add from "./reducers/add";
 import SignUp from "./components/SignUp";
-import AddList from "./components/AddList";
+import AddsList from "./components/AddsList";
 
 const reducer = combineReducers({
   user: user.reducer,
+  add: add.reducer,
 });
 
 const store = configureStore({ reducer });
@@ -19,7 +21,7 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<SignUp />} />
-          <Route path="/adds" element={<AddList />} />
+          <Route path="/adds" element={<AddsList />} />
           {/* <Route path="/signin" element={<Login />} />
           <Route path="*" element={<NotFound />} /> */}
         </Routes>

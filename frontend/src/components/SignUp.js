@@ -13,11 +13,11 @@ const SignUp = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (accessToken) {
-      navigate("/");
-    }
-  }, [accessToken, navigate]);
+  // useEffect(() => {
+  //   if (accessToken) {
+  //     navigate("/");
+  //   }
+  // }, [accessToken, navigate]);
 
   const onFormSubmit = (event) => {
     event.preventDefault();
@@ -53,7 +53,6 @@ const SignUp = () => {
         }
       });
   };
-  console.log(mode);
 
   return (
     <div>
