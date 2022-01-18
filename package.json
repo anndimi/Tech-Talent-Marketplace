@@ -3,5 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "postinstall": "npm install --prefix backend"
+  },
+  "dependencies": {
+    "react-router-dom": "^6.2.1"
   }
 }

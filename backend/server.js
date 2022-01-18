@@ -16,16 +16,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// var validateEmail = function(email) {
-//   var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-//   return re.test(email)
-// };
-
 //to validate the email when signing up/in
 const validateEmail = (email) => {
   const re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   return re.test(email);
 };
+
 const UserSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -61,8 +57,10 @@ const UserSchema = new mongoose.Schema({
     minlength: 2,
   },
   memberSince: {
-    type: Date,
-    default: () => newDate(),
+    // type: Date,
+    // default: () => new Date(),
+    type: Number,
+    default: () => Date.now(),
   },
   bio: {
     type: String,
@@ -76,6 +74,10 @@ const UserSchema = new mongoose.Schema({
   github: {
     type: String,
   },
+  // myAdds: {
+  //   type: mongoose.Schema.Types.ObjectID,
+  //   ref: "Add",
+  // },
   // techStack: {
 
   // }
@@ -83,6 +85,8 @@ const UserSchema = new mongoose.Schema({
   //   data: Buffer,
   //   contentType: String,
   // },
+
+  // addsCreated: [{ type: Schema.Types.ObjectId, ref: "Add" }],
 });
 
 const User = mongoose.model("User", UserSchema);
@@ -122,13 +126,13 @@ const AddSchema = new mongoose.Schema({
       "Game Developer",
     ],
   },
-  // time: {
-  //   type: Date,
-  // },
-  // createdAt: {
-  //   type: Date,
-  //   default: () => newDate(),
-  // },
+  time: {
+    type: Date,
+  },
+  createdAt: {
+    type: Number,
+    default: () => Date.now(),
+  },
   typeOf: {
     type: String,
     enum: ["Looking for", "Join"],
@@ -278,8 +282,8 @@ app.post("/adds", async (req, res) => {
     budget,
     currency,
     category,
-    // time,
-    // createdAt,
+    time,
+    createdAt,
     typeOf,
   } = req.body;
   try {
@@ -289,8 +293,8 @@ app.post("/adds", async (req, res) => {
       budget,
       currency,
       category,
-      // time,
-      // createdAt,
+      time,
+      createdAt,
       typeOf,
     }).save();
     res.status(201).json({ response: newAdd, success: true });
@@ -299,12 +303,66 @@ app.post("/adds", async (req, res) => {
   }
 });
 
+//Updates the add info that are edited. Ignores the other key & values with the $set operator
+app.patch("/adds/:id/edit", async (req, res) => {
+  const updatedAddInfo = req.body;
+  const { id } = req.params;
+  try {
+    const updatedAdd = await Add.findByIdAndUpdate(
+      id,
+      { $set: updatedAddInfo },
+      { new: true }
+    );
+    if (updatedAdd) {
+      res.status(200).json({ response: updatedAdd, success: true });
+    } else {
+      res.status(404).json({ response: "Add not found", success: false });
+    }
+  } catch (error) {
+    res.status(400).json({ response: error, success: false });
+  }
+});
+
+//Search single add
+app.get("/adds/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const singleAdd = await Add.findById(id);
+    res.status(201).json({ response: singleAdd, success: true });
+  } catch (error) {
+    res.status(400).json({ error: "Invalid add ID", success: false });
+  }
+});
+
+//Search all adds
+app.get("/adds", async (req, res) => {
+  try {
+    const allAdds = await Add.find().sort({ createdAt: "desc" });
+    res.status(201).json({ response: allAdds, success: true });
+  } catch (error) {
+    res.status(400).json({ error: "No adds found!", success: false });
+  }
+});
+
+//Search single user
+app.get("/userprofile/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const singleUser = await User.findById(id);
+    res.status(201).json({ response: singleUser, success: true });
+  } catch (error) {
+    res.status(400).json({ error: "Invalid user ID", success: false });
+  }
+});
+
 //Updates the user info that are edited. Ignores the other key & values with the $set operator
 app.patch("/userprofile/:id/edit", async (req, res) => {
   const updatedUserInfo = req.body;
   const { id } = req.params;
   try {
-    const updatedUser = await User.findOneAndUpdate(
+    const updatedUser = await User.findByIdAndUpdate(
       id,
       { $set: updatedUserInfo },
       { new: true }
