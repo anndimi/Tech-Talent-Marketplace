@@ -22,7 +22,7 @@ const add = createSlice({
     setTitle: (store, action) => {
       store.title = action.payload;
     },
-    setDescriprion: (store, action) => {
+    setDescription: (store, action) => {
       store.description = action.payload;
     },
     setBudget: (store, action) => {

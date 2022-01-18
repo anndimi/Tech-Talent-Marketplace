@@ -38,7 +38,7 @@ const AddsList = () => {
       <h1>All our adds</h1>
       {adds.map((item) => (
         <div key={item._id}>
-          <h1>{item.title}</h1>
+          <h2>{item.title}</h2>
           <p>{item.description}</p>
           <p>
             {item.budget}
@@ -47,8 +47,9 @@ const AddsList = () => {
           <p>{item.category}</p>
           <p>{moment(item.createdAt).fromNow()}</p>
           <p>{item.typeOf}</p>
-          <p>{item.user.username}</p>
-          <p>{item.user.email}</p>
+          {/* Utkommenderat för att vi inte har nån authentication */}
+          {/* <p>{item.user.username}</p>
+          <p>{item.user.email}</p> */}
         </div>
       ))}
     </div>

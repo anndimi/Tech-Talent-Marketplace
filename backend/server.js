@@ -277,7 +277,7 @@ app.get("/userprofile", (req, res) => {
 });
 
 //Post a new add
-app.post("/adds", authenticateUser);
+// app.post("/adds", authenticateUser);
 app.post("/adds", async (req, res) => {
   const {
     title,

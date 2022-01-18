@@ -7,6 +7,7 @@ import user from "./reducers/user";
 import add from "./reducers/add";
 import SignUp from "./components/SignUp";
 import AddsList from "./components/AddsList";
+import AddForm from "./components/AddForm";
 
 const reducer = combineReducers({
   user: user.reducer,
@@ -22,6 +23,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<SignUp />} />
           <Route path="/adds" element={<AddsList />} />
+          <Route path="/addsform" element={<AddForm />} />
           {/* <Route path="/signin" element={<Login />} />
           <Route path="*" element={<NotFound />} /> */}
         </Routes>
