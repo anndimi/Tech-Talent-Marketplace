@@ -3,6 +3,16 @@ import cors from "cors";
 import mongoose from "mongoose";
 import crypto from "crypto";
 import bcrypt from "bcrypt";
+import dotenv from "dotenv";
+import cloudinaryFramework from "cloudinary";
+import multer from "multer";
+import { CloudinaryStorage } from "multer-storage-cloudinary";
+import listEndpoints from "express-list-endpoints";
+
+// import { AddSchema } from "./Schemas/add";
+
+// const User = require("./Schemas/user");
+// const Add = require("./Schemas/add");
 
 const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/auth";
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -15,12 +25,36 @@ const app = express();
 // Add middlewares to enable cors and json body parsing
 app.use(cors());
 app.use(express.json());
+dotenv.config();
 
-//to validate the email when signing up/in
+// to validate the email when signing up/in
 const validateEmail = (email) => {
   const re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   return re.test(email);
 };
+
+//Image upload storage and set up
+const cloudinary = cloudinaryFramework.v2;
+cloudinary.config({
+  cloud_name: "dhmiugr5l",
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: "profileimage",
+    allowedFormats: ["jpg", "png"],
+    transformation: [{ width: 500, height: 500, crop: "limit" }],
+  },
+});
+const parser = multer({ storage });
+
+const UserImage = mongoose.model("UserImage", {
+  // name: String,
+  imageUrl: String,
+});
 
 const UserSchema = new mongoose.Schema({
   username: {
@@ -74,22 +108,15 @@ const UserSchema = new mongoose.Schema({
   github: {
     type: String,
   },
-  // myAdds: {
-  //   type: mongoose.Schema.Types.ObjectID,
-  //   ref: "Add",
-  // },
-  // techStack: {
-
-  // }
-  // profileImage: {
-  //   data: Buffer,
-  //   contentType: String,
-  // },
+  userImage: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "UserImage",
+  },
 });
 
 const User = mongoose.model("User", UserSchema);
 
-//To create an add.
+// To create an add.
 const AddSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -170,7 +197,7 @@ const authenticateUser = async (req, res, next) => {
 
 // Start defining your routes here
 app.get("/", (req, res) => {
-  res.send("Hello world");
+  res.send(listEndpoints(app));
 });
 
 //All these keys & values are available but not required when signed in
@@ -186,6 +213,7 @@ app.post("/signup", async (req, res) => {
     bio,
     linkedIn,
     github,
+    userImage,
   } = req.body;
 
   try {
@@ -205,6 +233,7 @@ app.post("/signup", async (req, res) => {
       bio,
       linkedIn,
       github,
+      userImage,
     }).save();
 
     res.status(201).json({
@@ -219,6 +248,7 @@ app.post("/signup", async (req, res) => {
         bio: newUser.bio,
         linkedIn: newUser.linkedIn,
         github: newUser.github,
+        userImage: newUwer.userImage,
       },
       success: true,
     });
@@ -274,6 +304,45 @@ app.post("/signin", async (req, res) => {
 app.get("/userprofile", authenticateUser);
 app.get("/userprofile", (req, res) => {
   res.json({ message: "This is your profile!" });
+});
+
+app.get("/userprofile/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const singleUser = await User.findById(id).populate("UserImage", {
+      imageUrl: 1,
+    });
+
+    res.status(201).json({ response: singleUser, success: true });
+  } catch (error) {
+    res.status(400).json({ error: "Invalid user ID", success: false });
+  }
+});
+
+//Profile image endpoint
+app.post("/userprofile/image", parser.single("image"), async (req, res) => {
+  res.json({ imageUrl: req.file.path, imageId: req.file.filename });
+});
+
+app.post("/userprofile/image", parser.single("image"), async (req, res) => {
+  try {
+    const profileImage = await new UserImage({
+      name: req.body.filename,
+      imageUrl: req.file.path,
+    }).save();
+    res.json(profileImage);
+  } catch (err) {
+    res.status(400).json({ errors: err.errors });
+  }
+});
+
+app.get("/userprofile/userimage/image", async (req, res) => {
+  try {
+    const allImages = await UserImage.find();
+    res.status(201).json({ response: allImages, success: true });
+  } catch (error) {
+    res.status(400).json({ error: "No img found!", success: false });
+  }
 });
 
 //Post a new add
@@ -340,6 +409,33 @@ app.get("/adds/:id", async (req, res) => {
     res.status(201).json({ response: singleAdd, success: true });
   } catch (error) {
     res.status(400).json({ error: "Invalid add ID", success: false });
+  }
+});
+
+//Delete single add
+app.delete("/adds/:id/delete", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const deleteAdd = await Add.findByIdAndDelete(id);
+    res.status(201).json({ response: deleteAdd, success: true });
+  } catch (error) {
+    res.status(400).json({ error: "Add id not found!", success: false });
+  }
+});
+
+app.delete("/adds", async (req, res) => {
+  const { createdAt } = req.body;
+
+  try {
+    const allDeletedAdds = await Add.findOneAndDelete(createdAt);
+    // const time = createdAt + 2592000000
+    const time = createdAt + 60000;
+    if (time < Date.now()) {
+      allDeletedAdds;
+    }
+  } catch (error) {
+    res.status(400).json({ error: "Add id not found!", success: false });
   }
 });
 

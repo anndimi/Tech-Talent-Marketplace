@@ -3,6 +3,7 @@ import { useSelector, useDispatch, batch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import user from "../reducers/user";
 import { API_URL } from "../utils/constants";
+import styled from "styled-components";
 
 const SignUp = () => {
   const [username, setUsername] = useState("");
