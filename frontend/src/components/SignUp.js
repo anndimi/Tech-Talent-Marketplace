@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch, batch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import user from "../reducers/user";
 import { API_URL } from "../utils/constants";
 import styled from "styled-components";
@@ -13,12 +13,14 @@ const SignUp = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  //   const id = useSelector((store) => store.user.userId);
+  const { id } = useParams();
 
-  // useEffect(() => {
-  //   if (accessToken) {
-  //     navigate("/");
-  //   }
-  // }, [accessToken, navigate]);
+  useEffect(() => {
+    if (accessToken) {
+      navigate("/userprofile");
+    }
+  }, [accessToken, navigate]);
 
   const onFormSubmit = (event) => {
     event.preventDefault();
@@ -40,6 +42,7 @@ const SignUp = () => {
             dispatch(user.actions.setUsername(data.response.username));
             dispatch(user.actions.setEmail(data.response.email));
             dispatch(user.actions.setAccessToken(data.response.accessToken));
+            dispatch(user.actions.setMemberSince(data.response.memberSince));
             dispatch(user.actions.setError(null));
           });
         } else {
@@ -48,6 +51,7 @@ const SignUp = () => {
             dispatch(user.actions.setUsername(null));
             dispatch(user.actions.setEmail(null));
             dispatch(user.actions.setAccessToken(null));
+            dispatch(user.actions.setMemberSince(null));
             dispatch(user.actions.setError(data.response));
           });
           alert(data.response);

@@ -59,11 +59,8 @@ export const UserSchema = new mongoose.Schema({
   github: {
     type: String,
   },
-  userImage: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "UserImage",
+  imageUrl: {
+    type: String,
+    default: "",
   },
 });
-
-const User = mongoose.model("User", UserSchema);
-module.exports = User;

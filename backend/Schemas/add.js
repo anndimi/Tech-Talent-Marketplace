@@ -51,5 +51,5 @@ export const AddSchema = new mongoose.Schema({
   },
 });
 
-const Add = mongoose.model("Add", AddSchema);
-module.exports = Add;
+// const Add = mongoose.model("Add", AddSchema);
+// module.exports = Add;

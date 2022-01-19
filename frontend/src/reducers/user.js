@@ -14,7 +14,7 @@ const user = createSlice({
     bio: null,
     linkedIn: null,
     github: null,
-    mode: "signin",
+    mode: "signup",
   },
   reducers: {
     setUserId: (store, action) => {

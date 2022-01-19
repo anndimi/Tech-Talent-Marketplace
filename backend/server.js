@@ -8,11 +8,8 @@ import cloudinaryFramework from "cloudinary";
 import multer from "multer";
 import { CloudinaryStorage } from "multer-storage-cloudinary";
 import listEndpoints from "express-list-endpoints";
-
-// import { AddSchema } from "./Schemas/add";
-
-// const User = require("./Schemas/user");
-// const Add = require("./Schemas/add");
+import { UserSchema } from "./Schemas/user";
+import { AddSchema } from "./Schemas/add";
 
 const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/auth";
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -26,12 +23,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 dotenv.config();
-
-// to validate the email when signing up/in
-const validateEmail = (email) => {
-  const re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-  return re.test(email);
-};
 
 //Image upload storage and set up
 const cloudinary = cloudinaryFramework.v2;
@@ -51,124 +42,17 @@ const storage = new CloudinaryStorage({
 });
 const parser = multer({ storage });
 
-const UserImage = mongoose.model("UserImage", {
-  // name: String,
-  imageUrl: String,
-});
+// const UserImage = mongoose.model("UserImage", {
+//   // name: String,
 
-const UserSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    unique: true,
-    required: true,
-  },
-  email: {
-    type: String,
-    trim: true,
-    lowercase: true,
-    unique: true,
-    required: "Email address is required",
-    validate: [validateEmail, "Please fill a valid email address"],
-    match: [
-      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-      "Please fill a valid email address",
-    ],
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  accessToken: {
-    type: String,
-    default: () => crypto.randomBytes(128).toString("hex"),
-  },
-  location: {
-    type: String,
-  },
-  name: {
-    type: String,
-    trim: true,
-    minlength: 2,
-  },
-  memberSince: {
-    // type: Date,
-    // default: () => new Date(),
-    type: Number,
-    default: () => Date.now(),
-  },
-  bio: {
-    type: String,
-    trim: true,
-    minlength: 10,
-    maxlength: 250,
-  },
-  linkedIn: {
-    type: String,
-  },
-  github: {
-    type: String,
-  },
-  userImage: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "UserImage",
-  },
-});
-
-const User = mongoose.model("User", UserSchema);
-
-// To create an add.
-const AddSchema = new mongoose.Schema({
-  title: {
-    type: String,
-  },
-  description: {
-    type: String,
-    minlength: 30,
-    maxlength: 400,
-    trim: true,
-  },
-  budget: {
-    type: Number,
-  },
-  currency: {
-    type: String,
-    enum: ["SEK", "EUR", "USD", "NOK", "GBP", "DKK", "CNY"],
-  },
-  category: {
-    type: String,
-    enum: [
-      "Frontend",
-      "Backend",
-      "Graphics and Design",
-      "Fullstack",
-      "App Developer",
-      "Chatbots",
-      "Project Lead",
-      "QA",
-      "Legal Consulting",
-      "Financial Consulting",
-      "Analytics",
-      "Game Developer",
-    ],
-  },
-  time: {
-    type: Date,
-  },
-  createdAt: {
-    type: Number,
-    default: () => Date.now(),
-  },
-  typeOf: {
-    type: String,
-    enum: ["Looking for", "Join"],
-  },
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-  },
-});
+//   user: {
+//     type: mongoose.Schema.Types.ObjectId,
+//     ref: "User",
+//   },
+// });
 
 const Add = mongoose.model("Add", AddSchema);
+const User = mongoose.model("User", UserSchema);
 
 const authenticateUser = async (req, res, next) => {
   const accessToken = req.header("Authorization");
@@ -202,7 +86,8 @@ app.get("/", (req, res) => {
 
 //All these keys & values are available but not required when signed in
 // REQUIRED: username, password, email
-app.post("/signup", async (req, res) => {
+app.post("/signup", parser.single("image"), async (req, res) => {
+  console.log(req.body);
   const {
     username,
     password,
@@ -213,7 +98,6 @@ app.post("/signup", async (req, res) => {
     bio,
     linkedIn,
     github,
-    userImage,
   } = req.body;
 
   try {
@@ -233,7 +117,7 @@ app.post("/signup", async (req, res) => {
       bio,
       linkedIn,
       github,
-      userImage,
+      imageUrl: req.file.path,
     }).save();
 
     res.status(201).json({
@@ -248,7 +132,7 @@ app.post("/signup", async (req, res) => {
         bio: newUser.bio,
         linkedIn: newUser.linkedIn,
         github: newUser.github,
-        userImage: newUwer.userImage,
+        imageUrl: newUser.imageUrl,
       },
       success: true,
     });
@@ -277,7 +161,7 @@ app.post("/signin", async (req, res) => {
     if (user && bcrypt.compareSync(password, user.password)) {
       res.status(200).json({
         response: {
-          userId: user._id,
+          id: user._id,
           username: user.username,
           email: user.email,
           accessToken: user.accessToken,
@@ -301,12 +185,12 @@ app.post("/signin", async (req, res) => {
 });
 
 //endpoint prepared to get data that can be displayed for a logged in user
-app.get("/userprofile", authenticateUser);
-app.get("/userprofile", (req, res) => {
+//app.get("/userprofile", authenticateUser);
+app.get("/userprofile", authenticateUser, (req, res) => {
   res.json({ message: "This is your profile!" });
 });
 
-app.get("/userprofile/:id", async (req, res) => {
+app.get("/userprofile/:id", authenticateUser, async (req, res) => {
   const { id } = req.params;
   try {
     const singleUser = await User.findById(id).populate("UserImage", {
@@ -320,25 +204,28 @@ app.get("/userprofile/:id", async (req, res) => {
 });
 
 //Profile image endpoint
-app.post("/userprofile/image", parser.single("image"), async (req, res) => {
-  res.json({ imageUrl: req.file.path, imageId: req.file.filename });
-});
+// app.post("/userprofile/image", parser.single("image"), async (req, res) => {
+//   res.json({ imageUrl: req.file.path, imageId: req.file.filename });
+// });
 
-app.post("/userprofile/image", parser.single("image"), async (req, res) => {
-  try {
-    const profileImage = await new UserImage({
-      name: req.body.filename,
-      imageUrl: req.file.path,
-    }).save();
-    res.json(profileImage);
-  } catch (err) {
-    res.status(400).json({ errors: err.errors });
-  }
-});
+// app.post("/userprofile/image", authenticateUser, async (req, res) => {
+//   try {
+//     const profileImage = await new UserImage({
+//       name: req.body.filename,
 
-app.get("/userprofile/userimage/image", async (req, res) => {
+//       user: req.user,
+//     }).save();
+//     res.json(profileImage);
+//   } catch (err) {
+//     res.status(400).json({ errors: err.errors });
+//   }
+// });
+
+app.get("/userprofile/test/image", authenticateUser, async (req, res) => {
   try {
-    const allImages = await UserImage.find();
+    const allImages = await UserImage.find().populate("user", {
+      username: 1,
+    });
     res.status(201).json({ response: allImages, success: true });
   } catch (error) {
     res.status(400).json({ error: "No img found!", success: false });

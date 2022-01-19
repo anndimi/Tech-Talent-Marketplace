@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-
+import { UserProfile } from "./components/UserProfile";
 import user from "./reducers/user";
 import add from "./reducers/add";
 import SignUp from "./components/SignUp";
@@ -21,11 +21,11 @@ const App = () => {
     <Provider store={store}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<SignUp />} />
+          <Route path="/signup" element={<SignUp />} />
           <Route path="/adds" element={<AddsList />} />
           <Route path="/addsform" element={<AddForm />} />
-          {/* <Route path="/signin" element={<Login />} />
-          <Route path="*" element={<NotFound />} /> */}
+          <Route path="/userprofile" element={<UserProfile />} />
+          {/* <Route path="*" element={<NotFound />} /> */}
         </Routes>
       </BrowserRouter>
     </Provider>
