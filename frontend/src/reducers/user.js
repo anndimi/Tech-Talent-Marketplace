@@ -14,6 +14,7 @@ const user = createSlice({
     bio: null,
     linkedIn: null,
     github: null,
+    imageUrl: null,
     mode: "signup",
   },
   reducers: {
@@ -52,6 +53,9 @@ const user = createSlice({
     },
     setMode: (store, action) => {
       store.mode = action.payload;
+    },
+    setImageUrl: (store, action) => {
+      store.imageUrl = action.payload;
     },
     clearAccessToken: (store) => {
       store.accessToken = null;

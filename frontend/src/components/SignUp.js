@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch, batch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import user from "../reducers/user";
@@ -14,7 +14,8 @@ const SignUp = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   //   const id = useSelector((store) => store.user.userId);
-  const { id } = useParams();
+  // const { id } = useParams();
+  // const fileInput = useRef();
 
   useEffect(() => {
     if (accessToken) {
@@ -23,10 +24,19 @@ const SignUp = () => {
   }, [accessToken, navigate]);
 
   const onFormSubmit = (event) => {
+    console.log("hej");
     event.preventDefault();
+
+    // const formData = new FormData(event.target);
+
+    // formData.append("username", username);
+    // formData.append("password", password);
+    // formData.append("email", email);
+    // formData.append("image", fileInput.current.files[0]);
 
     const options = {
       method: "POST",
+      // body: formData,
       headers: {
         "Content-Type": "application/json",
       },
@@ -43,6 +53,7 @@ const SignUp = () => {
             dispatch(user.actions.setEmail(data.response.email));
             dispatch(user.actions.setAccessToken(data.response.accessToken));
             dispatch(user.actions.setMemberSince(data.response.memberSince));
+            // dispatch(user.actions.setImageUrl(data.response.imageUrl));
             dispatch(user.actions.setError(null));
           });
         } else {
@@ -52,6 +63,7 @@ const SignUp = () => {
             dispatch(user.actions.setEmail(null));
             dispatch(user.actions.setAccessToken(null));
             dispatch(user.actions.setMemberSince(null));
+            // dispatch(user.actions.setImageUrl(null));
             dispatch(user.actions.setError(data.response));
           });
           alert(data.response);
@@ -62,6 +74,10 @@ const SignUp = () => {
   return (
     <div>
       <form onSubmit={onFormSubmit}>
+        {/* <label>
+          Profile image:
+          <input type="file" ref={fileInput} />
+        </label> */}
         <label htmlFor="username">Username: </label>
         <input
           id="username"

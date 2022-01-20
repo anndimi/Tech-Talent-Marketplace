@@ -1,12 +1,12 @@
 body {
-  margin: 20px;
-  font-family: "Raleway", sans-serif;
+  font-family: "Spartan", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   display: flex;
   flex-direction: column;
+  margin: 0;
 }
 
 code {
-  font-family: "Raleway", sans-serif;
+  font-family: "Spartan", sans-serif;
 }

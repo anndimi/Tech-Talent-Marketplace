@@ -2,8 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../utils/constants";
+import AddForm from "./AddForm";
 import moment from "moment";
 import add from "../reducers/add";
+import styled from "styled-components";
+
+const AddListSection = styled.section`
+  padding: 20px;
+`;
 
 const AddsList = () => {
   const [adds, setAdds] = useState([]);
@@ -34,7 +40,8 @@ const AddsList = () => {
   // ,[accessToken] add to line above
 
   return (
-    <div>
+    <AddListSection>
+      <AddForm />
       <h1>All our adds</h1>
       {adds.map((item) => (
         <div key={item._id}>
@@ -52,7 +59,7 @@ const AddsList = () => {
           <p>{item.user.email}</p> */}
         </div>
       ))}
-    </div>
+    </AddListSection>
   );
 };
 
