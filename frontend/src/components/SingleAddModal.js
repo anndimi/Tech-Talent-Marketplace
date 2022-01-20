@@ -1,0 +1,115 @@
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import { StyledButton } from "./Buttons/StyledButtons";
+import closeIcon from "../assets/close.png";
+import moment from "moment";
+import { useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { API_URL } from "../utils/constants";
+
+const Section = styled.section`
+  width: 100%;
+  &.section-blur {
+    filter: blur(2px);
+    -webkit-filter: blur(2px);
+  }
+`;
+
+const ModalWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+`;
+
+const AddModal = styled.div`
+  &.modal-active {
+    padding: 10px 0 10px 0;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    gap: 50px;
+    align-items: center;
+    position: absolute;
+    top: 20%;
+    background: #212427;
+    color: #ffffff;
+    width: 50%;
+    height: 90%;
+    border-radius: 15px;
+    overflow-y: scroll;
+  }
+  &.modal-inactive {
+    display: none;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    width: 60%;
+  }
+`;
+
+const CloseButton = styled.button`
+  background: none;
+  margin-right: 20px;
+  margin-top: 20px;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  align-self: end;
+  img {
+    width: 40px;
+    height: 40px;
+  }
+`;
+
+const SingleAddModal = () => {
+  //   const [isModalActive, setModalActive] = useState(false);
+  const [add, setAdd] = useState({});
+  const navigate = useNavigate();
+
+  //   const toggleModal = () => {
+  //     setModalActive(!isModalActive);
+  //   };
+  const { id } = useParams();
+
+  useEffect(() => {
+    if (id)
+      fetch(API_URL(`adds/${id}`))
+        .then((res) => res.json())
+        .then((data) => setAdd(data.response));
+  }, [id]);
+
+  return (
+    <Section>
+      <ModalWrapper>
+        <AddModal className={id ? "modal-active" : "modal-inactive"}>
+          <CloseButton onClick={() => navigate("/adds")}>
+            <img src={closeIcon} alt="close window" />
+          </CloseButton>
+          <p>
+            {add.typeOf} {add.category}
+          </p>
+
+          <p>{moment(add.createdAt).fromNow()}</p>
+
+          <h2>{add.title}</h2>
+
+          <p>{add.description}</p>
+          <p>
+            Budget is {add.budget}
+            {add.currency}
+          </p>
+        </AddModal>
+      </ModalWrapper>
+    </Section>
+  );
+};
+
+export default SingleAddModal;

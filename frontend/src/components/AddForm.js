@@ -34,6 +34,7 @@ const ModalWrapper = styled.div`
 
 const AddModal = styled.div`
   &.modal-active {
+    padding: 10px 0 10px 0;
     z-index: 10;
     display: flex;
     flex-direction: column;
@@ -45,7 +46,7 @@ const AddModal = styled.div`
     background: #212427;
     color: #ffffff;
     width: 50%;
-    height: 75%;
+    height: 90%;
     border-radius: 15px;
     overflow-y: scroll;
   }
@@ -140,28 +141,22 @@ const AddForm = () => {
     fetch(API_URL("adds"), options)
       .then((res) => res.json())
       .then((data) => {
-        if (data.success) {
-          batch(() => {
-            dispatch(add.actions.setTypeOf(data.response.typeOf));
-            dispatch(add.actions.setTitle(data.response.title));
-            dispatch(add.actions.setDescription(data.response.description));
-            dispatch(add.actions.setBudget(data.response.budget));
-            dispatch(add.actions.setCurrency(data.response.currency));
-            dispatch(add.actions.setCategory(data.response.category));
-            dispatch(add.actions.setError(null));
-          });
-        } else {
-          batch(() => {
-            dispatch(add.actions.setTypeOf(null));
-            dispatch(add.actions.setTitle(null));
-            dispatch(add.actions.setDescription(null));
-            dispatch(add.actions.setBudget(null));
-            dispatch(add.actions.setCurrency(null));
-            dispatch(add.actions.setCategory(null));
-            dispatch(add.actions.setError(data.response));
-          });
-          alert(data.response);
-        }
+        console.log(data, "this is data");
+
+        batch(() => {
+          dispatch(add.actions.setAddId(data.response._id));
+          dispatch(add.actions.setTypeOf(data.response.typeOf));
+          dispatch(add.actions.setTitle(data.response.title));
+          dispatch(add.actions.setDescription(data.response.description));
+          dispatch(add.actions.setBudget(data.response.budget));
+          dispatch(add.actions.setCurrency(data.response.currency));
+          dispatch(add.actions.setCategory(data.response.category));
+          dispatch(add.actions.setError(null));
+        });
+      })
+      .catch((error) => {
+        console.log(error.response);
+        dispatch(add.actions.setError(error.response));
       });
   };
 
@@ -178,29 +173,25 @@ const AddForm = () => {
             </CloseButton>
 
             <form onSubmit={onFormSubmit}>
-              <LabelInput>
-                <label htmlFor="title">Title </label>
+              <RadioButtonsContainer>
+                <label htmlFor="Looking for">Looking for </label>
                 <input
-                  id="title"
-                  type="text"
-                  value={info.title}
-                  onChange={(e) => setInfo({ ...info, title: e.target.value })}
-                ></input>
-              </LabelInput>
-
-              <LabelInput>
-                <label htmlFor="description">Description </label>
-                <textarea
-                  id="title"
-                  type="text"
-                  value={info.description}
-                  autoComplete="off"
-                  onChange={(e) =>
-                    setInfo({ ...info, description: e.target.value })
-                  }
+                  id="Looking for"
+                  type="radio"
+                  value="Looking for"
+                  checked={typeOf === "Looking for"}
+                  onChange={(e) => setTypeOf(e.target.value)}
                 />
-              </LabelInput>
 
+                <label htmlFor="Join">Join as</label>
+                <input
+                  id="Join as"
+                  type="radio"
+                  value="Join as"
+                  checked={typeOf === "Join as"}
+                  onChange={(e) => setTypeOf(e.target.value)}
+                />
+              </RadioButtonsContainer>
               <LabelInput>
                 <label htmlFor="category">Category </label>
                 <select
@@ -227,6 +218,28 @@ const AddForm = () => {
                   <option value="Analytics">Analytics</option>
                   <option value="Game Developer">Game Developer</option>
                 </select>
+              </LabelInput>
+              <LabelInput>
+                <label htmlFor="title">Title </label>
+                <input
+                  id="title"
+                  type="text"
+                  value={info.title}
+                  onChange={(e) => setInfo({ ...info, title: e.target.value })}
+                ></input>
+              </LabelInput>
+
+              <LabelInput>
+                <label htmlFor="description">Description </label>
+                <textarea
+                  id="title"
+                  type="text"
+                  value={info.description}
+                  autoComplete="off"
+                  onChange={(e) =>
+                    setInfo({ ...info, description: e.target.value })
+                  }
+                />
               </LabelInput>
 
               <LabelInput>
@@ -258,25 +271,7 @@ const AddForm = () => {
                   <option value="CNY">CNY</option>
                 </select>
               </LabelInput>
-              <RadioButtonsContainer>
-                <label htmlFor="Looking for">Looking for </label>
-                <input
-                  id="Looking for"
-                  type="radio"
-                  value="Looking for"
-                  checked={typeOf === "Looking for"}
-                  onChange={(e) => setTypeOf(e.target.value)}
-                />
 
-                <label htmlFor="Join">Join </label>
-                <input
-                  id="Join"
-                  type="radio"
-                  value="Join"
-                  checked={typeOf === "Join"}
-                  onChange={(e) => setTypeOf(e.target.value)}
-                />
-              </RadioButtonsContainer>
               <StyledButton type="submit">Submit</StyledButton>
             </form>
           </AddModal>

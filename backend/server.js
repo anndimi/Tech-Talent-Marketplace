@@ -86,7 +86,8 @@ app.get("/", (req, res) => {
 
 //All these keys & values are available but not required when signed in
 // REQUIRED: username, password, email
-app.post("/signup", parser.single("image"), async (req, res) => {
+//, parser.single("image") DENNA SKA IN  INNAN ASYNC
+app.post("/signup", async (req, res) => {
   console.log(req.body);
   const {
     username,
@@ -117,7 +118,7 @@ app.post("/signup", parser.single("image"), async (req, res) => {
       bio,
       linkedIn,
       github,
-      imageUrl: req.file.path,
+      // imageUrl: req.file.path,
     }).save();
 
     res.status(201).json({
@@ -132,7 +133,7 @@ app.post("/signup", parser.single("image"), async (req, res) => {
         bio: newUser.bio,
         linkedIn: newUser.linkedIn,
         github: newUser.github,
-        imageUrl: newUser.imageUrl,
+        // imageUrl: newUser.imageUrl,
       },
       success: true,
     });
@@ -293,7 +294,7 @@ app.get("/adds/:id", async (req, res) => {
       email: 1,
     });
 
-    res.status(201).json({ response: singleAdd, success: true });
+    res.status(200).json({ response: singleAdd, success: true });
   } catch (error) {
     res.status(400).json({ error: "Invalid add ID", success: false });
   }

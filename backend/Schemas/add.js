@@ -7,7 +7,7 @@ export const AddSchema = new mongoose.Schema({
   description: {
     type: String,
     minlength: 30,
-    maxlength: 400,
+    maxlength: 800,
     trim: true,
   },
   budget: {
@@ -43,7 +43,7 @@ export const AddSchema = new mongoose.Schema({
   },
   typeOf: {
     type: String,
-    enum: ["Looking for", "Join"],
+    enum: ["Looking for", "Join as"],
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,

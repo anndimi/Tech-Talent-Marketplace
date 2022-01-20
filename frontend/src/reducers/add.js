@@ -4,6 +4,7 @@ const add = createSlice({
   name: "add",
   initialState: {
     items: [],
+    _id: null,
     title: null,
     description: null,
     budget: null,
@@ -18,6 +19,10 @@ const add = createSlice({
   reducers: {
     setItems: (store, action) => {
       store.items = action.payload;
+      console.log(action.payload, "this is payload");
+    },
+    setAddId: (store, action) => {
+      store.addId = action.payload;
     },
     setTitle: (store, action) => {
       store.title = action.payload;

@@ -13,23 +13,25 @@ import NotFound from "./components/NotFound";
 import Navbar from "./components/Navbar";
 import ContactPage from "./components/ContactPage";
 import AboutPage from "./components/AboutPage";
+import SingleAddModal from "./components/SingleAddModal";
 
 const reducer = combineReducers({
   user: user.reducer,
   add: add.reducer,
 });
-const persistedStateJSON = localStorage.getItem("userReduxState");
-let persistedState = {};
+// const persistedStateJSON = localStorage.getItem("userReduxState");
+// let persistedState = {};
 
-if (persistedStateJSON) {
-  persistedState = JSON.parse(persistedStateJSON);
-}
+// if (persistedStateJSON) {
+//   persistedState = JSON.parse(persistedStateJSON);
+// }
 
-const store = createStore(reducer, persistedState);
+const store = createStore(reducer);
 
-store.subscribe(() => {
-  localStorage.setItem("userReduxState", JSON.stringify(store.getState()));
-});
+// Ska in i store  persistedState
+// store.subscribe(() => {
+//   localStorage.setItem("userReduxState", JSON.stringify(store.getState()));
+// });
 
 const App = () => {
   return (
@@ -38,7 +40,10 @@ const App = () => {
         <Navbar />
         <Routes>
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/adds" element={<AddsList />} />
+          {/* <Route path="/adds" element={<AddsList />} /> */}
+          <Route path="/adds" element={<AddsList />}>
+            <Route path=":id" element={<SingleAddModal />} />
+          </Route>
           <Route path="/addsform" element={<AddForm />} />
           <Route path="/userprofile" element={<UserProfile />} />
           <Route path="/contact" element={<ContactPage />} />
