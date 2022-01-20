@@ -15,8 +15,13 @@ const Section = styled.section`
 `;
 
 const SectionOverlay = styled.div`
-  width: 100%;
+  /* width: 100%;
   height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); */
 `;
 
 const ModalWrapper = styled.div`
@@ -33,14 +38,16 @@ const AddModal = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: start;
-    gap: 60px;
+    gap: 50px;
     align-items: center;
     position: absolute;
     top: 20%;
     background: #212427;
     color: #ffffff;
-    width: 90%;
-    height: 500px;
+    width: 50%;
+    height: 75%;
+    border-radius: 15px;
+    overflow-y: scroll;
   }
   &.modal-inactive {
     display: none;
@@ -49,28 +56,54 @@ const AddModal = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-  }
-  div {
-    display: flex;
-    align-self: end;
-  }
-  button {
-    background: none;
-    margin-right: 20px;
-    margin-top: 20px;
-    color: inherit;
-    border: none;
-    padding: 0;
-    font: inherit;
-    cursor: pointer;
-    img {
-      width: 40px;
-      height: 40px;
-    }
+    gap: 20px;
+    width: 60%;
   }
 `;
 
-const RadioButtonsContainer = styled.div``;
+const CloseButton = styled.button`
+  background: none;
+  margin-right: 20px;
+  margin-top: 20px;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  align-self: end;
+  img {
+    width: 40px;
+    height: 40px;
+  }
+`;
+
+const LabelInput = styled.div`
+  display: flex;
+  flex-direction: column;
+  input {
+    height: 30px;
+    border-radius: 5px;
+    border: none;
+  }
+  textarea {
+    resize: none;
+    height: 100px;
+    border-radius: 5px;
+    border: none;
+  }
+  select {
+    height: 30px;
+    border-radius: 5px;
+    border: none;
+  }
+`;
+
+const RadioButtonsContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin-bottom: 20px;
+`;
 
 const AddForm = () => {
   const [isModalActive, setModalActive] = useState(false);
@@ -140,75 +173,91 @@ const AddForm = () => {
           <AddModal
             className={isModalActive ? "modal-active" : "modal-inactive"}
           >
-            <div>
-              <button onClick={toggleModal}>
-                <img src={closeIcon} alt="close window" />
-              </button>
-            </div>
+            <CloseButton onClick={toggleModal}>
+              <img src={closeIcon} alt="close window" />
+            </CloseButton>
 
             <form onSubmit={onFormSubmit}>
-              <label htmlFor="title">Title: </label>
-              <input
-                id="title"
-                type="text"
-                value={info.title}
-                onChange={(e) => setInfo({ ...info, title: e.target.value })}
-              ></input>
+              <LabelInput>
+                <label htmlFor="title">Title </label>
+                <input
+                  id="title"
+                  type="text"
+                  value={info.title}
+                  onChange={(e) => setInfo({ ...info, title: e.target.value })}
+                ></input>
+              </LabelInput>
 
-              <label htmlFor="description">Description: </label>
-              <textarea
-                id="title"
-                type="text"
-                value={info.description}
-                autoComplete="off"
-                onChange={(e) =>
-                  setInfo({ ...info, description: e.target.value })
-                }
-              />
+              <LabelInput>
+                <label htmlFor="description">Description </label>
+                <textarea
+                  id="title"
+                  type="text"
+                  value={info.description}
+                  autoComplete="off"
+                  onChange={(e) =>
+                    setInfo({ ...info, description: e.target.value })
+                  }
+                />
+              </LabelInput>
 
-              <label htmlFor="category">Category:</label>
-              <select
-                value={info.category}
-                onChange={(e) => setInfo({ ...info, category: e.target.value })}
-              >
-                <option hidden>Category</option>
-                <option value="Frontend">Frontend</option>
-                <option value="Backend">Backend</option>
-                <option value="Graphics and Design">Graphics and Design</option>
-                <option value="Fullstack">Fullstack</option>
-                <option value="App Developer">App Developer</option>
-                <option value="Chatbots">Chatbots</option>
-                <option value="Project Lead">Project Lead</option>
-                <option value="QA">QA</option>
-                <option value="Legal Consulting">Legal Consulting</option>
-                <option value="Financial Consulting">
-                  Financial Consulting
-                </option>
-                <option value="Analytics">Analytics</option>
-                <option value="Game Developer">Game Developer</option>
-              </select>
+              <LabelInput>
+                <label htmlFor="category">Category </label>
+                <select
+                  value={info.category}
+                  onChange={(e) =>
+                    setInfo({ ...info, category: e.target.value })
+                  }
+                >
+                  <option hidden>Category</option>
+                  <option value="Frontend">Frontend</option>
+                  <option value="Backend">Backend</option>
+                  <option value="Graphics and Design">
+                    Graphics and Design
+                  </option>
+                  <option value="Fullstack">Fullstack</option>
+                  <option value="App Developer">App Developer</option>
+                  <option value="Chatbots">Chatbots</option>
+                  <option value="Project Lead">Project Lead</option>
+                  <option value="QA">QA</option>
+                  <option value="Legal Consulting">Legal Consulting</option>
+                  <option value="Financial Consulting">
+                    Financial Consulting
+                  </option>
+                  <option value="Analytics">Analytics</option>
+                  <option value="Game Developer">Game Developer</option>
+                </select>
+              </LabelInput>
 
-              <label htmlFor="password">Budget: </label>
-              <input
-                id="budget"
-                type="number"
-                value={info.budget}
-                onChange={(e) => setInfo({ ...info, budget: e.target.value })}
-              ></input>
-              <label htmlFor="currency">Currency:</label>
-              <select
-                value={info.currency}
-                onChange={(e) => setInfo({ ...info, currency: e.target.value })}
-              >
-                <option hidden>currency</option>
-                <option value="SEK">SEK</option>
-                <option value="EUR">EUR</option>
-                <option value="USD">USD</option>
-                <option value="NOK">NOK</option>
-                <option value="GBP">GBP</option>
-                <option value="DKK">DKK</option>
-                <option value="CNY">CNY</option>
-              </select>
+              <LabelInput>
+                <label htmlFor="password">Budget </label>
+                <input
+                  id="budget"
+                  type="number"
+                  min="0"
+                  value={info.budget}
+                  onChange={(e) => setInfo({ ...info, budget: e.target.value })}
+                ></input>
+              </LabelInput>
+
+              <LabelInput>
+                <label htmlFor="currency">Currency</label>
+                <select
+                  value={info.currency}
+                  onChange={(e) =>
+                    setInfo({ ...info, currency: e.target.value })
+                  }
+                >
+                  <option hidden>Choose</option>
+                  <option value="SEK">SEK</option>
+                  <option value="EUR">EUR</option>
+                  <option value="USD">USD</option>
+                  <option value="NOK">NOK</option>
+                  <option value="GBP">GBP</option>
+                  <option value="DKK">DKK</option>
+                  <option value="CNY">CNY</option>
+                </select>
+              </LabelInput>
               <RadioButtonsContainer>
                 <label htmlFor="Looking for">Looking for </label>
                 <input
