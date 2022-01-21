@@ -25,21 +25,28 @@ const ModalWrapper = styled.div`
 
 const AddModal = styled.div`
   &.modal-active {
-    padding: 10px 0 10px 0;
+    padding: 0 30px 0 30px;
     z-index: 10;
     display: flex;
     flex-direction: column;
     justify-content: start;
-    gap: 50px;
+    gap: 20px;
+    word-wrap: break-word;
     align-items: center;
-    position: absolute;
+    position: fixed;
     top: 20%;
     background: #212427;
     color: #ffffff;
-    width: 50%;
-    height: 90%;
+    width: 40%;
+    height: 70%;
     border-radius: 15px;
     overflow-y: scroll;
+    h2 {
+      margin: 0;
+    }
+    p {
+      margin 0;
+    }
   }
   &.modal-inactive {
     display: none;

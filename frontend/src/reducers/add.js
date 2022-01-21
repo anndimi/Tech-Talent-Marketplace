@@ -54,6 +54,12 @@ const add = createSlice({
     setError: (store, action) => {
       store.error = action.payload;
     },
+    filterCategory: (store, action) => {
+      const filterAdd = store.items.filter(
+        (item) => item.category === action.payload
+      );
+      store.items = filterAdd;
+    },
   },
 });
 

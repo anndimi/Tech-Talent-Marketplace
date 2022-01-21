@@ -34,7 +34,7 @@ const ModalWrapper = styled.div`
 
 const AddModal = styled.div`
   &.modal-active {
-    padding: 10px 0 10px 0;
+    padding: 0 0 10px 0;
     z-index: 10;
     display: flex;
     flex-direction: column;
@@ -73,29 +73,31 @@ const CloseButton = styled.button`
   cursor: pointer;
   align-self: end;
   img {
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
   }
 `;
 
 const LabelInput = styled.div`
   display: flex;
   flex-direction: column;
-  input {
+  input,
+  select {
     height: 30px;
-    border-radius: 5px;
-    border: none;
   }
   textarea {
     resize: none;
     height: 100px;
-    border-radius: 5px;
-    border: none;
+    padding-top: 10px;
   }
-  select {
-    height: 30px;
-    border-radius: 5px;
+  select,
+  input,
+  textarea {
+    font-family: "Spartan", sans-serif;
+    font-weight: 500;
+    padding-left: 10px;
     border: none;
+    border-radius: 5px;
   }
 `;
 
@@ -224,6 +226,7 @@ const AddForm = () => {
                 <input
                   id="title"
                   type="text"
+                  placeholder="A cathing title.."
                   value={info.title}
                   onChange={(e) => setInfo({ ...info, title: e.target.value })}
                 ></input>
@@ -235,6 +238,7 @@ const AddForm = () => {
                   id="title"
                   type="text"
                   value={info.description}
+                  placeholder="Describe the opportunity.."
                   autoComplete="off"
                   onChange={(e) =>
                     setInfo({ ...info, description: e.target.value })

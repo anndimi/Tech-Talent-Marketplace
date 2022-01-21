@@ -42,12 +42,15 @@ const TagWrapper = styled.div`
 
 const AddsList = () => {
   const [singleAdd, setSingleAdd] = useState("");
+  const [filter, setFilter] = useState("");
+  const [sort, setSort] = useState("");
+  const [type, setType] = useState("");
+
   const addItems = useSelector((store) => store.add.items);
-  // const addId = useSelector((store) => store.add._id);
+
   // const accessToken = useSelector((store) => store.user.accessToken);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
 
   // useEffect(() => {
   //   if (!accessToken) {
@@ -60,6 +63,40 @@ const AddsList = () => {
   const toggleModal = () => {
     setModalActive(!isModalActive);
   };
+
+  const onFilterChange = (event) => {
+    setFilter(event.target.value);
+  };
+  // const sortedByTimeAddItems = addItems.sort((a, b) => {
+  //   if (a.title < b.title) {
+  //     return -1;
+  //   }
+  //   if (a.title > b.title) {
+  //     return 1;
+  //   }
+  //   return 0;
+  // });
+
+  const onSortByTimeChange = (event) => {
+    setSort(event.target.value);
+  };
+  const onTypeChange = (event) => {
+    setType(event.target.value);
+  };
+
+  //Kanske filteredAddItems.sort (vi tar det på måndag)
+  const filteredAddItems = addItems.filter((item) => {
+    if (type && filter) {
+      return item.typeOf === type && item.category === filter;
+    }
+    if (filter) {
+      return item.category === filter;
+    }
+    if (type) {
+      return item.typeOf === type;
+    }
+    return item;
+  });
 
   useEffect(() => {
     const options = {
@@ -87,16 +124,51 @@ const AddsList = () => {
 
   return (
     <AddListSection>
-      <AddForm />
       <SingleAddModal
         isModalActive={isModalActive}
         toggleModal={toggleModal}
         singleAdd={singleAdd}
       />
-      <h1>All our adds</h1>
-      <AddFilter />
+      <div>
+        <AddForm />
+        <>
+          <p>This is where we filter our adds</p>
+          <label>Filter</label>
+
+          <select value={filter} onChange={onFilterChange}>
+            <option hidden>Category..</option>
+            <option value="Frontend">Frontend</option>
+            <option value="Backend">Backend</option>
+            <option value="Graphics and Design">Graphics and Design</option>
+            <option value="Fullstack">Fullstack</option>
+            <option value="App Developer">App Developer</option>
+            <option value="Chatbots">Chatbots</option>
+            <option value="Project Lead">Project Lead</option>
+            <option value="QA">QA</option>
+            <option value="Legal Consulting">Legal Consulting</option>
+            <option value="Financial Consulting">Financial Consulting</option>
+            <option value="Analytics">Analytics</option>
+            <option value="Game Developer">Game Developer</option>
+          </select>
+          <label>Time</label>
+          <select value={sort} onChange={onSortByTimeChange}>
+            <option hidden>Time..</option>
+            <option value="Ascending">Oldest to newest</option>
+            <option value="Descending">Oldest to newest</option>
+            <option value="AZ">A - Z</option>
+            <option value="ZA">Z - A</option>
+          </select>
+
+          <label>Type</label>
+          <select value={type} onChange={onTypeChange}>
+            <option hidden>Type..</option>
+            <option value="Looking for">Looking for</option>
+            <option value="Join as">Join as</option>
+          </select>
+        </>
+      </div>
       <AddWrapper>
-        {addItems.map((item) => (
+        {filteredAddItems.map((item) => (
           <AddCard
             key={item._id}
             onClick={() => {

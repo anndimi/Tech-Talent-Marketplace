@@ -40,6 +40,7 @@ const storage = new CloudinaryStorage({
     transformation: [{ width: 500, height: 500, crop: "limit" }],
   },
 });
+
 const parser = multer({ storage });
 
 // const UserImage = mongoose.model("UserImage", {
@@ -309,6 +310,40 @@ app.delete("/adds/:id/delete", async (req, res) => {
     res.status(201).json({ response: deleteAdd, success: true });
   } catch (error) {
     res.status(400).json({ error: "Add id not found!", success: false });
+  }
+});
+
+//filter adds based on category
+app.get("/adds/categories/:category", async (req, res) => {
+  const { category } = req.params;
+  try {
+    const filteredCategory = await Add.find({ category });
+    res.status(200).json({ response: filteredCategory, success: true });
+  } catch (error) {
+    res.status(400).json({ error: "Invalid category", success: false });
+  }
+});
+
+// sort based on createedAt
+app.get("/adds/created/asc", async (req, res) => {
+  const sortedByTime = await Add.find().sort({ createdAt: "asc" });
+  try {
+    res.status(200).json({ response: sortedByTime, success: true });
+  } catch (error) {
+    res
+      .status(400)
+      .json({ error: "Cannot sort by that order", success: false });
+  }
+});
+
+//sort by join/looking
+app.get("/adds/type/:typeOf", async (req, res) => {
+  const { typeOf } = req.params;
+  try {
+    const filteredType = await Add.find({ typeOf });
+    res.status(200).json({ response: filteredType, success: true });
+  } catch (error) {
+    res.status(400).json({ error: "Invalid type", success: false });
   }
 });
 
