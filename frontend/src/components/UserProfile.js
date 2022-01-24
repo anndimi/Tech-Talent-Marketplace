@@ -1,6 +1,6 @@
 import React from "react";
 import user from "../reducers/user";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 // import { API_URL } from "../utils/constants";
@@ -13,7 +13,7 @@ import { EditProfile } from "./EditProfile";
 export const UserProfile = () => {
   // const [userProfile, setUserProfile] = useState({});
   const accessToken = useSelector((store) => store.user.accessToken);
-  const id = useSelector((store) => store.user.userId);
+  // const id = useSelector((store) => store.user.userId);
   const username = useSelector((store) => store.user.username);
   const name = useSelector((store) => store.user.name);
   const email = useSelector((store) => store.user.email);
@@ -29,9 +29,11 @@ export const UserProfile = () => {
 
   const [isEditModalActive, setEditModalActive] = useState(false);
 
+  const { id } = useParams();
+  console.log("id:", id);
+
   const toggleEditModal = () => {
     setEditModalActive(!isEditModalActive);
-    navigate(id);
   };
 
   useEffect(() => {
@@ -80,7 +82,13 @@ export const UserProfile = () => {
       <button className="logout-button" onClick={onButtonClick}>
         Logout
       </button>
-      <button className="logout-button" onClick={toggleEditModal}>
+      <button
+        className="logout-button"
+        onClick={() => {
+          navigate("edit");
+          toggleEditModal();
+        }}
+      >
         Edit
       </button>
     </div>

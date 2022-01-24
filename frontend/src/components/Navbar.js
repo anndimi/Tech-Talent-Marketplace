@@ -4,6 +4,8 @@ import styled from "styled-components";
 import Open from "../assets/menu.png";
 import Close from "../assets/close.png";
 import logoImg from "../assets/logo.png";
+import { useSelector } from "react-redux";
+import { SignOutButton } from "./Buttons/StyledButtons";
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -76,6 +78,7 @@ const StyledLink = styled(Link)`
 
 const Navbar = () => {
   const [isActive, setActive] = useState(false);
+  const accessToken = useSelector((store) => store.user.accessToken);
 
   const toggleNavbar = () => {
     setActive(!isActive);
@@ -97,10 +100,27 @@ const Navbar = () => {
           className={isActive ? "side-menu-active" : "side-menu-hidden"}
           onClick={toggleNavbar}
         >
-          <StyledLink to="/adds">Adds</StyledLink>
-          <StyledLink to="/userprofile">My Profile</StyledLink>
-          <StyledLink to="/about">About</StyledLink>
-          <StyledLink to="/contact">Contact</StyledLink>
+          {accessToken ? (
+            <>
+              <StyledLink to="/adds">Create Add</StyledLink>
+              <StyledLink to="/adds">Adds</StyledLink>
+              <StyledLink to="/userprofile/:id">My Profile</StyledLink>
+              <StyledLink to="/inspiration">Inspiration</StyledLink>
+              <StyledLink to="/about">About</StyledLink>
+              <StyledLink to="/contact">Contact</StyledLink>
+              <SignOutButton />
+            </>
+          ) : (
+            <>
+              <StyledLink to="/signup">Sign up/ Sign in</StyledLink>
+              <StyledLink to="/adds">Create Add</StyledLink>
+              <StyledLink to="/adds">Adds</StyledLink>
+              <StyledLink to="/userprofile/:id">My Profile</StyledLink>
+              <StyledLink to="/inspiration">Inspiration</StyledLink>
+              <StyledLink to="/about">About</StyledLink>
+              <StyledLink to="/contact">Contact</StyledLink>
+            </>
+          )}
         </PopUpNav>
       </div>
     </>

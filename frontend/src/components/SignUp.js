@@ -16,15 +16,10 @@ const SignUp = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  //   const id = useSelector((store) => store.user.userId);
+  const id = useSelector((store) => store.user.userId);
   // const { id } = useParams();
   // const fileInput = useRef();
-
-  useEffect(() => {
-    if (accessToken) {
-      navigate("/userprofile");
-    }
-  }, [accessToken, navigate]);
+  console.log(id, "first");
 
   const onToggleClick = () => {
     if (mode === "signin") {
@@ -59,15 +54,18 @@ const SignUp = () => {
     fetch(API_URL(mode), options)
       .then((res) => res.json())
       .then((data) => {
+        console.log(data, "signup data");
         if (data.success) {
           batch(() => {
-            dispatch(user.actions.setUserId(data.response.userId));
+            dispatch(user.actions.setUserId(data.response.id));
             dispatch(user.actions.setUsername(data.response.username));
             dispatch(user.actions.setEmail(data.response.email));
             dispatch(user.actions.setAccessToken(data.response.accessToken));
             dispatch(user.actions.setMemberSince(data.response.memberSince));
             // dispatch(user.actions.setImageUrl(data.response.imageUrl));
             dispatch(user.actions.setError(null));
+            navigate(`/userprofile/${data.response.id}`);
+            console.log(data.response.id, "data res");
           });
         } else {
           batch(() => {
@@ -82,13 +80,21 @@ const SignUp = () => {
           alert(data.response);
         }
       });
+    // if (accessToken) {
+    //   navigate(`/userprofile/${id}`);
+    // }
   };
-  {
-    /* <label>
+
+  // useEffect(() => {
+  //   if (accessToken) {
+  //     navigate(`/userprofile/${id}`);
+  //   }
+  // }, [accessToken, navigate, id]);
+
+  /* <label>
           Profile image:
           <input type="file" ref={fileInput} />
         </label> */
-  }
 
   return (
     <section className="signup-container">

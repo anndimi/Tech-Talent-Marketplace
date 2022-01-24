@@ -31,7 +31,8 @@ const AddModal = styled.div`
     flex-direction: column;
     justify-content: start;
     gap: 20px;
-    word-wrap: break-word;
+    /* word-wrap: break-word; */
+    word-break: break-word;
     align-items: center;
     position: fixed;
     top: 20%;

@@ -20,6 +20,7 @@ const AddCard = styled.div`
     rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
   margin: 10px;
   padding: 10px;
+  cursor: pointer;
   box-sizing: border-box;
   width: 45%;
 
@@ -141,7 +142,7 @@ const AddsList = () => {
         singleAdd={singleAdd}
       />
       <div>
-        <AddForm />
+        <AddForm filteredAddItems={filteredAddItems} />
         <AddFilter
           filter={filter}
           sort={sort}

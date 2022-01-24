@@ -46,12 +46,12 @@ const AddModal = styled.div`
     align-items: center;
     position: absolute;
     top: 20%;
-    background: #ffff;
-    color: #212427;
+    background: #212427;
+    color: #ffff;
     width: 50%;
     height: 90%;
-    /* border-radius: 15px; */
-    border: 2px solid #289d8e;
+    border-radius: 15px;
+
     overflow-y: scroll;
     label {
       font-weight: 600;

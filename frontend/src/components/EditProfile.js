@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { API_URL } from "../utils/constants";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import closeIcon from "../assets/close.png";
 import { CloseButton } from "./Buttons/StyledButtons";
@@ -48,7 +48,7 @@ const EditModal = styled.div`
 export const EditProfile = ({ isEditModalActive, toggleEditModal }) => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const [user, setUser] = useState("");
+  // const [users, setUsers] = useState("");
   const [userInfo, setUserInfo] = useState({
     name: "",
     location: "",
@@ -57,26 +57,24 @@ export const EditProfile = ({ isEditModalActive, toggleEditModal }) => {
     github: "",
     imageUrl: "",
   });
-  useEffect(() => {
-    if (id)
-      fetch(API_URL(`userprofile/${id}`))
-        .then((res) => res.json())
-        .then(
-          (data) =>
-            console.log(data.respone, "hello data") && setUser(data.response)
-        );
-  }, [id]);
+
+  const userId = useSelector((store) => store.user.userId);
+  const name = useSelector((store) => store.user.name);
+  const location = useSelector((store) => store.user.location);
+  const bio = useSelector((store) => store.user.bio);
+  const github = useSelector((store) => store.user.github);
+  const linkedIn = useSelector((store) => store.user.linkedIn);
+  console.log("userID:", userId);
 
   const onFormSubmit = (event) => {
     event.preventDefault();
     const options = {
       method: "PATCH",
       headers: {
-        headers: {
-          "Content-Type": "application/json",
-        },
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        ...userInfo,
         // Authorization: accessToken,
       }),
     };
@@ -84,9 +82,8 @@ export const EditProfile = ({ isEditModalActive, toggleEditModal }) => {
       .then((res) => res.json())
       .then((data) => {
         setUserInfo(data.response);
-        console.log(data.response, "data");
         if (data.success) {
-          console.log(data.response, "hekllo");
+          console.log(data.response, "success");
           dispatch(user.actions.setName(data.response.name));
           dispatch(user.actions.setLocation(data.response.location));
           dispatch(user.actions.setBio(data.response.bio));
@@ -113,6 +110,9 @@ export const EditProfile = ({ isEditModalActive, toggleEditModal }) => {
     });
   };
 
+  console.log("hello from", userInfo.location);
+  console.log("your name is", userInfo.name);
+
   return (
     <>
       <EditModalWrapper>
@@ -133,7 +133,7 @@ export const EditProfile = ({ isEditModalActive, toggleEditModal }) => {
               accept="image/png, image/jpeg"
               id="image"
               type="file"
-              value={userInfo.imageUrl}
+              value={userInfo.imageUrl ? userInfo.imageUrl : ""}
               placeholder="image"
               onChange={(e) =>
                 setUserInfo({ ...userInfo, imageUrl: e.target.value })
@@ -144,8 +144,8 @@ export const EditProfile = ({ isEditModalActive, toggleEditModal }) => {
             <input
               id="name"
               type="text"
-              value={userInfo.name}
-              placeholder="name"
+              value={userInfo.name ? userInfo.name : ""}
+              placeholder={name ? name : "name"}
               onChange={(e) =>
                 setUserInfo({ ...userInfo, name: e.target.value })
               }
@@ -154,8 +154,8 @@ export const EditProfile = ({ isEditModalActive, toggleEditModal }) => {
             <input
               id="location"
               type="text"
-              value={userInfo.location}
-              placeholder="location"
+              value={userInfo.location ? userInfo.location : ""}
+              placeholder={location ? location : "location"}
               onChange={(e) =>
                 setUserInfo({ ...userInfo, location: e.target.value })
               }
@@ -164,8 +164,8 @@ export const EditProfile = ({ isEditModalActive, toggleEditModal }) => {
             <input
               id="bio"
               type="textarea"
-              value={userInfo.bio}
-              placeholder="bio"
+              value={userInfo.bio ? userInfo.bio : ""}
+              placeholder={bio ? bio : "bio"}
               onChange={(e) =>
                 setUserInfo({ ...userInfo, bio: e.target.value })
               }
@@ -174,8 +174,8 @@ export const EditProfile = ({ isEditModalActive, toggleEditModal }) => {
             <input
               id="linkedin"
               type="text"
-              placeholder="linkedin"
-              value={userInfo.linkedIn}
+              placeholder={linkedIn ? linkedIn : "LinkedIn"}
+              value={userInfo.linkedIn ? userInfo.linkedIn : ""}
               onChange={(e) =>
                 setUserInfo({ ...userInfo, linkedIn: e.target.value })
               }
@@ -184,8 +184,8 @@ export const EditProfile = ({ isEditModalActive, toggleEditModal }) => {
             <input
               id="github"
               type="text"
-              placeholder="github"
-              value={userInfo.github}
+              placeholder={github ? github : "github"}
+              value={userInfo.github ? userInfo.github : ""}
               onChange={(e) =>
                 setUserInfo({ ...userInfo, github: e.target.value })
               }
