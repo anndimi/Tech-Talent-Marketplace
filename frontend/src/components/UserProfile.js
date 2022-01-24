@@ -5,8 +5,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 // import { API_URL } from "../utils/constants";
 import moment from "moment";
+import styled from "styled-components";
 import linkedinIcon from "../assets/linkedin-icon.png";
 import githubIcon from "../assets/github-icon.png";
+import { EditProfile } from "./EditProfile";
 
 export const UserProfile = () => {
   // const [userProfile, setUserProfile] = useState({});
@@ -24,6 +26,13 @@ export const UserProfile = () => {
   const clearAccessToken = useSelector((store) => store.user.clearAccessToken);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const [isEditModalActive, setEditModalActive] = useState(false);
+
+  const toggleEditModal = () => {
+    setEditModalActive(!isEditModalActive);
+    navigate(id);
+  };
 
   useEffect(() => {
     if (!accessToken) {
@@ -52,6 +61,10 @@ export const UserProfile = () => {
   return (
     <div>
       <h1>Welcome to your page, {username}!</h1>
+      <EditProfile
+        isEditModalActive={isEditModalActive}
+        toggleEditModal={toggleEditModal}
+      />
       <img src={imageUrl} alt="User Profile" />
       <p>Member since: {moment(memberSince).fromNow()}</p>
       <p>Name: {name}</p>
@@ -66,6 +79,9 @@ export const UserProfile = () => {
       </p>
       <button className="logout-button" onClick={onButtonClick}>
         Logout
+      </button>
+      <button className="logout-button" onClick={toggleEditModal}>
+        Edit
       </button>
     </div>
   );

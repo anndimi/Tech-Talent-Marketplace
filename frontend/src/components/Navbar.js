@@ -8,7 +8,7 @@ import logoImg from "../assets/logo.png";
 const HeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  background: #212427;
+  background: #289d8e;
   color: #ffffff;
 `;
 
@@ -54,7 +54,7 @@ const PopUpNav = styled.nav`
     font-weight: bold;
     background: black;
     justify-content: center;
-    background-color: #212427;
+    background-color: #289d8e;
     @media (min-width: 768px) {
       width: 250px;
     }

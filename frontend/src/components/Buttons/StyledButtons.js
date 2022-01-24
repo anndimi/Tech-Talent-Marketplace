@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 export const StyledButton = styled.button`
   border-radius: 20px;
@@ -14,3 +16,27 @@ export const StyledButton = styled.button`
     color: #fff;
   }
 `;
+
+export const StyledCloseButton = styled.button`
+  background: none;
+  margin-right: 20px;
+  margin-top: 20px;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  align-self: end;
+  /* img {
+    width: 30px;
+    height: 30px;
+  } */
+`;
+
+export const CloseButton = () => {
+  return (
+    <CloseButton>
+      <FontAwesomeIcon icon={faTimes} size="3x" color="#212427" />
+    </CloseButton>
+  );
+};

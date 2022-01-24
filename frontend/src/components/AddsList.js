@@ -6,8 +6,9 @@ import AddForm from "./AddForm";
 import moment from "moment";
 import add from "../reducers/add";
 import styled from "styled-components";
-import { AddFilter } from "./AddFilter";
+import AddFilter from "./AddFilter";
 import SingleAddModal from "./SingleAddModal";
+import { StyledButton } from "./Buttons/StyledButtons";
 
 const AddListSection = styled.section`
   padding: 20px;
@@ -47,6 +48,7 @@ const AddsList = () => {
   const [type, setType] = useState("");
 
   const addItems = useSelector((store) => store.add.items);
+  const createdDate = useSelector((store) => store.add.createdAt);
 
   // const accessToken = useSelector((store) => store.user.accessToken);
   const navigate = useNavigate();
@@ -64,25 +66,28 @@ const AddsList = () => {
     setModalActive(!isModalActive);
   };
 
-  const onFilterChange = (event) => {
-    setFilter(event.target.value);
-  };
-  // const sortedByTimeAddItems = addItems.sort((a, b) => {
-  //   if (a.title < b.title) {
-  //     return -1;
-  //   }
-  //   if (a.title > b.title) {
-  //     return 1;
-  //   }
-  //   return 0;
-  // });
-
   const onSortByTimeChange = (event) => {
     setSort(event.target.value);
+    // sortedAddItems();
   };
   const onTypeChange = (event) => {
     setType(event.target.value);
   };
+
+  const onFilterChange = (event) => {
+    setFilter(event.target.value);
+  };
+
+  const onFilterReset = () => {
+    setFilter("");
+    setSort("");
+    setType("");
+  };
+
+  // const sortedByTimeAddItems = addItems.sort((a, b) => {
+  //a.title - b.title
+  // return addItems
+  // });
 
   //Kanske filteredAddItems.sort (vi tar det på måndag)
   const filteredAddItems = addItems.filter((item) => {
@@ -97,6 +102,12 @@ const AddsList = () => {
     }
     return item;
   });
+
+  // const sortedAddItems = filteredAddItems.sort((oldestAdds, newestAdds) => {
+  //   sort === "Oldest" &&
+  //     return new Date(oldestAdds.createdDate) - new Date(newestAdds.createdDate);
+
+  // });
 
   useEffect(() => {
     const options = {
@@ -131,71 +142,50 @@ const AddsList = () => {
       />
       <div>
         <AddForm />
-        <>
-          <p>This is where we filter our adds</p>
-          <label>Filter</label>
-
-          <select value={filter} onChange={onFilterChange}>
-            <option hidden>Category..</option>
-            <option value="Frontend">Frontend</option>
-            <option value="Backend">Backend</option>
-            <option value="Graphics and Design">Graphics and Design</option>
-            <option value="Fullstack">Fullstack</option>
-            <option value="App Developer">App Developer</option>
-            <option value="Chatbots">Chatbots</option>
-            <option value="Project Lead">Project Lead</option>
-            <option value="QA">QA</option>
-            <option value="Legal Consulting">Legal Consulting</option>
-            <option value="Financial Consulting">Financial Consulting</option>
-            <option value="Analytics">Analytics</option>
-            <option value="Game Developer">Game Developer</option>
-          </select>
-          <label>Time</label>
-          <select value={sort} onChange={onSortByTimeChange}>
-            <option hidden>Time..</option>
-            <option value="Ascending">Oldest to newest</option>
-            <option value="Descending">Oldest to newest</option>
-            <option value="AZ">A - Z</option>
-            <option value="ZA">Z - A</option>
-          </select>
-
-          <label>Type</label>
-          <select value={type} onChange={onTypeChange}>
-            <option hidden>Type..</option>
-            <option value="Looking for">Looking for</option>
-            <option value="Join as">Join as</option>
-          </select>
-        </>
+        <AddFilter
+          filter={filter}
+          sort={sort}
+          type={type}
+          onFilterChange={onFilterChange}
+          onTypeChange={onTypeChange}
+          onFilterReset={onFilterReset}
+          onSortByTimeChange={onSortByTimeChange}
+          // sortedAddItems={sortedAddItems}
+        />
       </div>
       <AddWrapper>
-        {filteredAddItems.map((item) => (
-          <AddCard
-            key={item._id}
-            onClick={() => {
-              navigate(item._id);
-            }}
-          >
-            <TagWrapper>
+        {filteredAddItems.length === 0 ? (
+          <h1>No adds</h1>
+        ) : (
+          filteredAddItems.map((item) => (
+            <AddCard
+              key={item._id}
+              onClick={() => {
+                navigate(item._id);
+              }}
+            >
+              <TagWrapper>
+                <p>
+                  {item.typeOf} {item.category}
+                </p>
+                {/* <p>{item._id}</p> */}
+
+                <p>{moment(item.createdAt).fromNow()}</p>
+              </TagWrapper>
+              <h2>{item.title}</h2>
+
+              {/* <p>{item.description}</p> */}
               <p>
-                {item.typeOf} {item.category}
+                Budget is {item.budget}
+                {item.currency}
               </p>
-              {/* <p>{item._id}</p> */}
 
-              <p>{moment(item.createdAt).fromNow()}</p>
-            </TagWrapper>
-            <h2>{item.title}</h2>
-
-            {/* <p>{item.description}</p> */}
-            <p>
-              Budget is {item.budget}
-              {item.currency}
-            </p>
-
-            {/* Utkommenderat för att vi inte har nån authentication */}
-            {/* <p>{item.user.username}</p>
+              {/* Utkommenderat för att vi inte har nån authentication */}
+              {/* <p>{item.user.username}</p>
           <p>{item.user.email}</p> */}
-          </AddCard>
-        ))}
+            </AddCard>
+          ))
+        )}
       </AddWrapper>
     </AddListSection>
   );

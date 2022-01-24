@@ -14,6 +14,7 @@ import Navbar from "./components/Navbar";
 import ContactPage from "./components/ContactPage";
 import AboutPage from "./components/AboutPage";
 import SingleAddModal from "./components/SingleAddModal";
+import { EditProfile } from "./components/EditProfile";
 
 const reducer = combineReducers({
   user: user.reducer,
@@ -45,7 +46,10 @@ const App = () => {
             <Route path=":id" element={<SingleAddModal />} />
           </Route>
           <Route path="/addsform" element={<AddForm />} />
-          <Route path="/userprofile" element={<UserProfile />} />
+          <Route path="/userprofile" element={<UserProfile />}>
+            <Route path=":id" element={<EditProfile />} />
+          </Route>
+
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="*" element={<NotFound />} />

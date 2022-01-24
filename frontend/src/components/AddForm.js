@@ -3,6 +3,7 @@ import { useSelector, useDispatch, batch } from "react-redux";
 import add from "../reducers/add";
 import { API_URL } from "../utils/constants";
 import { StyledButton } from "./Buttons/StyledButtons";
+import { CloseButton } from "./Buttons/StyledButtons";
 import styled from "styled-components";
 import closeIcon from "../assets/close.png";
 
@@ -34,6 +35,8 @@ const ModalWrapper = styled.div`
 
 const AddModal = styled.div`
   &.modal-active {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+      rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
     padding: 0 0 10px 0;
     z-index: 10;
     display: flex;
@@ -43,12 +46,16 @@ const AddModal = styled.div`
     align-items: center;
     position: absolute;
     top: 20%;
-    background: #212427;
-    color: #ffffff;
+    background: #ffff;
+    color: #212427;
     width: 50%;
     height: 90%;
-    border-radius: 15px;
+    /* border-radius: 15px; */
+    border: 2px solid #289d8e;
     overflow-y: scroll;
+    label {
+      font-weight: 600;
+    }
   }
   &.modal-inactive {
     display: none;
@@ -59,22 +66,6 @@ const AddModal = styled.div`
     justify-content: center;
     gap: 20px;
     width: 60%;
-  }
-`;
-
-const CloseButton = styled.button`
-  background: none;
-  margin-right: 20px;
-  margin-top: 20px;
-  color: inherit;
-  border: none;
-  padding: 0;
-  font: inherit;
-  cursor: pointer;
-  align-self: end;
-  img {
-    width: 30px;
-    height: 30px;
   }
 `;
 
@@ -96,7 +87,7 @@ const LabelInput = styled.div`
     font-family: "Spartan", sans-serif;
     font-weight: 500;
     padding-left: 10px;
-    border: none;
+    border: 2px solid #212427;
     border-radius: 5px;
   }
 `;
@@ -160,6 +151,13 @@ const AddForm = () => {
         console.log(error.response);
         dispatch(add.actions.setError(error.response));
       });
+    setInfo({
+      title: "",
+      description: "",
+      budget: "",
+      currency: "",
+      category: "",
+    });
   };
 
   return (
