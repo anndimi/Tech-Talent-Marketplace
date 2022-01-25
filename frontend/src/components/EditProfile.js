@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState, useRef } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { API_URL } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
@@ -47,7 +47,10 @@ const EditModal = styled.div`
 
 export const EditProfile = ({ isEditModalActive, toggleEditModal }) => {
   const { id } = useParams();
+  console.log(id, "this is the params");
   const dispatch = useDispatch();
+  const fileInput = useRef();
+  const navigate = useNavigate;
   // const [users, setUsers] = useState("");
   const [userInfo, setUserInfo] = useState({
     name: "",
@@ -68,16 +71,21 @@ export const EditProfile = ({ isEditModalActive, toggleEditModal }) => {
 
   const onFormSubmit = (event) => {
     event.preventDefault();
+    const formData = new FormData();
+    formData.append("name", userInfo.name);
+    formData.append("location", userInfo.location);
+    formData.append("bio", userInfo.bio);
+    formData.append("github", userInfo.github);
+    formData.append("linkedIn", userInfo.linkedIn);
+    formData.append("imageUrl", userInfo.fileInput.current.files[0]);
     const options = {
       method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        ...userInfo,
-        // Authorization: accessToken,
-      }),
+      // headers: {
+      //   "Content-Type": "Multipart/form-data",
+      // },
+      body: formData,
     };
+    console.log(formData.get("location"));
     fetch(API_URL(`userprofile/${id}/edit`), options)
       .then((res) => res.json())
       .then((data) => {
@@ -115,7 +123,12 @@ export const EditProfile = ({ isEditModalActive, toggleEditModal }) => {
 
   return (
     <>
-      <EditModalWrapper>
+      <EditModalWrapper
+      // onClick={() => {
+      //   navigate("userprofile");
+      //   toggleEditModal();
+      // }}
+      >
         <EditModal
           className={
             isEditModalActive ? "edit-modal-active" : "edit-modal-inactive"
@@ -130,6 +143,7 @@ export const EditProfile = ({ isEditModalActive, toggleEditModal }) => {
           <form onSubmit={onFormSubmit}>
             <label htmlFor="image">Profile image</label>
             <input
+              ref={fileInput}
               accept="image/png, image/jpeg"
               id="image"
               type="file"

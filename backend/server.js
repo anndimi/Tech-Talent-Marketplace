@@ -393,12 +393,11 @@ app.get("/userprofile/:id", async (req, res) => {
 app.patch("/userprofile/:id/edit", async (req, res) => {
   const updatedUserInfo = req.body;
   const { id } = req.params;
+  console.log(req.body);
   try {
-    const updatedUser = await User.findByIdAndUpdate(
-      id,
-      { $set: updatedUserInfo },
-      { new: true }
-    );
+    const updatedUser = await User.findByIdAndUpdate(id, updatedUserInfo, {
+      new: true,
+    });
     if (updatedUser) {
       res.status(200).json({ response: updatedUser, success: true });
     } else {

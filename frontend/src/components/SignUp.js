@@ -21,16 +21,6 @@ const SignUp = () => {
   // const fileInput = useRef();
   console.log(id, "first");
 
-  const onToggleClick = () => {
-    if (mode === "signin") {
-      setMode("signup");
-      setIsContainerActive(true);
-    } else {
-      setMode("signin");
-      setIsContainerActive(false);
-    }
-  };
-
   const onFormSubmit = (event) => {
     console.log("hej");
     event.preventDefault();
@@ -54,7 +44,6 @@ const SignUp = () => {
     fetch(API_URL(mode), options)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data, "signup data");
         if (data.success) {
           batch(() => {
             dispatch(user.actions.setUserId(data.response.id));
@@ -165,18 +154,24 @@ const SignUp = () => {
               <button
                 className="signup-button ghost"
                 id="signIn"
-                onClick={onToggleClick}
+                onClick={() => {
+                  setMode("signin");
+                  setIsContainerActive(false);
+                }}
               >
                 Sign In
               </button>
             </div>
             <div className="overlay-panel overlay-right">
-              <h1>Hi there, Friend!</h1>
-              <p>Enter your personal details and start journey your with us</p>
+              <h1>Don't have an account?</h1>
+              <p>Sign up and start your journey with us!</p>
               <button
                 className="signup-button ghost"
                 id="signUp"
-                onClick={onToggleClick}
+                onClick={() => {
+                  setMode("signup");
+                  setIsContainerActive(true);
+                }}
               >
                 Sign Up
               </button>

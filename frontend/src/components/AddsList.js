@@ -50,10 +50,15 @@ const AddsList = () => {
 
   const addItems = useSelector((store) => store.add.items);
   const createdDate = useSelector((store) => store.add.createdAt);
+  const [isModalActive, setModalActive] = useState(false);
 
   // const accessToken = useSelector((store) => store.user.accessToken);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const toggleModal = () => {
+    setModalActive(!isModalActive);
+  };
 
   // useEffect(() => {
   //   if (!accessToken) {
@@ -61,11 +66,11 @@ const AddsList = () => {
   //   }
   // }, [accessToken, navigate]);
 
-  const [isModalActive, setModalActive] = useState(false);
+  // const [isAddActive, setAddActive] = useState(false);
 
-  const toggleModal = () => {
-    setModalActive(!isModalActive);
-  };
+  // const toggleAdd = () => {
+  //   setAddActive(!isAddActive);
+  // };
 
   const onSortByTimeChange = (event) => {
     setSort(event.target.value);
@@ -135,60 +140,71 @@ const AddsList = () => {
   // ,[accessToken] add to line above
 
   return (
-    <AddListSection>
-      <SingleAddModal
-        isModalActive={isModalActive}
-        toggleModal={toggleModal}
-        singleAdd={singleAdd}
-      />
-      <div>
-        <AddForm filteredAddItems={filteredAddItems} />
-        <AddFilter
-          filter={filter}
-          sort={sort}
-          type={type}
-          onFilterChange={onFilterChange}
-          onTypeChange={onTypeChange}
-          onFilterReset={onFilterReset}
-          onSortByTimeChange={onSortByTimeChange}
-          // sortedAddItems={sortedAddItems}
-        />
-      </div>
-      <AddWrapper>
-        {filteredAddItems.length === 0 ? (
-          <h1>No adds</h1>
-        ) : (
-          filteredAddItems.map((item) => (
-            <AddCard
-              key={item._id}
-              onClick={() => {
-                navigate(item._id);
-              }}
-            >
-              <TagWrapper>
+    <>
+      <StyledButton
+        onClick={() => {
+          navigate("create");
+          toggleModal();
+        }}
+      >
+        Create add
+      </StyledButton>
+      <AddListSection onClick={() => setModalActive(false)}>
+        <SingleAddModal />
+        <div>
+          <AddForm
+            toggleModal={toggleModal}
+            onClose={() => setModalActive(false)}
+            isModalActive={isModalActive}
+            filteredAddItems={filteredAddItems}
+          />
+          <AddFilter
+            filter={filter}
+            sort={sort}
+            type={type}
+            onFilterChange={onFilterChange}
+            onTypeChange={onTypeChange}
+            onFilterReset={onFilterReset}
+            onSortByTimeChange={onSortByTimeChange}
+            // sortedAddItems={sortedAddItems}
+          />
+        </div>
+        <AddWrapper>
+          {filteredAddItems.length === 0 ? (
+            <h1>No adds</h1>
+          ) : (
+            filteredAddItems.map((item) => (
+              <AddCard
+                key={item._id}
+                onClick={() => {
+                  navigate(item._id);
+                }}
+              >
+                <TagWrapper>
+                  <p>
+                    {item.typeOf} {item.category}
+                  </p>
+                  {/* <p>{item._id}</p> */}
+
+                  <p>{moment(item.createdAt).fromNow()}</p>
+                </TagWrapper>
+                <h2>{item.title}</h2>
+
+                {/* <p>{item.description}</p> */}
                 <p>
-                  {item.typeOf} {item.category}
+                  Budget is {item.budget}
+                  {item.currency}
                 </p>
-                {/* <p>{item._id}</p> */}
 
-                <p>{moment(item.createdAt).fromNow()}</p>
-              </TagWrapper>
-              <h2>{item.title}</h2>
-
-              {/* <p>{item.description}</p> */}
-              <p>
-                Budget is {item.budget}
-                {item.currency}
-              </p>
-
-              {/* Utkommenderat för att vi inte har nån authentication */}
-              {/* <p>{item.user.username}</p>
+                {/* Utkommenderat för att vi inte har nån authentication */}
+                {/* <p>{item.user.username}</p>
           <p>{item.user.email}</p> */}
-            </AddCard>
-          ))
-        )}
-      </AddWrapper>
-    </AddListSection>
+              </AddCard>
+            ))
+          )}
+        </AddWrapper>
+      </AddListSection>
+    </>
   );
 };
 

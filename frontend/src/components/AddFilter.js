@@ -17,7 +17,6 @@ const AddFilter = ({
 }) => {
   return (
     <>
-      <p>This is where we filter our adds</p>
       <label>Filter</label>
 
       <select value={filter} onChange={onFilterChange}>

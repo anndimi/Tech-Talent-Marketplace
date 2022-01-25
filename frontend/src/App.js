@@ -1,7 +1,13 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
-import { combineReducers, createStore } from "@reduxjs/toolkit";
+import thunkMiddleware from "redux-thunk";
+import {
+  combineReducers,
+  createStore,
+  compose,
+  applyMiddleware,
+} from "@reduxjs/toolkit";
 
 import { UserProfile } from "./components/UserProfile";
 import user from "./reducers/user";
@@ -13,6 +19,7 @@ import NotFound from "./components/NotFound";
 import Navbar from "./components/Navbar";
 import ContactPage from "./components/ContactPage";
 import AboutPage from "./components/AboutPage";
+import Inspiration from "./components/Inspiration";
 import SingleAddModal from "./components/SingleAddModal";
 import { EditProfile } from "./components/EditProfile";
 
@@ -27,7 +34,17 @@ if (persistedStateJSON) {
   persistedState = JSON.parse(persistedStateJSON);
 }
 
-const store = createStore(reducer, persistedState);
+const composedEnhancers =
+  (process.env.NODE_ENV !== "production" &&
+    typeof window !== "undefined" &&
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
+  compose;
+
+const store = createStore(
+  reducer,
+  persistedState,
+  composedEnhancers(applyMiddleware(thunkMiddleware))
+);
 
 // Ska in i store  persistedState
 store.subscribe(() => {
@@ -41,17 +58,17 @@ const App = () => {
         <Navbar />
         <Routes>
           <Route path="/signup" element={<SignUp />} />
-          {/* <Route path="/adds" element={<AddsList />} /> */}
           <Route path="/adds" element={<AddsList />}>
             <Route path=":id" element={<SingleAddModal />} />
+            <Route path="create" element={<AddForm />} />
           </Route>
-          <Route path="/addsform" element={<AddForm />} />
           <Route path="/userprofile/:id" element={<UserProfile />}>
             <Route path="edit" element={<EditProfile />} />
           </Route>
 
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/inspiration" element={<Inspiration />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

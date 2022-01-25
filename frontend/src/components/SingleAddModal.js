@@ -94,6 +94,10 @@ const SingleAddModal = () => {
         .then((data) => setAdd(data.response));
   }, [id]);
 
+  if (id) {
+    document.body.style.overflow = "hidden";
+  }
+
   return (
     <Section>
       <ModalWrapper>

@@ -78,6 +78,7 @@ const StyledLink = styled(Link)`
 
 const Navbar = () => {
   const [isActive, setActive] = useState(false);
+  const id = useSelector((store) => store.user.userId);
   const accessToken = useSelector((store) => store.user.accessToken);
 
   const toggleNavbar = () => {
@@ -102,9 +103,9 @@ const Navbar = () => {
         >
           {accessToken ? (
             <>
-              <StyledLink to="/adds">Create Add</StyledLink>
+              <StyledLink to="/adds/create">Create Add</StyledLink>
               <StyledLink to="/adds">Adds</StyledLink>
-              <StyledLink to="/userprofile/:id">My Profile</StyledLink>
+              <StyledLink to={`/userprofile/${id}`}>My Profile</StyledLink>
               <StyledLink to="/inspiration">Inspiration</StyledLink>
               <StyledLink to="/about">About</StyledLink>
               <StyledLink to="/contact">Contact</StyledLink>
@@ -113,9 +114,9 @@ const Navbar = () => {
           ) : (
             <>
               <StyledLink to="/signup">Sign up/ Sign in</StyledLink>
-              <StyledLink to="/adds">Create Add</StyledLink>
+              <StyledLink to="/adds/create">Create Add</StyledLink>
               <StyledLink to="/adds">Adds</StyledLink>
-              <StyledLink to="/userprofile/:id">My Profile</StyledLink>
+              <StyledLink to={`/userprofile/${id}`}>My Profile</StyledLink>
               <StyledLink to="/inspiration">Inspiration</StyledLink>
               <StyledLink to="/about">About</StyledLink>
               <StyledLink to="/contact">Contact</StyledLink>
