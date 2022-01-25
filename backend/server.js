@@ -96,7 +96,7 @@ app.post("/signup", async (req, res) => {
     email,
     location,
     name,
-    memberSince,
+    createdAt,
     bio,
     linkedIn,
     github,
@@ -115,7 +115,7 @@ app.post("/signup", async (req, res) => {
       email,
       location,
       name,
-      memberSince,
+      createdAt,
       bio,
       linkedIn,
       github,
@@ -130,7 +130,7 @@ app.post("/signup", async (req, res) => {
         email: newUser.email,
         location: newUser.location,
         name: newUser.name,
-        memberSince: newUser.memberSince,
+        createdAt: newUser.createdAt,
         bio: newUser.bio,
         linkedIn: newUser.linkedIn,
         github: newUser.github,
@@ -390,10 +390,10 @@ app.get("/userprofile/:id", async (req, res) => {
 });
 
 //Updates the user info that are edited. Ignores the other key & values with the $set operator
-app.patch("/userprofile/:id/edit", async (req, res) => {
+app.patch("/userprofile/:id/edit", parser.single("image"), async (req, res) => {
   const updatedUserInfo = req.body;
   const { id } = req.params;
-  console.log(req.body);
+  console.log(req.b);
   try {
     const updatedUser = await User.findByIdAndUpdate(id, updatedUserInfo, {
       new: true,

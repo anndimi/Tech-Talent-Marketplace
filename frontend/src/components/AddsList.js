@@ -187,6 +187,7 @@ const AddsList = () => {
                   {/* <p>{item._id}</p> */}
 
                   <p>{moment(item.createdAt).fromNow()}</p>
+                  <p>Posted by: {item.username}</p>
                 </TagWrapper>
                 <h2>{item.title}</h2>
 

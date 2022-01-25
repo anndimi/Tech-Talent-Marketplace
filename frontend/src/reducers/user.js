@@ -10,7 +10,7 @@ const user = createSlice({
     error: null,
     location: null,
     name: null,
-    memberSince: null,
+    createdAt: null,
     bio: null,
     linkedIn: null,
     github: null,
@@ -38,8 +38,8 @@ const user = createSlice({
     setName: (store, action) => {
       store.name = action.payload;
     },
-    setMemberSince: (store, action) => {
-      store.memberSince = action.payload;
+    setCreatedAt: (store, action) => {
+      store.createdAt = action.payload;
     },
     setBio: (store, action) => {
       store.bio = action.payload;

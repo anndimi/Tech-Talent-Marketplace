@@ -41,7 +41,7 @@ export const UserSchema = new mongoose.Schema({
     trim: true,
     minlength: 2,
   },
-  memberSince: {
+  createdAt: {
     // type: Date,
     // default: () => new Date(),
     type: Number,

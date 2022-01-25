@@ -19,7 +19,7 @@ export const UserProfile = () => {
   const email = useSelector((store) => store.user.email);
   const location = useSelector((store) => store.user.location);
   const imageUrl = useSelector((store) => store.user.imageUrl);
-  const memberSince = useSelector((store) => store.user.memberSince);
+  const memberSince = useSelector((store) => store.user.createdAt);
   const userBio = useSelector((store) => store.user.bio);
   const linkedIn = useSelector((store) => store.user.linkedin);
   const gitHub = useSelector((store) => store.user.github);

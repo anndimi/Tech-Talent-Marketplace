@@ -47,7 +47,6 @@ const EditModal = styled.div`
 
 export const EditProfile = ({ isEditModalActive, toggleEditModal }) => {
   const { id } = useParams();
-  console.log(id, "this is the params");
   const dispatch = useDispatch();
   const fileInput = useRef();
   const navigate = useNavigate;
@@ -67,17 +66,19 @@ export const EditProfile = ({ isEditModalActive, toggleEditModal }) => {
   const bio = useSelector((store) => store.user.bio);
   const github = useSelector((store) => store.user.github);
   const linkedIn = useSelector((store) => store.user.linkedIn);
+
   console.log("userID:", userId);
 
   const onFormSubmit = (event) => {
+    console.log("sumbitted");
     event.preventDefault();
     const formData = new FormData();
-    formData.append("name", userInfo.name);
-    formData.append("location", userInfo.location);
-    formData.append("bio", userInfo.bio);
-    formData.append("github", userInfo.github);
-    formData.append("linkedIn", userInfo.linkedIn);
-    formData.append("imageUrl", userInfo.fileInput.current.files[0]);
+    formData.set("name", userInfo.name);
+    formData.set("location", userInfo.location);
+    formData.set("bio", userInfo.bio);
+    formData.set("github", userInfo.github);
+    formData.set("linkedIn", userInfo.linkedIn);
+    formData.append("image", userInfo?.imageUrl?.fileInput?.current?.files[0]);
     const options = {
       method: "PATCH",
       // headers: {
@@ -89,6 +90,7 @@ export const EditProfile = ({ isEditModalActive, toggleEditModal }) => {
     fetch(API_URL(`userprofile/${id}/edit`), options)
       .then((res) => res.json())
       .then((data) => {
+        console.log(data, "thisis data");
         setUserInfo(data.response);
         if (data.success) {
           console.log(data.response, "success");
@@ -149,9 +151,10 @@ export const EditProfile = ({ isEditModalActive, toggleEditModal }) => {
               type="file"
               value={userInfo.imageUrl ? userInfo.imageUrl : ""}
               placeholder="image"
-              onChange={(e) =>
-                setUserInfo({ ...userInfo, imageUrl: e.target.value })
-              }
+              onChange={(e) => {
+                console.log("changes", e.target.value);
+                setUserInfo({ ...userInfo, imageUrl: e.target.value });
+              }}
             />
 
             <label htmlFor="name">Name</label>

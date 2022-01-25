@@ -140,6 +140,7 @@ const AddForm = ({ isModalActive, onClose, toggleModal }) => {
           dispatch(add.actions.setDescription(data.response.description));
           dispatch(add.actions.setBudget(data.response.budget));
           dispatch(add.actions.setCurrency(data.response.currency));
+          dispatch(add.actions.setUser(data.response.user));
           dispatch(add.actions.setCategory(data.response.category));
           dispatch(add.actions.setError(null));
         });
