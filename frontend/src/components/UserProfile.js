@@ -10,6 +10,12 @@ import linkedinIcon from "../assets/linkedin-icon.png";
 import githubIcon from "../assets/github-icon.png";
 import { EditProfile } from "./EditProfile";
 
+const ProfileImage = styled.img`
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+`;
+
 export const UserProfile = () => {
   // const [userProfile, setUserProfile] = useState({});
   const accessToken = useSelector((store) => store.user.accessToken);
@@ -67,8 +73,8 @@ export const UserProfile = () => {
         isEditModalActive={isEditModalActive}
         toggleEditModal={toggleEditModal}
       />
-      <img src={imageUrl} alt="User Profile" />
-      <p>Member since: {moment(memberSince).fromNow()}</p>
+      <ProfileImage src={imageUrl} alt="User Profile" />
+      <p>Member since: {memberSince}</p>
       <p>Name: {name}</p>
       <p>Location: {location}</p>
       <p>Bio: {userBio}</p>

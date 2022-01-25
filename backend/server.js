@@ -399,7 +399,11 @@ app.patch("/userprofile/:id/edit", parser.single("image"), async (req, res) => {
       new: true,
     });
     if (updatedUser) {
-      res.status(200).json({ response: updatedUser, success: true });
+      res.status(200).json({
+        response: updatedUser,
+        success: true,
+      });
+      // { imageUrl: req.file.path, imageId: req.file.filename }
     } else {
       res.status(404).json({ response: "Member not found", success: false });
     }
