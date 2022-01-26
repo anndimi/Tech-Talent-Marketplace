@@ -42,10 +42,8 @@ export const UserSchema = new mongoose.Schema({
     minlength: 2,
   },
   createdAt: {
-    // type: Date,
-    // default: () => new Date(),
-    type: Number,
-    default: () => Date.now(),
+    type: Date,
+    default: () => new Date(),
   },
   bio: {
     type: String,

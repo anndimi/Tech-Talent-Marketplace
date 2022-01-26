@@ -43,15 +43,6 @@ const storage = new CloudinaryStorage({
 
 const parser = multer({ storage });
 
-// const UserImage = mongoose.model("UserImage", {
-//   // name: String,
-
-//   user: {
-//     type: mongoose.Schema.Types.ObjectId,
-//     ref: "User",
-//   },
-// });
-
 const Add = mongoose.model("Add", AddSchema);
 const User = mongoose.model("User", UserSchema);
 
@@ -157,7 +148,8 @@ app.post("/signup", async (req, res) => {
 
 app.post("/signin", async (req, res) => {
   try {
-    const { username, password, email } = req.body;
+    const { username, password, email, location, bio, github, linkedIn, name } =
+      req.body;
     const user = await User.findOne({ username });
 
     if (user && bcrypt.compareSync(password, user.password)) {
@@ -167,6 +159,11 @@ app.post("/signin", async (req, res) => {
           username: user.username,
           email: user.email,
           accessToken: user.accessToken,
+          location: user.location,
+          bio: user.bio,
+          github: user.github,
+          linkedIn: user.linkedIn,
+          name: user.name,
         },
         success: true,
       });
@@ -183,25 +180,6 @@ app.post("/signin", async (req, res) => {
       error: error,
       success: false,
     });
-  }
-});
-
-//endpoint prepared to get data that can be displayed for a logged in user
-//app.get("/userprofile", authenticateUser);
-app.get("/userprofile", authenticateUser, (req, res) => {
-  res.json({ message: "This is your profile!" });
-});
-
-app.get("/userprofile/:id", authenticateUser, async (req, res) => {
-  const { id } = req.params;
-  try {
-    const singleUser = await User.findById(id).populate("UserImage", {
-      imageUrl: 1,
-    });
-
-    res.status(201).json({ response: singleUser, success: true });
-  } catch (error) {
-    res.status(400).json({ error: "Invalid user ID", success: false });
   }
 });
 
@@ -223,16 +201,16 @@ app.get("/userprofile/:id", authenticateUser, async (req, res) => {
 //   }
 // });
 
-app.get("/userprofile/test/image", authenticateUser, async (req, res) => {
-  try {
-    const allImages = await UserImage.find().populate("user", {
-      username: 1,
-    });
-    res.status(201).json({ response: allImages, success: true });
-  } catch (error) {
-    res.status(400).json({ error: "No img found!", success: false });
-  }
-});
+// app.get("/userprofile/test/image", authenticateUser, async (req, res) => {
+//   try {
+//     const allImages = await UserImage.find().populate("user", {
+//       username: 1,
+//     });
+//     res.status(201).json({ response: allImages, success: true });
+//   } catch (error) {
+//     res.status(400).json({ error: "No img found!", success: false });
+//   }
+// });
 
 //Post a new add
 // app.post("/adds", authenticateUser);
@@ -313,54 +291,20 @@ app.delete("/adds/:id/delete", async (req, res) => {
   }
 });
 
-//filter adds based on category
-app.get("/adds/categories/:category", async (req, res) => {
-  const { category } = req.params;
-  try {
-    const filteredCategory = await Add.find({ category });
-    res.status(200).json({ response: filteredCategory, success: true });
-  } catch (error) {
-    res.status(400).json({ error: "Invalid category", success: false });
-  }
-});
+// app.delete("/adds", async (req, res) => {
+//   const { createdAt } = req.body;
 
-// sort based on createedAt
-app.get("/adds/created/asc", async (req, res) => {
-  const sortedByTime = await Add.find().sort({ createdAt: "asc" });
-  try {
-    res.status(200).json({ response: sortedByTime, success: true });
-  } catch (error) {
-    res
-      .status(400)
-      .json({ error: "Cannot sort by that order", success: false });
-  }
-});
-
-//sort by join/looking
-app.get("/adds/type/:typeOf", async (req, res) => {
-  const { typeOf } = req.params;
-  try {
-    const filteredType = await Add.find({ typeOf });
-    res.status(200).json({ response: filteredType, success: true });
-  } catch (error) {
-    res.status(400).json({ error: "Invalid type", success: false });
-  }
-});
-
-app.delete("/adds", async (req, res) => {
-  const { createdAt } = req.body;
-
-  try {
-    const allDeletedAdds = await Add.findOneAndDelete(createdAt);
-    // const time = createdAt + 2592000000
-    const time = createdAt + 60000;
-    if (time < Date.now()) {
-      allDeletedAdds;
-    }
-  } catch (error) {
-    res.status(400).json({ error: "Add id not found!", success: false });
-  }
-});
+//   try {
+//     const allDeletedAdds = await Add.findOneAndDelete(createdAt);
+//     const time = createdAt + 2592000000
+//     const time = createdAt + 60000;
+//     if (time < Date.now()) {
+//       allDeletedAdds;
+//     }
+//   } catch (error) {
+//     res.status(400).json({ error: "Add id not found!", success: false });
+//   }
+// });
 
 //Search all adds
 app.get("/adds", async (req, res) => {
@@ -377,7 +321,7 @@ app.get("/adds", async (req, res) => {
   }
 });
 
-//Search single user
+//Search single user  authenticateUser, SKA IN I , async,
 app.get("/userprofile/:id", async (req, res) => {
   const { id } = req.params;
 
@@ -390,20 +334,23 @@ app.get("/userprofile/:id", async (req, res) => {
 });
 
 //Updates the user info that are edited. Ignores the other key & values with the $set operator
-app.patch("/userprofile/:id/edit", parser.single("image"), async (req, res) => {
+app.patch("/userprofile/:id/edit", async (req, res) => {
   const updatedUserInfo = req.body;
   const { id } = req.params;
   console.log(req.b);
   try {
-    const updatedUser = await User.findByIdAndUpdate(id, updatedUserInfo, {
-      new: true,
-    });
+    const updatedUser = await User.findByIdAndUpdate(
+      id,
+      { $set: updatedUserInfo },
+      {
+        new: true,
+      }
+    );
     if (updatedUser) {
       res.status(200).json({
         response: updatedUser,
         success: true,
       });
-      // { imageUrl: req.file.path, imageId: req.file.filename }
     } else {
       res.status(404).json({ response: "Member not found", success: false });
     }

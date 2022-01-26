@@ -51,14 +51,6 @@ export const EditProfile = ({ isEditModalActive, toggleEditModal }) => {
   const fileInput = useRef();
   const navigate = useNavigate;
   // const [users, setUsers] = useState("");
-  const [userInfo, setUserInfo] = useState({
-    name: "",
-    location: "",
-    bio: "",
-    linkedIn: "",
-    github: "",
-    imageUrl: "",
-  });
 
   const userId = useSelector((store) => store.user.userId);
   const name = useSelector((store) => store.user.name);
@@ -67,30 +59,31 @@ export const EditProfile = ({ isEditModalActive, toggleEditModal }) => {
   const github = useSelector((store) => store.user.github);
   const linkedIn = useSelector((store) => store.user.linkedIn);
 
-  console.log("userID:", userId);
+  const [userInfo, setUserInfo] = useState({
+    name: name,
+    location: location,
+    bio: bio,
+    linkedIn: linkedIn,
+    github: github,
+    // imageUrl: "",
+  });
+
+  // console.log("userID:", userId);
 
   const onFormSubmit = (event) => {
-    console.log("sumbitted");
     event.preventDefault();
-    const formData = new FormData();
-    formData.set("name", userInfo.name);
-    formData.set("location", userInfo.location);
-    formData.set("bio", userInfo.bio);
-    formData.set("github", userInfo.github);
-    formData.set("linkedIn", userInfo.linkedIn);
-    formData.append("image", userInfo?.imageUrl?.fileInput?.current?.files[0]);
+
     const options = {
       method: "PATCH",
-      // headers: {
-      //   "Content-Type": "Multipart/form-data",
-      // },
-      body: formData,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ...userInfo }),
     };
-    console.log(formData.get("location"));
+
     fetch(API_URL(`userprofile/${id}/edit`), options)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data, "thisis data");
         setUserInfo(data.response);
         if (data.success) {
           console.log(data.response, "success");
@@ -98,7 +91,6 @@ export const EditProfile = ({ isEditModalActive, toggleEditModal }) => {
           dispatch(user.actions.setLocation(data.response.location));
           dispatch(user.actions.setBio(data.response.bio));
           dispatch(user.actions.setLinkedIn(data.response.linkedIn));
-          dispatch(user.actions.setImageUrl(data.response.imageUrl));
           dispatch(user.actions.setGithub(data.response.github));
           dispatch(user.actions.setError(null));
         } else {
@@ -106,7 +98,6 @@ export const EditProfile = ({ isEditModalActive, toggleEditModal }) => {
           dispatch(user.actions.setLocation(null));
           dispatch(user.actions.setBio(null));
           dispatch(user.actions.setLinkedIn(null));
-          dispatch(user.actions.setImageUrl(null));
           dispatch(user.actions.setGithub(null));
           dispatch(user.actions.setError(data.response));
         }
@@ -143,7 +134,7 @@ export const EditProfile = ({ isEditModalActive, toggleEditModal }) => {
 
           {/* <p>Username: {userInfo.name}</p> */}
           <form onSubmit={onFormSubmit}>
-            <label htmlFor="image">Profile image</label>
+            {/* <label htmlFor="image">Profile image</label>
             <input
               ref={fileInput}
               accept="image/png, image/jpeg"
@@ -155,14 +146,14 @@ export const EditProfile = ({ isEditModalActive, toggleEditModal }) => {
                 console.log("changes", e.target.value);
                 setUserInfo({ ...userInfo, imageUrl: e.target.value });
               }}
-            />
+            /> */}
 
             <label htmlFor="name">Name</label>
             <input
               id="name"
               type="text"
-              value={userInfo.name ? userInfo.name : ""}
-              placeholder={name ? name : "name"}
+              value={userInfo.name}
+              placeholder="name"
               onChange={(e) =>
                 setUserInfo({ ...userInfo, name: e.target.value })
               }
@@ -171,8 +162,8 @@ export const EditProfile = ({ isEditModalActive, toggleEditModal }) => {
             <input
               id="location"
               type="text"
-              value={userInfo.location ? userInfo.location : ""}
-              placeholder={location ? location : "location"}
+              value={userInfo.location}
+              placeholder="location"
               onChange={(e) =>
                 setUserInfo({ ...userInfo, location: e.target.value })
               }
@@ -181,8 +172,8 @@ export const EditProfile = ({ isEditModalActive, toggleEditModal }) => {
             <input
               id="bio"
               type="textarea"
-              value={userInfo.bio ? userInfo.bio : ""}
-              placeholder={bio ? bio : "bio"}
+              value={userInfo.bio}
+              placeholder="bio"
               onChange={(e) =>
                 setUserInfo({ ...userInfo, bio: e.target.value })
               }
@@ -191,8 +182,8 @@ export const EditProfile = ({ isEditModalActive, toggleEditModal }) => {
             <input
               id="linkedin"
               type="text"
-              placeholder={linkedIn ? linkedIn : "LinkedIn"}
-              value={userInfo.linkedIn ? userInfo.linkedIn : ""}
+              placeholder="LinkedIn"
+              value={userInfo.linkedIn}
               onChange={(e) =>
                 setUserInfo({ ...userInfo, linkedIn: e.target.value })
               }
@@ -201,8 +192,8 @@ export const EditProfile = ({ isEditModalActive, toggleEditModal }) => {
             <input
               id="github"
               type="text"
-              placeholder={github ? github : "github"}
-              value={userInfo.github ? userInfo.github : ""}
+              placeholder="GitHub"
+              value={userInfo.github}
               onChange={(e) =>
                 setUserInfo({ ...userInfo, github: e.target.value })
               }

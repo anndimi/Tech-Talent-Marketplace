@@ -1,9 +1,8 @@
 import React from "react";
 import user from "../reducers/user";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-// import { API_URL } from "../utils/constants";
 import moment from "moment";
 import styled from "styled-components";
 import linkedinIcon from "../assets/linkedin-icon.png";
@@ -17,26 +16,22 @@ const ProfileImage = styled.img`
 `;
 
 export const UserProfile = () => {
-  // const [userProfile, setUserProfile] = useState({});
   const accessToken = useSelector((store) => store.user.accessToken);
-  // const id = useSelector((store) => store.user.userId);
   const username = useSelector((store) => store.user.username);
   const name = useSelector((store) => store.user.name);
   const email = useSelector((store) => store.user.email);
   const location = useSelector((store) => store.user.location);
   const imageUrl = useSelector((store) => store.user.imageUrl);
-  const memberSince = useSelector((store) => store.user.createdAt);
+  const createdAt = useSelector((store) => store.user.createdAt);
   const userBio = useSelector((store) => store.user.bio);
   const linkedIn = useSelector((store) => store.user.linkedin);
   const gitHub = useSelector((store) => store.user.github);
+  const users = useSelector((store) => store.user.users);
   const clearAccessToken = useSelector((store) => store.user.clearAccessToken);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [isEditModalActive, setEditModalActive] = useState(false);
-
-  const { id } = useParams();
-  console.log("id:", id);
 
   const toggleEditModal = () => {
     setEditModalActive(!isEditModalActive);
@@ -47,20 +42,6 @@ export const UserProfile = () => {
       navigate("/signup");
     }
   }, [accessToken, navigate]);
-
-  // useEffect(() => {
-  //   if (accessToken) {
-  //     const options = {
-  //       method: "GET",
-  //       headers: {
-  //         Authorization: accessToken,
-  //       },
-  //     };
-  //     fetch(API_URL(`userprofile/${id}`), options)
-  //       .then((res) => res.json())
-  //       .then((data) => setUserProfile(data.response));
-  //   }
-  // }, []);
 
   const onButtonClick = () => {
     dispatch(user.actions.setAccessToken(null));
@@ -73,8 +54,8 @@ export const UserProfile = () => {
         isEditModalActive={isEditModalActive}
         toggleEditModal={toggleEditModal}
       />
-      <ProfileImage src={imageUrl} alt="User Profile" />
-      <p>Member since: {memberSince}</p>
+      {/* <ProfileImage src={imageUrl} alt="User Profile" /> */}
+      <p>Member since {moment(createdAt).format("MMMM Do YYYY")}</p>
       <p>Name: {name}</p>
       <p>Location: {location}</p>
       <p>Bio: {userBio}</p>

@@ -19,10 +19,10 @@ const SignUp = () => {
   const id = useSelector((store) => store.user.userId);
   // const { id } = useParams();
   // const fileInput = useRef();
-  console.log(id, "first");
+  // console.log(id, "first");
 
   const onFormSubmit = (event) => {
-    console.log("hej");
+    // console.log("hej");
     event.preventDefault();
 
     // const formData = new FormData(event.target);
@@ -48,21 +48,31 @@ const SignUp = () => {
           batch(() => {
             dispatch(user.actions.setUserId(data.response.id));
             dispatch(user.actions.setUsername(data.response.username));
+            dispatch(user.actions.setName(data.response.name));
             dispatch(user.actions.setEmail(data.response.email));
+            dispatch(user.actions.setLocation(data.response.location));
+            dispatch(user.actions.setBio(data.response.bio));
+            dispatch(user.actions.setLinkedIn(data.response.linkedIn));
+            dispatch(user.actions.setGithub(data.response.github));
             dispatch(user.actions.setAccessToken(data.response.accessToken));
             dispatch(user.actions.setCreatedAt(data.response.createdAt));
             // dispatch(user.actions.setImageUrl(data.response.imageUrl));
             dispatch(user.actions.setError(null));
             navigate(`/userprofile/${data.response.id}`);
-            console.log(data.response.id, "data res");
+            // console.log(data.response.id, "data res");
           });
         } else {
           batch(() => {
             dispatch(user.actions.setUserId(null));
             dispatch(user.actions.setUsername(null));
+            dispatch(user.actions.setName(null));
             dispatch(user.actions.setEmail(null));
+            dispatch(user.actions.setLocation(null));
             dispatch(user.actions.setAccessToken(null));
             dispatch(user.actions.setCreatedAt(null));
+            dispatch(user.actions.setLinkedIn(null));
+            dispatch(user.actions.setGithub(null));
+            dispatch(user.actions.setBio(null));
             // dispatch(user.actions.setImageUrl(null));
             dispatch(user.actions.setError(data.response));
           });
