@@ -101,6 +101,7 @@ const RadioButtonsContainer = styled.div`
 `;
 
 const AddForm = ({ isModalActive, onClose, toggleModal }) => {
+  const id = useSelector((store) => store.user.userId);
   const [typeOf, setTypeOf] = useState("Join");
   const [info, setInfo] = useState({
     // typeOf: "",
@@ -128,11 +129,10 @@ const AddForm = ({ isModalActive, onClose, toggleModal }) => {
       }),
     };
     console.log(info, "info");
-    fetch(API_URL("adds"), options)
+    fetch(API_URL(`adds/${id}`), options)
       .then((res) => res.json())
       .then((data) => {
         console.log(data, "this is data");
-
         batch(() => {
           dispatch(add.actions.setAddId(data.response._id));
           dispatch(add.actions.setTypeOf(data.response.typeOf));
@@ -149,6 +149,7 @@ const AddForm = ({ isModalActive, onClose, toggleModal }) => {
         console.log(error.response);
         dispatch(add.actions.setError(error.response));
       });
+
     setInfo({
       title: "",
       description: "",
@@ -261,6 +262,7 @@ const AddForm = ({ isModalActive, onClose, toggleModal }) => {
                 <LabelInput>
                   <label htmlFor="password">Budget </label>
                   <input
+                    required
                     id="budget"
                     type="number"
                     min="0"

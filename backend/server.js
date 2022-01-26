@@ -10,6 +10,7 @@ import { CloudinaryStorage } from "multer-storage-cloudinary";
 import listEndpoints from "express-list-endpoints";
 import { UserSchema } from "./Schemas/user";
 import { AddSchema } from "./Schemas/add";
+import { ImageSchema } from "./Schemas/image";
 
 const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/auth";
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -43,6 +44,7 @@ const storage = new CloudinaryStorage({
 
 const parser = multer({ storage });
 
+const Image = mongoose.model("Image", ImageSchema);
 const Add = mongoose.model("Add", AddSchema);
 const User = mongoose.model("User", UserSchema);
 
@@ -188,33 +190,65 @@ app.post("/signin", async (req, res) => {
 //   res.json({ imageUrl: req.file.path, imageId: req.file.filename });
 // });
 
-// app.post("/userprofile/image", authenticateUser, async (req, res) => {
-//   try {
-//     const profileImage = await new UserImage({
-//       name: req.body.filename,
+app.post("/userprofile/:id/image", parser.single("image"), async (req, res) => {
+  const { id } = req.params;
+  try {
+    const userImage = await new Image({
+      imageUrl: req.file.path,
+    }).save();
+    res.status(200).json({ response: userImage, success: true });
+  } catch (error) {
+    res.status(400).json({ error: error, succcess: false });
+  }
+});
 
-//       user: req.user,
-//     }).save();
-//     res.json(profileImage);
-//   } catch (err) {
-//     res.status(400).json({ errors: err.errors });
-//   }
-// });
+app.patch("/userprofile/:id/image/:imageId", async (req, res) => {
+  const { id, imageId } = req.params;
 
-// app.get("/userprofile/test/image", authenticateUser, async (req, res) => {
-//   try {
-//     const allImages = await UserImage.find().populate("user", {
-//       username: 1,
-//     });
-//     res.status(201).json({ response: allImages, success: true });
-//   } catch (error) {
-//     res.status(400).json({ error: "No img found!", success: false });
-//   }
-// });
+  try {
+    const queriedUser = await User.findById(id);
+    if (queriedUser) {
+      const queriedImage = await Image.findById(imageId);
+      if (queriedImage) {
+        const updatedUser = await User.findByIdAndUpdate(
+          id,
+          {
+            $set: { image: queriedImage },
+          },
+          { new: true }
+        );
+        res.status(200).json({ response: updatedUser, success: true });
+      } else {
+        res.status(404).json({ response: "Image not found", success: false });
+      }
+    } else {
+      res.status(404).json({ response: "User not found", success: false });
+    }
+  } catch (error) {
+    res.status(400).json({ response: error, success: false });
+  }
+});
+
+app.get("/userprofile/:id/image", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const queriedUser = await User.findById(id).populate("image");
+    if (queriedUser) {
+      res.status(200).json({ response: queriedUser.image, success: true });
+    } else {
+      res.status(404).json({ response: "User not found", success: false });
+    }
+  } catch (error) {
+    res.status(400).json({ response: error, success: false });
+  }
+});
 
 //Post a new add
 // app.post("/adds", authenticateUser);
-app.post("/adds", async (req, res) => {
+app.post("/adds/:id", async (req, res) => {
+  const { id } = req.params;
+
   const {
     title,
     description,
@@ -237,7 +271,10 @@ app.post("/adds", async (req, res) => {
       typeOf,
       user: req.user,
     }).save();
-    res.status(201).json({ response: newAdd, success: true });
+    const updatedUser = await User.findByIdAndUpdate(id, {
+      $push: { add: newAdd },
+    });
+    res.status(201).json({ response: updatedUser, success: true });
   } catch (error) {
     res.status(400).json({ response: error, success: false });
   }
@@ -326,10 +363,20 @@ app.get("/userprofile/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
-    const singleUser = await User.findById(id);
-    res.status(201).json({ response: singleUser, success: true });
+    const queriedUser = await User.findById(id)
+      .populate("add", {
+        _id: 0,
+      })
+      .populate("image", {
+        _id: 0,
+      });
+    if (queriedUser) {
+      res.status(201).json({ response: queriedUser, success: true });
+    } else {
+      res.status(404).json({ response: "User not found", success: false });
+    }
   } catch (error) {
-    res.status(400).json({ error: "Invalid user ID", success: false });
+    res.status(400).json({ error: error, success: false });
   }
 });
 
@@ -337,7 +384,7 @@ app.get("/userprofile/:id", async (req, res) => {
 app.patch("/userprofile/:id/edit", async (req, res) => {
   const updatedUserInfo = req.body;
   const { id } = req.params;
-  console.log(req.b);
+
   try {
     const updatedUser = await User.findByIdAndUpdate(
       id,

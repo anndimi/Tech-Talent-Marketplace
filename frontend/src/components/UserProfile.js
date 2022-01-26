@@ -9,11 +9,11 @@ import linkedinIcon from "../assets/linkedin-icon.png";
 import githubIcon from "../assets/github-icon.png";
 import { EditProfile } from "./EditProfile";
 
-// const ProfileImage = styled.img`
-//   width: 50px;
-//   height: 50px;
-//   border-radius: 50%;
-// `;
+const ProfileImage = styled.img`
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+`;
 
 export const UserProfile = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
@@ -21,7 +21,7 @@ export const UserProfile = () => {
   const name = useSelector((store) => store.user.name);
   const email = useSelector((store) => store.user.email);
   const location = useSelector((store) => store.user.location);
-  const imageUrl = useSelector((store) => store.user.imageUrl);
+  const image = useSelector((store) => store.user.image);
   const createdAt = useSelector((store) => store.user.createdAt);
   const userBio = useSelector((store) => store.user.bio);
   const linkedIn = useSelector((store) => store.user.linkedin);
@@ -54,7 +54,7 @@ export const UserProfile = () => {
         isEditModalActive={isEditModalActive}
         toggleEditModal={toggleEditModal}
       />
-      {/* <ProfileImage src={imageUrl} alt="User Profile" /> */}
+      <ProfileImage src={image} alt="User Profile" />
       <p>Member since {moment(createdAt).format("MMMM Do YYYY")}</p>
       <p>Name: {name}</p>
       <p>Location: {location}</p>

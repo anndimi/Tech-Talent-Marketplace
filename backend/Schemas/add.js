@@ -50,6 +50,3 @@ export const AddSchema = new mongoose.Schema({
     ref: "User",
   },
 });
-
-// const Add = mongoose.model("Add", AddSchema);
-// module.exports = Add;

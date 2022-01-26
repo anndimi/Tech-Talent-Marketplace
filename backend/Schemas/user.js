@@ -57,8 +57,14 @@ export const UserSchema = new mongoose.Schema({
   github: {
     type: String,
   },
-  imageUrl: {
-    type: String,
-    default: "",
+  image: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Image",
   },
+  add: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Add",
+    },
+  ],
 });
