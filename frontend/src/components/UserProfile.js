@@ -9,11 +9,11 @@ import linkedinIcon from "../assets/linkedin-icon.png";
 import githubIcon from "../assets/github-icon.png";
 import { EditProfile } from "./EditProfile";
 
-const ProfileImage = styled.img`
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-`;
+// const ProfileImage = styled.img`
+//   width: 50px;
+//   height: 50px;
+//   border-radius: 50%;
+// `;
 
 export const UserProfile = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
