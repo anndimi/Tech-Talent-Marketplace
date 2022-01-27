@@ -197,9 +197,9 @@ const AddsList = () => {
                   {item.currency}
                 </p>
 
-                {/* Utkommenderat för att vi inte har nån authentication */}
+                {/* Utkommenderat för att vi inte har nån authentication  */}
                 {/* <p>{item.user.username}</p>
-          <p>{item.user.email}</p> */}
+                <p>{item.user.email}</p> */}
               </AddCard>
             ))
           )}

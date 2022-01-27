@@ -12,6 +12,7 @@ import {
 import { UserProfile } from "./components/UserProfile";
 import user from "./reducers/user";
 import add from "./reducers/add";
+import { Startpage } from "./pages/Startpage";
 import SignUp from "./components/SignUp";
 import AddsList from "./components/AddsList";
 import AddForm from "./components/AddForm";
@@ -22,6 +23,7 @@ import AboutPage from "./components/AboutPage";
 import Inspiration from "./components/Inspiration";
 import SingleAddModal from "./components/SingleAddModal";
 import { EditProfile } from "./components/EditProfile";
+import { UploadImg } from "./components/UploadImg";
 
 const reducer = combineReducers({
   user: user.reducer,
@@ -57,6 +59,7 @@ const App = () => {
       <BrowserRouter>
         <Navbar />
         <Routes>
+          <Route path="/" element={<Startpage />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/adds" element={<AddsList />}>
             <Route path=":id" element={<SingleAddModal />} />
@@ -64,6 +67,7 @@ const App = () => {
           </Route>
           <Route path="/userprofile/:id" element={<UserProfile />}>
             <Route path="edit" element={<EditProfile />} />
+            <Route path="edit/image" element={<UploadImg />} />
           </Route>
 
           <Route path="/contact" element={<ContactPage />} />

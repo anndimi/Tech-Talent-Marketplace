@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Open from "../assets/menu.png";
 import Close from "../assets/close.png";
@@ -80,7 +80,7 @@ const Navbar = () => {
   const [isActive, setActive] = useState(false);
   const id = useSelector((store) => store.user.userId);
   const accessToken = useSelector((store) => store.user.accessToken);
-
+  const navigate = useNavigate();
   const toggleNavbar = () => {
     setActive(!isActive);
   };
@@ -88,7 +88,7 @@ const Navbar = () => {
   return (
     <>
       <HeaderContainer>
-        <Logo>
+        <Logo onClick={() => navigate("/")}>
           <LogoImage src={logoImg} />
         </Logo>
         <HamburgerNav

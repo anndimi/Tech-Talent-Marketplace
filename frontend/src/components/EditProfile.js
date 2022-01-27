@@ -45,7 +45,11 @@ const EditModal = styled.div`
   } */
 `;
 
-export const EditProfile = ({ isEditModalActive, toggleEditModal }) => {
+export const EditProfile = ({
+  isEditModalActive,
+  toggleEditModal,
+  onClose,
+}) => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const fileInput = useRef();
@@ -102,13 +106,7 @@ export const EditProfile = ({ isEditModalActive, toggleEditModal }) => {
           dispatch(user.actions.setError(data.response));
         }
       });
-    setUserInfo({
-      name: "",
-      location: "",
-      bio: "",
-      linkedIn: "",
-      github: "",
-    });
+    onClose();
   };
 
   console.log("hello from", userInfo.location);
@@ -126,6 +124,7 @@ export const EditProfile = ({ isEditModalActive, toggleEditModal }) => {
           className={
             isEditModalActive ? "edit-modal-active" : "edit-modal-inactive"
           }
+          onClick={(e) => e.stopPropagation()}
         >
           <CloseButton onClick={toggleEditModal}>
             <img src={closeIcon} alt="close window" />
