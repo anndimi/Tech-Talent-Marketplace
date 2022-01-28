@@ -7,7 +7,8 @@ const Add = mongoose.model("Add", AddSchema);
 
 export const PostAdd = async (req, res) => {
   const { id } = req.params;
-
+  console.log(req.user);
+  console.log(req.user._id);
   const {
     title,
     description,

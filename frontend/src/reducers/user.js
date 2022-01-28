@@ -10,7 +10,6 @@ const user = createSlice({
     error: null,
     location: null,
     name: null,
-    createdAt: null,
     bio: null,
     linkedIn: null,
     github: null,
@@ -41,9 +40,9 @@ const user = createSlice({
       console.log("name:", action.payload);
       store.name = action.payload;
     },
-    setCreatedAt: (store, action) => {
-      store.createdAt = action.payload;
-    },
+    // setCreatedAt: (store, action) => {
+    //   store.createdAt = action.payload;
+    // },
     setBio: (store, action) => {
       store.bio = action.payload;
     },

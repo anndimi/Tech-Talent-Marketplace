@@ -81,6 +81,7 @@ const SingleAddModal = () => {
   //   const [isModalActive, setModalActive] = useState(false);
   const [add, setAdd] = useState({});
   const navigate = useNavigate();
+  const accessToken = useSelector((store) => store.user.accessToken);
 
   //   const toggleModal = () => {
   //     setModalActive(!isModalActive);
@@ -112,6 +113,11 @@ const SingleAddModal = () => {
           <p>{moment(add.createdAt).fromNow()}</p>
 
           <h2>{add.title}</h2>
+          <p>{add.user?.username}</p>
+          <p>
+            Contact:{" "}
+            {accessToken ? add.user?.email : `Sign in to get contact details`}
+          </p>
 
           <p>{add.description}</p>
           <p>

@@ -27,7 +27,8 @@ export const GetSingleAdd = async (req, res) => {
 
   try {
     const singleAdd = await Add.findById(id).populate("user", {
-      // _id: 1,
+      username: 1,
+      email: 1,
     });
     if (singleAdd) {
       res.status(200).json({ response: singleAdd, success: true });

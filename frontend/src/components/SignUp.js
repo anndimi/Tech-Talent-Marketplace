@@ -55,7 +55,7 @@ const SignUp = () => {
             dispatch(user.actions.setLinkedIn(data.response.linkedIn));
             dispatch(user.actions.setGithub(data.response.github));
             dispatch(user.actions.setAccessToken(data.response.accessToken));
-            dispatch(user.actions.setCreatedAt(data.response.createdAt));
+            // dispatch(user.actions.setCreatedAt(data.response.createdAt));
             // dispatch(user.actions.setImageUrl(data.response.imageUrl));
             dispatch(user.actions.setError(null));
             navigate(`/userprofile/${data.response.id}`);
@@ -69,7 +69,7 @@ const SignUp = () => {
             dispatch(user.actions.setEmail(null));
             dispatch(user.actions.setLocation(null));
             dispatch(user.actions.setAccessToken(null));
-            dispatch(user.actions.setCreatedAt(null));
+            // dispatch(user.actions.setCreatedAt(null));
             dispatch(user.actions.setLinkedIn(null));
             dispatch(user.actions.setGithub(null));
             dispatch(user.actions.setBio(null));

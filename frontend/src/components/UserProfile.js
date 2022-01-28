@@ -25,7 +25,7 @@ export const UserProfile = () => {
   const name = useSelector((store) => store.user.name);
   const email = useSelector((store) => store.user.email);
   const location = useSelector((store) => store.user.location);
-  const createdAt = useSelector((store) => store.user.createdAt);
+  // const createdAt = useSelector((store) => store.user.createdAt);
   const userBio = useSelector((store) => store.user.bio);
   const linkedIn = useSelector((store) => store.user.linkedIn);
   const gitHub = useSelector((store) => store.user.github);
@@ -106,7 +106,7 @@ export const UserProfile = () => {
           onClose={() => setImageModalActive(false)}
         />
 
-        <p>Member since {moment(createdAt).format("MMMM Do YYYY")}</p>
+        <p>Member since {moment(user.createdAt).format("MMMM Do YYYY")}</p>
         <p>Name: {name}</p>
         <p>Location: {location}</p>
         <p>Bio: {userBio}</p>

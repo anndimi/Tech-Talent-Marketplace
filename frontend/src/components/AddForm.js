@@ -102,6 +102,7 @@ const RadioButtonsContainer = styled.div`
 
 const AddForm = ({ isModalActive, onClose, toggleModal }) => {
   const id = useSelector((store) => store.user.userId);
+  const accessToken = useSelector((store) => store.user.accessToken);
   const [typeOf, setTypeOf] = useState("Join");
   const [info, setInfo] = useState({
     // typeOf: "",
@@ -122,6 +123,7 @@ const AddForm = ({ isModalActive, onClose, toggleModal }) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: accessToken,
       },
       body: JSON.stringify({
         ...info,
