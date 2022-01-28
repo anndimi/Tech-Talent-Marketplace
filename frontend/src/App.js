@@ -20,7 +20,7 @@ import NotFound from "./components/NotFound";
 import Navbar from "./components/Navbar";
 import ContactPage from "./components/ContactPage";
 import AboutPage from "./components/AboutPage";
-import Inspiration from "./components/Inspiration";
+import Inspiration from "./pages/Inspiration";
 import SingleAddModal from "./components/SingleAddModal";
 import { EditProfile } from "./components/EditProfile";
 import { UploadImg } from "./components/UploadImg";

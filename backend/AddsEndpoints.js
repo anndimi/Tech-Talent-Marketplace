@@ -45,7 +45,7 @@ export const DeleteAdd = async (req, res) => {
 
   try {
     const deleteAdd = await Add.findByIdAndDelete(id);
-    res.status(201).json({ response: deleteAdd, success: true });
+    res.status(200).json({ response: deleteAdd, success: true });
   } catch (error) {
     res.status(400).json({ error: "Add id not found!", success: false });
   }

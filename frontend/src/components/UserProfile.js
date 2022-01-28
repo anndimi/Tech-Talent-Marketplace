@@ -25,7 +25,7 @@ export const UserProfile = () => {
   const name = useSelector((store) => store.user.name);
   const email = useSelector((store) => store.user.email);
   const location = useSelector((store) => store.user.location);
-  // const createdAt = useSelector((store) => store.user.createdAt);
+  const userId = useSelector((store) => store.user.userId);
   const userBio = useSelector((store) => store.user.bio);
   const linkedIn = useSelector((store) => store.user.linkedIn);
   const gitHub = useSelector((store) => store.user.github);
@@ -33,6 +33,8 @@ export const UserProfile = () => {
   const clearAccessToken = useSelector((store) => store.user.clearAccessToken);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  // const getTimestamp = (date = new Date()) => Math.floor(date.getTime() / 1000);
 
   const [isEditModalActive, setEditModalActive] = useState(false);
   const [isImageModalActive, setImageModalActive] = useState(false);
@@ -106,7 +108,7 @@ export const UserProfile = () => {
           onClose={() => setImageModalActive(false)}
         />
 
-        <p>Member since {moment(user.createdAt).format("MMMM Do YYYY")}</p>
+        {/* <p>Member since {moment(getTimestamp()).format("MMMM Do YYYY")}</p> */}
         <p>Name: {name}</p>
         <p>Location: {location}</p>
         <p>Bio: {userBio}</p>

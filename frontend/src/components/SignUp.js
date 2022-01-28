@@ -10,6 +10,7 @@ const SignUp = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [createdAt, setCreatedAt] = useState("");
   const [isContainerActive, setIsContainerActive] = useState("");
   const [mode, setMode] = useState("signin");
   // const mode = useSelector((store) => store.user.mode);
@@ -38,12 +39,13 @@ const SignUp = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ username, password, email }),
+      body: JSON.stringify({ username, password, email, createdAt }),
     };
 
     fetch(API_URL(mode), options)
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
         if (data.success) {
           batch(() => {
             dispatch(user.actions.setUserId(data.response.id));
@@ -55,7 +57,7 @@ const SignUp = () => {
             dispatch(user.actions.setLinkedIn(data.response.linkedIn));
             dispatch(user.actions.setGithub(data.response.github));
             dispatch(user.actions.setAccessToken(data.response.accessToken));
-            // dispatch(user.actions.setCreatedAt(data.response.createdAt));
+            dispatch(user.actions.setCreatedAt(data.response.createdAt));
             // dispatch(user.actions.setImageUrl(data.response.imageUrl));
             dispatch(user.actions.setError(null));
             navigate(`/userprofile/${data.response.id}`);
@@ -69,7 +71,7 @@ const SignUp = () => {
             dispatch(user.actions.setEmail(null));
             dispatch(user.actions.setLocation(null));
             dispatch(user.actions.setAccessToken(null));
-            // dispatch(user.actions.setCreatedAt(null));
+            dispatch(user.actions.setCreatedAt(null));
             dispatch(user.actions.setLinkedIn(null));
             dispatch(user.actions.setGithub(null));
             dispatch(user.actions.setBio(null));
@@ -79,6 +81,7 @@ const SignUp = () => {
           alert(data.response);
         }
       });
+
     // if (accessToken) {
     //   navigate(`/userprofile/${id}`);
     // }

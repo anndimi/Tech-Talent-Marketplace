@@ -1,24 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { API_URL } from "../utils/constants";
 import { useParams } from "react-router-dom";
+import DeleteAdd from "./Buttons/DeleteAdd";
 
 export const MyAdds = () => {
   const [myAdds, setMyAdds] = useState([]);
-  const [deleteAnAdd, setDeleteAnAdd] = useState({});
   const { id } = useParams();
-  console.log(id, "id");
-
-  const deleteAdd = () => {
-    const options = {
-      method: "DELETE",
-      headers: {
-        // Authorization: accessToken,
-      },
-    };
-    fetch(API_URL(`adds/${id}/delete`), options).then(() =>
-      setDeleteAnAdd({ status: "Delete successful" })
-    );
-  };
 
   useEffect(() => {
     const options = {
@@ -31,6 +18,8 @@ export const MyAdds = () => {
       .then((res) => res.json())
       .then((data) => {
         setMyAdds(data.response.add);
+        console.log(data.response.add);
+        console.log(myAdds._id);
       });
   }, []);
 
@@ -46,10 +35,11 @@ export const MyAdds = () => {
           <p>{add.title}</p>
           <p>{add.description}</p>
           <p>{add.createdAt}</p>
+          <p>id: {add._id}</p>
           <p>
             {add.budget} {add.currency}
           </p>
-          {/* <button onClick={() => deleteAdd(id)}>Delete this add</button> */}
+          <DeleteAdd myAddsId={add._id} />
           {/* <button onClick={() => editAdd()}>Edit this add</button> */}
         </div>
       ))}

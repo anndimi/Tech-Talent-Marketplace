@@ -35,7 +35,6 @@ export const SignupUser = async (req, res) => {
         email: newUser.email,
         location: newUser.location,
         name: newUser.name,
-        createdAt: newUser.createdAt,
         bio: newUser.bio,
         linkedIn: newUser.linkedIn,
         github: newUser.github,
