@@ -1,23 +1,21 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useSelector, useDispatch, batch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import React, { useState } from "react";
+import { useDispatch, batch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import swal from "sweetalert";
 import user from "../reducers/user";
 import { API_URL } from "../utils/constants";
-import styled from "styled-components";
 import "../signup.css";
 
 const SignUp = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [createdAt, setCreatedAt] = useState("");
   const [isContainerActive, setIsContainerActive] = useState("");
   const [mode, setMode] = useState("signin");
   // const mode = useSelector((store) => store.user.mode);
-  const accessToken = useSelector((store) => store.user.accessToken);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const id = useSelector((store) => store.user.userId);
   // const { id } = useParams();
   // const fileInput = useRef();
   // console.log(id, "first");
@@ -39,7 +37,7 @@ const SignUp = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ username, password, email, createdAt }),
+      body: JSON.stringify({ username, password, email }),
     };
 
     fetch(API_URL(mode), options)
@@ -76,9 +74,14 @@ const SignUp = () => {
             dispatch(user.actions.setGithub(null));
             dispatch(user.actions.setBio(null));
             // dispatch(user.actions.setImageUrl(null));
-            dispatch(user.actions.setError(data.response));
+            dispatch(user.actions.setError(data.error));
           });
-          alert(data.response);
+
+          swal({
+            title: data.response,
+            icon: "warning",
+            button: "Ok!",
+          });
         }
       });
 

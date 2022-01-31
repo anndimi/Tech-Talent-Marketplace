@@ -3,7 +3,7 @@ import user from "../reducers/user";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import moment from "moment";
+
 import styled from "styled-components";
 import linkedinIcon from "../assets/linkedin-icon.png";
 import githubIcon from "../assets/github-icon.png";
@@ -26,12 +26,9 @@ export const UserProfile = () => {
   const name = useSelector((store) => store.user.name);
   const email = useSelector((store) => store.user.email);
   const location = useSelector((store) => store.user.location);
-  const userId = useSelector((store) => store.user.userId);
   const userBio = useSelector((store) => store.user.bio);
   const linkedIn = useSelector((store) => store.user.linkedIn);
   const gitHub = useSelector((store) => store.user.github);
-  const users = useSelector((store) => store.user.users);
-  const clearAccessToken = useSelector((store) => store.user.clearAccessToken);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -72,7 +69,7 @@ export const UserProfile = () => {
         setMyImage(data.response.image);
         console.log(myImage);
       });
-  }, []);
+  }, [id, myImage]);
 
   const onButtonClick = () => {
     dispatch(user.actions.setAccessToken(null));

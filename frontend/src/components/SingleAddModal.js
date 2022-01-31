@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { StyledButton } from "./Buttons/StyledButtons";
+// import { StyledButton } from "./Buttons/StyledButtons";
 import closeIcon from "../assets/close.png";
 import moment from "moment";
 import { useNavigate, useParams } from "react-router-dom";

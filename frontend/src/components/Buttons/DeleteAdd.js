@@ -1,15 +1,12 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+
 import { API_URL } from "../../utils/constants";
-import add from "../../reducers/add";
+
 import swal from "sweetalert";
 
 const DeleteAdd = ({ myAddsId }) => {
-  const [deleteAnAdd, setDeleteAnAdd] = useState({});
-  // const { id } = use.params;
-  // const id = useSelector((store) => store.add._id);
-  //   const id = myAddsId;
-  console.log(myAddsId);
+  const [setDeleteAnAdd] = useState({});
+
   const onDeleteClick = () => {
     swal({
       title: "Are you sure?",
@@ -32,6 +29,8 @@ const DeleteAdd = ({ myAddsId }) => {
         swal("Poof! Your add has been deleted!", {
           icon: "success",
         });
+
+        window.location.reload(true);
       } else {
         swal("Your add is safe!");
       }

@@ -52,7 +52,8 @@ export const UploadImg = ({
   const fileInput = useRef();
 
   const handleFormSubmit = (event) => {
-    event.preventDefault();
+    window.location.reload(true);
+    // event.preventDefault();
     const formData = new FormData();
     formData.append("image", fileInput.current.files[0]);
     fetch(API_URL(`userprofile/${id}/image`), {

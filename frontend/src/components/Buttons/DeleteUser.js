@@ -5,10 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 const DeleteUser = ({ id }) => {
   const navigate = useNavigate();
-  const [deleteUser, setDeleteUser] = useState({});
-  // const { id } = use.params;
-  // const id = useSelector((store) => store.add._id);
-  //   const id = myAddsId;
+  const [setDeleteUser] = useState({});
 
   const onDeleteClick = () => {
     swal({

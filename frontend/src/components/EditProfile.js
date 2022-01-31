@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useRef } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 import { API_URL } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
@@ -52,11 +52,8 @@ export const EditProfile = ({
 }) => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const fileInput = useRef();
-  const navigate = useNavigate;
   // const [users, setUsers] = useState("");
 
-  const userId = useSelector((store) => store.user.userId);
   const name = useSelector((store) => store.user.name);
   const location = useSelector((store) => store.user.location);
   const bio = useSelector((store) => store.user.bio);

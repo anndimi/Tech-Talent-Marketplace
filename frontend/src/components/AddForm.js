@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch, batch } from "react-redux";
 import add from "../reducers/add";
 import { API_URL } from "../utils/constants";
@@ -116,8 +116,9 @@ const AddForm = ({ isModalActive, onClose, toggleModal }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const onFormSubmit = (event) => {
-    event.preventDefault();
+  const onFormSubmit = () => {
+    window.location.reload(true);
+    // event.preventDefault();
 
     const options = {
       method: "POST",

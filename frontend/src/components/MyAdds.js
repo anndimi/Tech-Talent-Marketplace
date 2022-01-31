@@ -21,7 +21,7 @@ export const MyAdds = () => {
         console.log(data.response.add);
         console.log(myAdds._id);
       });
-  }, []);
+  }, [id, myAdds._id]);
 
   return (
     <>

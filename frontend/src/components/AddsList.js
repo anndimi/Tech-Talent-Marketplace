@@ -45,14 +45,13 @@ const TagWrapper = styled.div`
 `;
 
 const AddsList = () => {
-  const [singleAdd, setSingleAdd] = useState("");
   const [filter, setFilter] = useState("");
   const [sort, setSort] = useState("");
   const [type, setType] = useState("");
   const [searchValue, setSearchValue] = useState("");
 
   const addItems = useSelector((store) => store.add.items);
-  const createdDate = useSelector((store) => store.add.createdAt);
+
   const [isModalActive, setModalActive] = useState(false);
 
   // const accessToken = useSelector((store) => store.user.accessToken);
