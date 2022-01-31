@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
 import { API_URL } from "../utils/constants";
 import AddForm from "./AddForm";
 import moment from "moment";
@@ -9,6 +10,7 @@ import styled from "styled-components";
 import AddFilter from "./AddFilter";
 import SingleAddModal from "./SingleAddModal";
 import { StyledButton } from "./Buttons/StyledButtons";
+import { SearchBar } from "./SearchBar";
 
 const AddListSection = styled.section`
   padding: 20px;
@@ -47,6 +49,7 @@ const AddsList = () => {
   const [filter, setFilter] = useState("");
   const [sort, setSort] = useState("");
   const [type, setType] = useState("");
+  const [searchValue, setSearchValue] = useState("");
 
   const addItems = useSelector((store) => store.add.items);
   const createdDate = useSelector((store) => store.add.createdAt);
@@ -122,7 +125,7 @@ const AddsList = () => {
         // Authorization: accessToken,
       },
     };
-    fetch(API_URL("adds"), options)
+    fetch(API_URL(`adds?title=${searchValue}`), options)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -135,7 +138,7 @@ const AddsList = () => {
           dispatch(add.actions.setError(data.response));
         }
       });
-  }, []);
+  }, [searchValue, dispatch]);
 
   // ,[accessToken] add to line above
 
@@ -151,6 +154,7 @@ const AddsList = () => {
       </StyledButton>
       <AddListSection onClick={() => setModalActive(false)}>
         <SingleAddModal />
+        <SearchBar setSearchValue={setSearchValue} searchValue={searchValue} />
         <div>
           <AddForm
             toggleModal={toggleModal}

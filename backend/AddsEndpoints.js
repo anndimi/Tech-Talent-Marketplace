@@ -52,9 +52,14 @@ export const DeleteAdd = async (req, res) => {
   }
 };
 
+//RegExp to search for queries in frontend
 export const GetAllAdds = async (req, res) => {
+  const { title, description } = req.query;
   try {
-    const allAdds = await Add.find()
+    const allAdds = await Add.find({
+      title: new RegExp(title, "i"),
+      description: new RegExp(description, "i"),
+    })
       .sort({ createdAt: "desc" })
       .populate("user", {
         username: 1,
