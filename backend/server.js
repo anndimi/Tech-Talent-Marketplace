@@ -110,7 +110,6 @@ app.get("/userprofile/:id/image", GetImage);
 // app.post("/adds/:id", authenticateUser);
 app.post("/adds/:id", authenticateUser, PostAdd);
 
-//Updates the add info that are edited. Ignores the other key & values with the $set operator
 app.patch("/adds/:id/edit", EditAdd);
 
 //Search single add

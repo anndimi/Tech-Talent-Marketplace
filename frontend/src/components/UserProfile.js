@@ -69,6 +69,7 @@ export const UserProfile = () => {
       .then((res) => res.json())
       .then((data) => {
         setMyImage(data.response.image);
+        console.log(myImage);
       });
   }, []);
 

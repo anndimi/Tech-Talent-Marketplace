@@ -194,6 +194,7 @@ const AddForm = ({ isModalActive, onClose, toggleModal }) => {
                     id="Looking for"
                     type="radio"
                     value="Looking for"
+                    name="typeOf"
                     checked={typeOf === "Looking for"}
                     onChange={(e) => setTypeOf(e.target.value)}
                   />
@@ -203,6 +204,8 @@ const AddForm = ({ isModalActive, onClose, toggleModal }) => {
                     id="Join as"
                     type="radio"
                     value="Join as"
+                    name="typeOf"
+                    required="required"
                     checked={typeOf === "Join as"}
                     onChange={(e) => setTypeOf(e.target.value)}
                   />
@@ -211,11 +214,14 @@ const AddForm = ({ isModalActive, onClose, toggleModal }) => {
                   <label htmlFor="category">Category </label>
                   <select
                     value={info.category}
+                    required
                     onChange={(e) =>
                       setInfo({ ...info, category: e.target.value })
                     }
                   >
-                    <option hidden>Category</option>
+                    <option hidden value="">
+                      Category
+                    </option>
                     <option value="Frontend">Frontend</option>
                     <option value="Backend">Backend</option>
                     <option value="Graphics and Design">
@@ -241,6 +247,7 @@ const AddForm = ({ isModalActive, onClose, toggleModal }) => {
                     type="text"
                     placeholder="A cathing title.."
                     value={info.title}
+                    required
                     onChange={(e) =>
                       setInfo({ ...info, title: e.target.value })
                     }
@@ -255,6 +262,7 @@ const AddForm = ({ isModalActive, onClose, toggleModal }) => {
                     value={info.description}
                     placeholder="Describe the opportunity.."
                     autoComplete="off"
+                    required
                     onChange={(e) =>
                       setInfo({ ...info, description: e.target.value })
                     }
@@ -279,11 +287,15 @@ const AddForm = ({ isModalActive, onClose, toggleModal }) => {
                   <label htmlFor="currency">Currency</label>
                   <select
                     value={info.currency}
+                    required
                     onChange={(e) =>
                       setInfo({ ...info, currency: e.target.value })
                     }
                   >
-                    <option hidden>Choose</option>
+                    {/* <option hidden>Choose</option> */}
+                    <option hidden value="">
+                      Choose
+                    </option>
                     <option value="SEK">SEK</option>
                     <option value="EUR">EUR</option>
                     <option value="USD">USD</option>

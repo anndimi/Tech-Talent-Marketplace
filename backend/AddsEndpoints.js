@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 
 const Add = mongoose.model("Add", AddSchema);
 
+//Updates the add info that are edited. Ignores the other key & values with the $set operator
 export const EditAdd = async (req, res) => {
   const updatedAddInfo = req.body;
   const { id } = req.params;
