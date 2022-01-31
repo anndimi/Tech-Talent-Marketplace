@@ -22,6 +22,7 @@ export const SigninUser = async (req, res) => {
           github: user.github,
           linkedIn: user.linkedIn,
           name: user.name,
+          created: user.created,
         },
         success: true,
       });
