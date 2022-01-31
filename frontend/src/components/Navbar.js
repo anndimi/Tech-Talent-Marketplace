@@ -6,6 +6,7 @@ import Close from "../assets/close.png";
 import logoImg from "../assets/logo.png";
 import { useSelector } from "react-redux";
 import { SignOutButton } from "./Buttons/StyledButtons";
+// import AddForm from "./AddForm";
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -114,7 +115,7 @@ const Navbar = () => {
           ) : (
             <>
               <StyledLink to="/signup">Sign up/ Sign in</StyledLink>
-              <StyledLink to="/adds/create">Create Add</StyledLink>
+              {/* <StyledLink to="/adds/create">Create Add</StyledLink> */}
               <StyledLink to="/adds">Adds</StyledLink>
               <StyledLink to={`/userprofile/${id}`}>My Profile</StyledLink>
               <StyledLink to="/inspiration">Inspiration</StyledLink>

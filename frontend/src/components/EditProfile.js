@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import closeIcon from "../assets/close.png";
 import { CloseButton } from "./Buttons/StyledButtons";
+import { useNavigate } from "react-router-dom";
 
 import user from "../reducers/user";
 
@@ -52,6 +53,7 @@ export const EditProfile = ({
 }) => {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   // const [users, setUsers] = useState("");
 
   const name = useSelector((store) => store.user.name);
@@ -94,6 +96,7 @@ export const EditProfile = ({
           dispatch(user.actions.setLinkedIn(data.response.linkedIn));
           dispatch(user.actions.setGithub(data.response.github));
           dispatch(user.actions.setError(null));
+          // navigate(`/userprofile/${id}`);
         } else {
           dispatch(user.actions.setName(null));
           dispatch(user.actions.setLocation(null));
@@ -101,9 +104,10 @@ export const EditProfile = ({
           dispatch(user.actions.setLinkedIn(null));
           dispatch(user.actions.setGithub(null));
           dispatch(user.actions.setError(data.response));
+          // navigate(`/userprofile/${id}`);
         }
       });
-    onClose();
+    onClose(navigate(`/userprofile/${id}`));
   };
 
   console.log("hello from", userInfo.location);
@@ -123,7 +127,12 @@ export const EditProfile = ({
           }
           onClick={(e) => e.stopPropagation()}
         >
-          <CloseButton onClick={toggleEditModal}>
+          <CloseButton
+            onClick={() => {
+              navigate(`/userprofile/${id}`);
+              toggleEditModal();
+            }}
+          >
             <img src={closeIcon} alt="close window" />
           </CloseButton>
           <h1>edit your profile</h1>
@@ -148,7 +157,7 @@ export const EditProfile = ({
             <input
               id="name"
               type="text"
-              value={userInfo.name}
+              defaultValue={userInfo.name}
               placeholder="name"
               onChange={(e) =>
                 setUserInfo({ ...userInfo, name: e.target.value })
@@ -158,7 +167,7 @@ export const EditProfile = ({
             <input
               id="location"
               type="text"
-              value={userInfo.location}
+              defaultValue={userInfo.location}
               placeholder="location"
               onChange={(e) =>
                 setUserInfo({ ...userInfo, location: e.target.value })
@@ -168,7 +177,7 @@ export const EditProfile = ({
             <input
               id="bio"
               type="textarea"
-              value={userInfo.bio}
+              defaultValue={userInfo.bio}
               placeholder="bio"
               onChange={(e) =>
                 setUserInfo({ ...userInfo, bio: e.target.value })
@@ -179,7 +188,7 @@ export const EditProfile = ({
               id="linkedin"
               type="text"
               placeholder="LinkedIn"
-              value={userInfo.linkedIn}
+              defaultValue={userInfo.linkedIn}
               onChange={(e) =>
                 setUserInfo({ ...userInfo, linkedIn: e.target.value })
               }
@@ -189,7 +198,7 @@ export const EditProfile = ({
               id="github"
               type="text"
               placeholder="GitHub"
-              value={userInfo.github}
+              defaultValue={userInfo.github}
               onChange={(e) =>
                 setUserInfo({ ...userInfo, github: e.target.value })
               }

@@ -3,7 +3,7 @@ import user from "../reducers/user";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-
+import moment from "moment";
 import styled from "styled-components";
 import linkedinIcon from "../assets/linkedin-icon.png";
 import githubIcon from "../assets/github-icon.png";
@@ -29,11 +29,13 @@ export const UserProfile = () => {
   const userBio = useSelector((store) => store.user.bio);
   const linkedIn = useSelector((store) => store.user.linkedIn);
   const gitHub = useSelector((store) => store.user.github);
+  const created = useSelector((store) => store.user.created);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   // const getTimestamp = (date = new Date()) => Math.floor(date.getTime() / 1000);
 
+  console.log(created, "hejj");
   const [isEditModalActive, setEditModalActive] = useState(false);
   const [isImageModalActive, setImageModalActive] = useState(false);
   const [myImage, setMyImage] = useState("");
@@ -94,6 +96,7 @@ export const UserProfile = () => {
         onClick={() => {
           setEditModalActive(false);
           setImageModalActive(false);
+          navigate(`/userprofile/${id}`);
         }}
       >
         <EditProfile
@@ -106,18 +109,17 @@ export const UserProfile = () => {
           toggleImageModal={toggleImageModal}
           onClose={() => setImageModalActive(false)}
         />
-
-        {/* <p>Member since {moment(getTimestamp()).format("MMMM Do YYYY")}</p> */}
+        <p>Member since {moment(created).format("MMMM Do YYYY")}</p>
         <p>Name: {name}</p>
         <p>Location: {location}</p>
         <p>Bio: {userBio}</p>
         <p>Your email is {email}</p>
-        <p>
-          <img src={linkedinIcon} alt="linkedin-icon" /> {linkedIn}
-        </p>
-        <p>
-          <img src={githubIcon} alt="github-icon" /> {gitHub}
-        </p>
+        <a href={linkedIn} target="_blank" rel="noopener noreferrer">
+          <img src={linkedinIcon} alt="linkedin-icon" />
+        </a>
+        <a href={gitHub} target="_blank" rel="noopener noreferrer">
+          <img src={githubIcon} alt="github-icon" />
+        </a>
       </section>
       <button
         className="logout-button"

@@ -1,12 +1,9 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React from "react";
 // import { useNavigate, generatePath, useParams } from "react-router-dom";
 // import { useSelector, useDispatch } from "react-redux";
 // import { API_URL } from "../utils/constants";
 // import add from "../reducers/add";
 import { StyledButton } from "./Buttons/StyledButtons";
-import categoriesData from "../assets/categories.json";
-import { Listbox, Transition } from "@headlessui/react";
-import { CheckIcon, SelectorIcon } from "@heroicons/react/solid";
 
 const AddFilter = ({
   filter,

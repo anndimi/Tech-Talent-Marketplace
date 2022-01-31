@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { API_URL } from "../utils/constants";
 import styled from "styled-components";
 import closeIcon from "../assets/close.png";
@@ -50,6 +50,7 @@ export const UploadImg = ({
   const [image, setImage] = useState("");
   const { id } = useParams();
   const fileInput = useRef();
+  const navigate = useNavigate();
 
   const handleFormSubmit = (event) => {
     window.location.reload(true);
@@ -63,7 +64,7 @@ export const UploadImg = ({
       .then((res) => res.json())
       .then((data) => console.log(data.response) && setImage(data.response));
 
-    onClose();
+    onClose(navigate(`/userprofile/${id}`));
   };
 
   return (
@@ -75,7 +76,12 @@ export const UploadImg = ({
           }
           onClick={(e) => e.stopPropagation()}
         >
-          <CloseButton onClick={() => toggleImageModal()}>
+          <CloseButton
+            onClick={() => {
+              navigate(`/userprofile/${id}`);
+              toggleImageModal();
+            }}
+          >
             <img src={closeIcon} alt="close window" />
           </CloseButton>
           <h1>edit your profile image</h1>

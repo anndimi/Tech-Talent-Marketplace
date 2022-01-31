@@ -38,6 +38,7 @@ export const SignupUser = async (req, res) => {
         bio: newUser.bio,
         linkedIn: newUser.linkedIn,
         github: newUser.github,
+        created: newUser.created,
         // imageUrl: newUser.imageUrl,
       },
       success: true,

@@ -41,9 +41,9 @@ const user = createSlice({
       console.log("name:", action.payload);
       store.name = action.payload;
     },
-    setCreatedAt: (store, action) => {
+    setCreated: (store, action) => {
       console.log("createdAt", action.payload);
-      store.createdAt = action.payload;
+      store.created = action.payload;
     },
     setBio: (store, action) => {
       store.bio = action.payload;

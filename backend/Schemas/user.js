@@ -58,6 +58,10 @@ export const UserSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Image",
     },
+    created: {
+      type: Number,
+      default: () => Date.now(),
+    },
     add: [
       {
         type: mongoose.Schema.Types.ObjectId,
