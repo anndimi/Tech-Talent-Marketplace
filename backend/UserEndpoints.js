@@ -47,6 +47,17 @@ export const EditUser = async (req, res) => {
   }
 };
 
+export const DeleteUser = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const deleteUser = await User.findByIdAndDelete(id);
+    res.status(200).json({ response: deleteUser, success: true });
+  } catch (error) {
+    res.status(400).json({ error: "User id not found!", success: false });
+  }
+};
+
 export const PostImage = async (req, res) => {
   const { id } = req.params;
   try {

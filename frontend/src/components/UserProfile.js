@@ -12,6 +12,7 @@ import { UploadImg } from "./UploadImg";
 import { MyAdds } from "./MyAdds";
 import { API_URL } from "../utils/constants";
 import { useParams } from "react-router-dom";
+import DeleteUser from "./Buttons/DeleteUser";
 
 const ProfileImage = styled.img`
   width: 100px;
@@ -134,6 +135,7 @@ export const UserProfile = () => {
       <button className="logout-button" onClick={onButtonClick}>
         Logout
       </button>
+      <DeleteUser id={id} />
     </div>
   );
 };

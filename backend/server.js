@@ -17,6 +17,7 @@ import { PostAdd } from "./PostAddEndpoints";
 import { EditAdd, GetSingleAdd, DeleteAdd, GetAllAdds } from "./AddsEndpoints";
 import {
   EditUser,
+  DeleteUser,
   GetSingleUser,
   GetImage,
   PatchImage,
@@ -140,7 +141,9 @@ app.get("/adds", GetAllAdds);
 app.get("/userprofile/:id", GetSingleUser);
 
 //Updates the user info that are edited. Ignores the other key & values with the $set operator
+//Deletes the user with the id
 app.patch("/userprofile/:id/edit", EditUser);
+app.delete("/userprofile/:id/delete", DeleteUser);
 
 // Start the server
 app.listen(port, () => {
