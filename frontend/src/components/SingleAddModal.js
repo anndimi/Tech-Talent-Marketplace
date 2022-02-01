@@ -8,6 +8,13 @@ import { useSelector } from "react-redux";
 import { API_URL } from "../utils/constants";
 import IconSwitcher from "./IconSwitcher";
 
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+
 const Section = styled.section`
   width: 100%;
   &.section-blur {
@@ -79,14 +86,15 @@ const CloseButton = styled.button`
 `;
 
 const SingleAddModal = () => {
-  //   const [isModalActive, setModalActive] = useState(false);
+  // const [isModalActive, setModalActive] = useState(false);
   const [add, setAdd] = useState({});
   const navigate = useNavigate();
   const accessToken = useSelector((store) => store.user.accessToken);
 
-  //   const toggleModal = () => {
-  //     setModalActive(!isModalActive);
-  //   };
+  // const toggleModal = () => {
+  //   setModalActive(!isModalActive);
+  // };
+
   const { id } = useParams();
 
   useEffect(() => {
@@ -96,41 +104,113 @@ const SingleAddModal = () => {
         .then((data) => setAdd(data.response));
   }, [id]);
 
-  // if (id) {
-  //   document.body.style.overflow = "hidden";
-  // }
+  if (id) {
+    document.body.style.overflow = "hidden";
+    return (
+      <Box
+        sx={{
+          height: "100%",
+          width: "100%",
+          bgcolor: "secondary.main",
+          position: "fixed",
+          top: 0,
+          zIndex: 1,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100%",
+          width: "100%",
+        }}
+      >
+        <Card
+          sx={{
+            width: 500,
+            zIndex: 2,
+            height: "70%",
+            position: "fixed",
+            top: "20%",
+          }}
+        >
+          <Box
+            sx={{
+              bgcolor: "primary.main",
+              display: "flex",
+              justifyContent: "space-between",
+              color: "white",
+              paddingTop: 1,
+              paddingBottom: 4,
+            }}
+          >
+            <Box sx={{ display: "flex", flexDirection: "column" }}>
+              <Typography
+                sx={{ fontFamily: "primary.fontFamily", fontSize: 20 }}
+              >
+                {add.typeOf} {add.category}
+              </Typography>
+              <Typography
+                sx={{
+                  fontFamily: "secondary.fontFamily",
+                  fontSize: 15,
+                  fontStyle: "italic",
+                  paddingTop: 0,
+                }}
+              >
+                {moment(add.createdAt).fromNow()}
+              </Typography>
+            </Box>
+            <Button
+              sx={{ alignSelf: "flex-start" }}
+              onClick={() => navigate("/adds")}
+            >
+              <img
+                src={closeIcon}
+                alt="close window"
+                style={{ height: 35, width: 35 }}
+              />
+            </Button>
+          </Box>
+          <CardContent
+            sx={{ overflowY: "auto", wordBreak: "break-word", height: "100%" }}
+          >
+            <Box
+              sx={{ display: "flex", justifyContent: "center", marginTop: 2 }}
+            >
+              <img
+                style={{ width: 70, height: 70 }}
+                src={IconSwitcher(add.category)}
+              />
+            </Box>
 
-  return (
-    <Section>
-      <ModalWrapper>
-        <AddModal className={id ? "modal-active" : "modal-inactive"}>
-          <CloseButton onClick={() => navigate("/adds")}>
-            <img src={closeIcon} alt="close window" />
-          </CloseButton>
-          <p>
-            {add.typeOf} {add.category}
-          </p>
+            <Typography
+              sx={{
+                textAlign: "center",
+                fontSize: 24,
+                fontFamily: "primary.fontFamily",
+                fontWeight: 600,
+                marginTop: 2,
+                wordBreak: "break-word",
+              }}
+            >
+              {add.title}
+            </Typography>
 
-          <img src={IconSwitcher(add.category)} />
-
-          <p>{moment(add.createdAt).fromNow()}</p>
-
-          <h2>{add.title}</h2>
-          <p>{add.user?.username}</p>
-          <p>
-            Contact:{" "}
-            {accessToken ? add.user?.email : `Sign in to get contact details`}
-          </p>
-
-          <p>{add.description}</p>
-          <p>
-            Budget is {add.budget}
-            {add.currency}
-          </p>
-        </AddModal>
-      </ModalWrapper>
-    </Section>
-  );
+            <Typography>{add.description}</Typography>
+            <Typography>
+              Budget is {add.budget}
+              {add.currency}
+            </Typography>
+            <Typography>{add.user?.username}</Typography>
+            <Typography>
+              Contact:{" "}
+              {accessToken ? add.user?.email : `Sign in to get contact details`}
+            </Typography>
+          </CardContent>
+        </Card>
+      </Box>
+    );
+  } else {
+    return null;
+  }
 };
 
 export default SingleAddModal;

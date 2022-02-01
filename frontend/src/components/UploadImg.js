@@ -1,6 +1,8 @@
 import React, { useRef, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { API_URL } from "../utils/constants";
+import user from "../reducers/user";
 import styled from "styled-components";
 import closeIcon from "../assets/close.png";
 import { CloseButton } from "./Buttons/StyledButtons";
@@ -51,10 +53,10 @@ export const UploadImg = ({
   const { id } = useParams();
   const fileInput = useRef();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleFormSubmit = (event) => {
-    window.location.reload(true);
-    // event.preventDefault();
+    event.preventDefault();
     const formData = new FormData();
     formData.append("image", fileInput.current.files[0]);
     fetch(API_URL(`userprofile/${id}/image`), {
@@ -62,7 +64,7 @@ export const UploadImg = ({
       body: formData,
     })
       .then((res) => res.json())
-      .then((data) => console.log(data.response) && setImage(data.response));
+      .then((data) => dispatch(user.actions.setImage(data.response.imageUrl)));
 
     onClose(navigate(`/userprofile/${id}`));
   };

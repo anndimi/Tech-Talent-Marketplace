@@ -14,8 +14,7 @@ import { SearchBar } from "./SearchBar";
 import IconSwitcher from "./IconSwitcher";
 
 //Material UI Card
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Grid from "@mui/material/Grid";
+
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -24,7 +23,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
 const AddListSection = styled.section`
-  padding: 20px;
+  /* padding: 20px; */
 `;
 
 const AddCard = styled.div`

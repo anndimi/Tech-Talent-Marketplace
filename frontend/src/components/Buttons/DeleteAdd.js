@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import add from "../../reducers/add";
 
 import { API_URL } from "../../utils/constants";
 
@@ -6,6 +8,7 @@ import swal from "sweetalert";
 
 const DeleteAdd = ({ myAddsId }) => {
   const [setDeleteAnAdd] = useState({});
+  const dispatch = useDispatch();
 
   const onDeleteClick = () => {
     swal({
@@ -22,15 +25,15 @@ const DeleteAdd = ({ myAddsId }) => {
             // Authorization: accessToken,
           },
         };
-        fetch(API_URL(`adds/${myAddsId}/delete`), options).then(() =>
-          setDeleteAnAdd({ status: "Delete successful" })
-        );
+        fetch(API_URL(`adds/${myAddsId}/delete`), options).then(() => {
+          dispatch(add.actions.deleteAdd(myAddsId));
+        });
 
         swal("Poof! Your add has been deleted!", {
           icon: "success",
         });
 
-        window.location.reload(true);
+        // window.location.reload(true);
       } else {
         swal("Your add is safe!");
       }

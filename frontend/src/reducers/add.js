@@ -60,6 +60,11 @@ const add = createSlice({
       );
       store.items = filterAdd;
     },
+    deleteAdd: (store, action) => {
+      store.items = store.items.filter((item) => item._id !== action.payload);
+      console.log(store.items, "items");
+      console.log(action.payload, "payload");
+    },
   },
 });
 

@@ -32,10 +32,10 @@ export const UserProfile = () => {
   const linkedIn = useSelector((store) => store.user.linkedIn);
   const gitHub = useSelector((store) => store.user.github);
   const created = useSelector((store) => store.user.created);
+  const image = useSelector((store) => store.user.image);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // console.log(created, "hejj");
   const [isEditModalActive, setEditModalActive] = useState(false);
   const [isImageModalActive, setImageModalActive] = useState(false);
   const [myImage, setMyImage] = useState("");
@@ -55,21 +55,6 @@ export const UserProfile = () => {
     }
   }, [accessToken, navigate]);
 
-  useEffect(() => {
-    const options = {
-      method: "GET",
-      headers: {
-        // Authorization: accessToken,
-      },
-    };
-    fetch(API_URL(`userprofile/${id}`), options)
-      .then((res) => res.json())
-      .then((data) => {
-        setMyImage(data.response.image);
-        // console.log(myImage);
-      });
-  }, [id, myImage]);
-
   const onButtonClick = () => {
     dispatch(user.actions.setAccessToken(null));
   };
@@ -77,10 +62,7 @@ export const UserProfile = () => {
   return (
     <div>
       <h1>Welcome to your page, {username}!</h1>
-      <ProfileImage
-        src={myImage ? myImage.imageUrl : dummyUser}
-        alt="User Profile image "
-      />
+      <ProfileImage src={image || dummyUser} alt="User Profile image" />
       <button
         onClick={() => {
           navigate("edit/image");

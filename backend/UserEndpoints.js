@@ -58,44 +58,44 @@ export const DeleteUser = async (req, res) => {
   }
 };
 
-export const PostImage = async (req, res) => {
-  const { id } = req.params;
-  try {
-    const userImage = await new Image({
-      imageUrl: req.file.path,
-    }).save();
-    const updatedUser = await User.findByIdAndUpdate(id, {
-      $push: { image: userImage },
-    });
-    res.status(200).json({ response: userImage, success: true });
-  } catch (error) {
-    res.status(400).json({ error: error, succcess: false });
-  }
-};
-
-// export const PatchImage = async (req, res) => {
-//   const imageUrl = req.body;
+// export const PostImage = async (req, res) => {
 //   const { id } = req.params;
-
 //   try {
-//     const updatedImage = await new Image({
+//     const userImage = await new Image({
 //       imageUrl: req.file.path,
-//     });
+//     }).save();
 //     const updatedUser = await User.findByIdAndUpdate(id, {
-//       $push: { image: updatedImage },
+//       $push: { image: userImage },
 //     });
-//     if (updatedImage) {
-//       res.status(200).json({
-//         response: updatedImage,
-//         success: true,
-//       });
-//     } else {
-//       res.status(404).json({ response: "Image not found", success: false });
-//     }
+//     res.status(200).json({ response: userImage, success: true });
 //   } catch (error) {
-//     res.status(400).json({ response: error, success: false });
+//     res.status(400).json({ error: error, succcess: false });
 //   }
 // };
+
+export const PostImage = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const updatedImage = await new Image({
+      imageUrl: req.file.path,
+    }).save();
+
+    if (updatedImage) {
+      const updatedUser = await User.findByIdAndUpdate(id, {
+        $set: { image: updatedImage },
+      });
+      res.status(200).json({
+        response: updatedImage,
+        success: true,
+      });
+    } else {
+      res.status(404).json({ response: "Image not found", success: false });
+    }
+  } catch (error) {
+    res.status(400).json({ response: error, success: false });
+  }
+};
 
 // export const PatchImage = async (req, res) => {
 //   const { id } = req.params;

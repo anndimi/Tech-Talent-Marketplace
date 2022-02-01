@@ -7,7 +7,7 @@ export const AddSchema = new mongoose.Schema({
   description: {
     type: String,
     minlength: 30,
-    maxlength: 800,
+    maxlength: 1200,
     trim: true,
   },
   budget: {

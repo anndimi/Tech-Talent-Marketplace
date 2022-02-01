@@ -24,7 +24,7 @@ const IconSwitcher = (category) => {
       return fullstackIcon;
     case "App Developer":
       return appIcon;
-    case "Chatbot":
+    case "Chatbots":
       return chatbotIcon;
     case "Project Lead":
       return leadIcon;
