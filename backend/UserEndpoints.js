@@ -73,32 +73,56 @@ export const PostImage = async (req, res) => {
   }
 };
 
-export const PatchImage = async (req, res) => {
-  const { id, imageId } = req.params;
+// export const PatchImage = async (req, res) => {
+//   const imageUrl = req.body;
+//   const { id } = req.params;
 
-  try {
-    const queriedUser = await User.findById(id);
-    if (queriedUser) {
-      const queriedImage = await Image.findById(imageId);
-      if (queriedImage) {
-        const updatedUser = await User.findByIdAndUpdate(
-          id,
-          {
-            $set: { image: queriedImage },
-          },
-          { new: true }
-        );
-        res.status(200).json({ response: updatedUser, success: true });
-      } else {
-        res.status(404).json({ response: "Image not found", success: false });
-      }
-    } else {
-      res.status(404).json({ response: "User not found", success: false });
-    }
-  } catch (error) {
-    res.status(400).json({ response: error, success: false });
-  }
-};
+//   try {
+//     const updatedImage = await new Image({
+//       imageUrl: req.file.path,
+//     });
+//     const updatedUser = await User.findByIdAndUpdate(id, {
+//       $push: { image: updatedImage },
+//     });
+//     if (updatedImage) {
+//       res.status(200).json({
+//         response: updatedImage,
+//         success: true,
+//       });
+//     } else {
+//       res.status(404).json({ response: "Image not found", success: false });
+//     }
+//   } catch (error) {
+//     res.status(400).json({ response: error, success: false });
+//   }
+// };
+
+// export const PatchImage = async (req, res) => {
+//   const { id } = req.params;
+
+//   try {
+//     const queriedUser = await User.findById(id);
+//     if (queriedUser) {
+//       const queriedImage = await Image.findById(imageId);
+//       if (queriedImage) {
+//         const updatedUser = await User.findByIdAndUpdate(
+//           id,
+//           {
+//             $push: { image: queriedImage },
+//           },
+//           { new: true }
+//         );
+//         res.status(200).json({ response: updatedUser, success: true });
+//       } else {
+//         res.status(404).json({ response: "Image not found", success: false });
+//       }
+//     } else {
+//       res.status(404).json({ response: "User not found", success: false });
+//     }
+//   } catch (error) {
+//     res.status(400).json({ response: error, success: false });
+//   }
+// };
 
 export const GetImage = async (req, res) => {
   const { id } = req.params;

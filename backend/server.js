@@ -103,7 +103,7 @@ app.post("/signin", SigninUser);
 
 app.post("/userprofile/:id/image", parser.single("image"), PostImage);
 
-// app.patch("/userprofile/:id/image/:imageId", PatchImage);
+app.patch("/userprofile/:id/image/edit", parser.single("image"), PatchImage);
 
 app.get("/userprofile/:id/image", GetImage);
 

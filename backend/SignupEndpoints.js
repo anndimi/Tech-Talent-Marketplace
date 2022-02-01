@@ -5,8 +5,17 @@ import mongoose from "mongoose";
 const User = mongoose.model("User", UserSchema);
 
 export const SignupUser = async (req, res) => {
-  const { username, password, email, location, name, bio, linkedIn, github } =
-    req.body;
+  const {
+    username,
+    password,
+    email,
+    location,
+    name,
+    bio,
+    linkedIn,
+    github,
+    created,
+  } = req.body;
 
   try {
     const salt = bcrypt.genSaltSync();
@@ -24,7 +33,7 @@ export const SignupUser = async (req, res) => {
       bio,
       linkedIn,
       github,
-      // imageUrl: req.file.path,
+      created,
     }).save();
 
     res.status(201).json({
@@ -39,7 +48,6 @@ export const SignupUser = async (req, res) => {
         linkedIn: newUser.linkedIn,
         github: newUser.github,
         created: newUser.created,
-        // imageUrl: newUser.imageUrl,
       },
       success: true,
     });
