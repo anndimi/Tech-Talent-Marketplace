@@ -6,6 +6,7 @@ import moment from "moment";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { API_URL } from "../utils/constants";
+import IconSwitcher from "./IconSwitcher";
 
 const Section = styled.section`
   width: 100%;
@@ -109,6 +110,8 @@ const SingleAddModal = () => {
           <p>
             {add.typeOf} {add.category}
           </p>
+
+          <img src={IconSwitcher(add.category)} />
 
           <p>{moment(add.createdAt).fromNow()}</p>
 

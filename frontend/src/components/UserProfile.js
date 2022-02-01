@@ -13,11 +13,13 @@ import { MyAdds } from "./MyAdds";
 import { API_URL } from "../utils/constants";
 import { useParams } from "react-router-dom";
 import DeleteUser from "./Buttons/DeleteUser";
+import dummyUser from "../assets/dummy-user.png";
 
 const ProfileImage = styled.img`
   width: 100px;
   height: 100px;
   border-radius: 50%;
+  object-fit: cover;
 `;
 
 export const UserProfile = () => {
@@ -33,16 +35,11 @@ export const UserProfile = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // const getTimestamp = (date = new Date()) => Math.floor(date.getTime() / 1000);
-
-  console.log(created, "hejj");
+  // console.log(created, "hejj");
   const [isEditModalActive, setEditModalActive] = useState(false);
   const [isImageModalActive, setImageModalActive] = useState(false);
   const [myImage, setMyImage] = useState("");
   const { id } = useParams();
-
-  const dummyImage =
-    "https://images.unsplash.com/photo-1634926878768-2a5b3c42f139?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=756&q=80";
 
   const toggleEditModal = () => {
     setEditModalActive(!isEditModalActive);
@@ -69,7 +66,7 @@ export const UserProfile = () => {
       .then((res) => res.json())
       .then((data) => {
         setMyImage(data.response.image);
-        console.log(myImage);
+        // console.log(myImage);
       });
   }, [id, myImage]);
 
@@ -81,7 +78,7 @@ export const UserProfile = () => {
     <div>
       <h1>Welcome to your page, {username}!</h1>
       <ProfileImage
-        src={myImage ? myImage.imageUrl : dummyImage}
+        src={myImage ? myImage.imageUrl : dummyUser}
         alt="User Profile image "
       />
       <button

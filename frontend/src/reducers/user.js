@@ -10,7 +10,7 @@ const user = createSlice({
     error: null,
     location: null,
     name: null,
-    createdAt: null,
+    created: null,
     bio: null,
     linkedIn: null,
     github: null,

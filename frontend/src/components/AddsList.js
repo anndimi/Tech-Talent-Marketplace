@@ -11,6 +11,7 @@ import AddFilter from "./AddFilter";
 import SingleAddModal from "./SingleAddModal";
 import { StyledButton } from "./Buttons/StyledButtons";
 import { SearchBar } from "./SearchBar";
+import IconSwitcher from "./IconSwitcher";
 
 const AddListSection = styled.section`
   padding: 20px;
@@ -61,18 +62,6 @@ const AddsList = () => {
   const toggleModal = () => {
     setModalActive(!isModalActive);
   };
-
-  // useEffect(() => {
-  //   if (!accessToken) {
-  //     navigate("/login");
-  //   }
-  // }, [accessToken, navigate]);
-
-  // const [isAddActive, setAddActive] = useState(false);
-
-  // const toggleAdd = () => {
-  //   setAddActive(!isAddActive);
-  // };
 
   const onSortByTimeChange = (event) => {
     setSort(event.target.value);
@@ -187,14 +176,14 @@ const AddsList = () => {
                   <p>
                     {item.typeOf} {item.category}
                   </p>
-                  {/* <p>{item._id}</p> */}
-
                   <p>{moment(item.createdAt).fromNow()}</p>
                   <p>Posted by: {item.user?.username}</p>
                 </TagWrapper>
                 <h2>{item.title}</h2>
 
                 {/* <p>{item.description}</p> */}
+                <img src={IconSwitcher(item.category)} />
+
                 <p>
                   Budget is {item.budget}
                   {item.currency}

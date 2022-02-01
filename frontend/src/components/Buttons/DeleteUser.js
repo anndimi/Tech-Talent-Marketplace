@@ -36,7 +36,7 @@ const DeleteUser = ({ id }) => {
     });
   };
 
-  return <button onClick={onDeleteClick}>Delete this user</button>;
+  return <button onClick={onDeleteClick}>Delete user</button>;
 };
 
 export default DeleteUser;

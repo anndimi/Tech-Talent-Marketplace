@@ -110,8 +110,8 @@ export const EditProfile = ({
     onClose(navigate(`/userprofile/${id}`));
   };
 
-  console.log("hello from", userInfo.location);
-  console.log("your name is", userInfo.name);
+  // console.log("hello from", userInfo.location);
+  // console.log("your name is", userInfo.name);
 
   return (
     <>
