@@ -42,7 +42,7 @@ const AddModal = styled.div`
     width: 40%;
     height: 70%;
     border-radius: 15px;
-    overflow-y: scroll;
+    overflow-y: hidden;
     h2 {
       margin: 0;
     }
@@ -96,9 +96,9 @@ const SingleAddModal = () => {
         .then((data) => setAdd(data.response));
   }, [id]);
 
-  if (id) {
-    document.body.style.overflow = "hidden";
-  }
+  // if (id) {
+  //   document.body.style.overflow = "hidden";
+  // }
 
   return (
     <Section>

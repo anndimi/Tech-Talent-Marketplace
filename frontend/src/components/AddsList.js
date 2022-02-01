@@ -13,6 +13,16 @@ import { StyledButton } from "./Buttons/StyledButtons";
 import { SearchBar } from "./SearchBar";
 import IconSwitcher from "./IconSwitcher";
 
+//Material UI Card
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+
 const AddListSection = styled.section`
   padding: 20px;
 `;
@@ -38,6 +48,7 @@ const AddWrapper = styled.div`
   flex-direction: row;
   justify-content: center;
   flex-wrap: wrap;
+  gap: 15px;
 `;
 const TagWrapper = styled.div`
   display: flex;
@@ -166,33 +177,101 @@ const AddsList = () => {
             <h1>No adds</h1>
           ) : (
             filteredAddItems.map((item) => (
-              <AddCard
+              <Card
                 key={item._id}
                 onClick={() => {
                   navigate(item._id);
                 }}
+                sx={{ width: 350 }}
               >
-                <TagWrapper>
-                  <p>
-                    {item.typeOf} {item.category}
-                  </p>
-                  <p>{moment(item.createdAt).fromNow()}</p>
-                  <p>Posted by: {item.user?.username}</p>
-                </TagWrapper>
-                <h2>{item.title}</h2>
+                <CardContent>
+                  <Box
+                    sx={{ display: "flex", justifyContent: "space-between" }}
+                  >
+                    <Typography
+                      sx={{
+                        fontSize: 14,
+                        padding: 0,
+                        fontFamily: "secondary.fontFamily",
+                        marginBottom: 1,
+                      }}
+                      color="primary.main"
+                      gutterBottom
+                    >
+                      {moment(item.createdAt).fromNow()}
+                      <br />
+                      {item.typeOf} {item.category}
+                    </Typography>
+                    <img
+                      src={IconSwitcher(item.category)}
+                      style={{ width: 38, height: 38 }}
+                    />
+                  </Box>
+                  <Typography
+                    sx={{
+                      fontWeight: 600,
+                      fontFamily: "primary.fontFamily",
+                      marginTop: 3,
+                    }}
+                    variant="h5"
+                    component="div"
+                    noWrap
+                  >
+                    {item.title}
+                  </Typography>
 
-                {/* <p>{item.description}</p> */}
-                <img src={IconSwitcher(item.category)} />
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      padding: 0,
+                      marginTop: 3,
+                      fontFamily: "secondary.fontFamily",
+                    }}
+                  >
+                    Budget is {item.budget}
+                    {item.currency}
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <Typography sx={{ fontFamily: "secondary.fontFamily" }}>
+                    Posted by:
+                  </Typography>
+                  <Button
+                    size="small"
+                    sx={{ fontFamily: "secondary.fontFamily" }}
+                  >
+                    {item.user?.username}
+                  </Button>
+                </CardActions>
+              </Card>
 
-                <p>
-                  Budget is {item.budget}
-                  {item.currency}
-                </p>
+              // <AddCard
+              //   key={item._id}
+              //   onClick={() => {
+              //     navigate(item._id);
+              //   }}
+              // >
+              //   <TagWrapper>
+              //     <p>
+              //       {item.typeOf} {item.category}
+              //     </p>
+              //     <p>{moment(item.createdAt).fromNow()}</p>
+              //     <p>Posted by: {item.user?.username}</p>
+              //   </TagWrapper>
+              //   <h2>{item.title}</h2>
 
-                {/* Utkommenderat för att vi inte har nån authentication  */}
-                {/* <p>{item.user.username}</p>
-                <p>{item.user.email}</p> */}
-              </AddCard>
+              //   {/* <p>{item.description}</p> */}
+              //   <img src={IconSwitcher(item.category)} />
+
+              //   <p>
+              //     Budget is {item.budget}
+              //     {item.currency}
+              //   </p>
+
+              //   {/* Utkommenderat för att vi inte har nån authentication  */}
+              //   {/* <p>{item.user.username}</p>
+              //   <p>{item.user.email}</p> */}
+              // </AddCard>
             ))
           )}
         </AddWrapper>
