@@ -22,6 +22,7 @@ import {
   GetImage,
   // PatchImage,
   PostImage,
+  // likedAdd
 } from "./UserEndpoints";
 
 const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/auth";
@@ -144,6 +145,8 @@ app.get("/userprofile/:id", GetSingleUser);
 //Deletes the user with the id
 app.patch("/userprofile/:id/edit", EditUser);
 app.delete("/userprofile/:id/delete", DeleteUser);
+
+// app.post("/add/:id/like", likedAdd);
 
 // Start the server
 app.listen(port, () => {

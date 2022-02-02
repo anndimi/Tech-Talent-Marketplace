@@ -3,7 +3,12 @@ import React from "react";
 // import { useSelector, useDispatch } from "react-redux";
 // import { API_URL } from "../utils/constants";
 // import add from "../reducers/add";
-import { StyledButton } from "./Buttons/StyledButtons";
+import Box from "@mui/material/Box";
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import Button from "@mui/material/Button";
 
 const AddFilter = ({
   filter,
@@ -16,41 +21,72 @@ const AddFilter = ({
   sortedAddItems,
 }) => {
   return (
-    <>
-      <label>Filter</label>
+    <Box>
+    <FormControl variant="standard" sx={{ m: 1, width: '160px' }}>
+        <InputLabel id="demo-simple-select-standard-label">Category</InputLabel>
+        <Select
+          labelId="demo-simple-select-standard-label"
+          id="demo-simple-select-standard"
+          value={filter}
+          onChange={onFilterChange}
+          label="Category"
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          <MenuItem value="Frontend">Frontend</MenuItem>
+          <MenuItem value="Backend">Backend</MenuItem>
+          <MenuItem value="Graphics and Design">Graphics and Design</MenuItem>
+          <MenuItem value="Fullstack">Fullstack</MenuItem>
+          <MenuItem value="App Developer">App Developer</MenuItem>
+          <MenuItem value="Chatbots">Chatbots</MenuItem>
+          <MenuItem value="Project Lead">Project Lead</MenuItem>
+          <MenuItem value="QA">QA</MenuItem>
+          <MenuItem value="Legal Consulting">Legal Consulting</MenuItem>
+          <MenuItem value="Financial Consulting">Financial Consulting</MenuItem>
+          <MenuItem value="Analytics">Analytics</MenuItem>
+          <MenuItem value="Game Developer">Game Developer</MenuItem>
+          
+        </Select>
+      </FormControl>
 
-      <select value={filter} onChange={onFilterChange}>
-        <option hidden>Category..</option>
-        <option value="Frontend">Frontend</option>
-        <option value="Backend">Backend</option>
-        <option value="Graphics and Design">Graphics and Design</option>
-        <option value="Fullstack">Fullstack</option>
-        <option value="App Developer">App Developer</option>
-        <option value="Chatbots">Chatbots</option>
-        <option value="Project Lead">Project Lead</option>
-        <option value="QA">QA</option>
-        <option value="Legal Consulting">Legal Consulting</option>
-        <option value="Financial Consulting">Financial Consulting</option>
-        <option value="Analytics">Analytics</option>
-        <option value="Game Developer">Game Developer</option>
-      </select>
-      <label>Time</label>
-      <select value={sort} onChange={onSortByTimeChange}>
-        <option hidden>Time..</option>
-        <option value="Oldest">Oldest to newest</option>
-        <option value="Newest">Newest to oldest</option>
-        <option value="AZ">A - Z</option>
-        <option value="ZA">Z - A</option>
-      </select>
+      <FormControl variant="standard" sx={{ m: 1, width: '160px' }}>
+        <InputLabel id="demo-simple-select-standard-label">Time</InputLabel>
+        <Select
+          labelId="demo-simple-select-standard-label"
+          id="demo-simple-select-standard"
+          value={sort}
+          onChange={onSortByTimeChange}
+          label="Time"
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          <MenuItem value="Oldest">Oldest to newest</MenuItem>
+          <MenuItem value="Newest">Newest to oldest</MenuItem>
+          <MenuItem value="AZ">A - Z</MenuItem>
+          <MenuItem value="ZA">Z - A</MenuItem>
+        </Select>
+      </FormControl>
 
-      <label>Type</label>
-      <select value={type} onChange={onTypeChange}>
-        <option hidden>Type..</option>
-        <option value="Looking for">Looking for</option>
-        <option value="Join as">Join as</option>
-      </select>
-      <StyledButton onClick={onFilterReset}>Reset</StyledButton>
-    </>
+      <FormControl variant="standard" sx={{ m: 1, width: '160px' }}>
+        <InputLabel id="demo-simple-select-standard-label">Type</InputLabel>
+        <Select
+          labelId="demo-simple-select-standard-label"
+          id="demo-simple-select-standard"
+          value={type}
+          onChange={onTypeChange}
+          label="Type"
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          <MenuItem value="Looking for">Looking for</MenuItem>
+          <MenuItem value="Join as">Join as</MenuItem>
+        </Select>
+      </FormControl>
+      <Button variant="contained" onClick={onFilterReset}>Reset</Button>
+    </Box>
   );
 };
 

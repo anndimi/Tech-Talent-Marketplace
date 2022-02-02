@@ -4,6 +4,8 @@ import mongoose from "mongoose";
 
 const User = mongoose.model("User", UserSchema);
 const Image = mongoose.model("Image", ImageSchema);
+// const Add = mongoose.model("Add", AddSchema);
+
 
 export const GetSingleUser = async (req, res) => {
   const { id } = req.params;
@@ -138,3 +140,18 @@ export const GetImage = async (req, res) => {
     res.status(400).json({ response: error, success: false });
   }
 };
+
+
+// export const likedAdd =  async (req, res) => {
+//   const { id } = req.params;
+//   try {
+//     const updatedUser = await User.findById(id).populate("add")
+//     if (updatedUser) {
+//       res.status(201).json({ response: updatedUser, success: true });
+//     } else {
+//       res.status(404).json({ response: "User not found", success: false });
+//     }
+//   } catch (error) {
+//     res.status(400).json({ response: error, success: false });
+//   }
+// }

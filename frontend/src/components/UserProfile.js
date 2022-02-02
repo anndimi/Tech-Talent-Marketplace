@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import moment from "moment";
-import styled from "styled-components";
+// import styled from "styled-components";
 import linkedinIcon from "../assets/linkedin-icon.png";
 import githubIcon from "../assets/github-icon.png";
 import { EditProfile } from "./EditProfile";
@@ -14,13 +14,22 @@ import { API_URL } from "../utils/constants";
 import { useParams } from "react-router-dom";
 import DeleteUser from "./Buttons/DeleteUser";
 import dummyUser from "../assets/dummy-user.png";
+import IconButton from '@mui/material/IconButton';
+import PhotoCamera from '@mui/icons-material/PhotoCamera';
+// import Input from '@mui/material/Input'
+import Button from '@mui/material/Button'
+import { styled } from '@mui/material/styles'
 
-const ProfileImage = styled.img`
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
-`;
+// const ProfileImage = styled.img`
+//   width: 100px;
+//   height: 100px;
+//   border-radius: 50%;
+//   object-fit: cover;
+// `;
+
+const hiddenInput = styled("input")({
+  display: "none"
+})
 
 export const UserProfile = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
@@ -62,15 +71,26 @@ export const UserProfile = () => {
   return (
     <div>
       <h1>Welcome to your page, {username}!</h1>
-      <ProfileImage src={image || dummyUser} alt="User Profile image" />
-      <button
+      
+      <img style={{width: '100px', height: "100px", borderRadius: "50%", objectfitCover: "cover" }} src={image || dummyUser} alt="User Profile image" alt="profile" />
+      
+      {/* <button
         onClick={() => {
           navigate("edit/image");
           toggleImageModal();
         }}
       >
         Upload profile image
-      </button>
+      </button> */}
+      <label htmlFor="icon-button-file">
+        <hiddenInput accept="image/*" id="icon-button-file" type="file" />
+        <IconButton color="primary" aria-label="upload picture" component="span" onClick={() => {
+          navigate("edit/image");
+          toggleImageModal();
+        }}>
+          <PhotoCamera />
+        </IconButton>
+      </label>
       <section
         onClick={() => {
           setEditModalActive(false);
@@ -100,19 +120,25 @@ export const UserProfile = () => {
           <img src={githubIcon} alt="github-icon" />
         </a>
       </section>
-      <button
-        className="logout-button"
+      <Button variant="contained" 
+      sx={{fontFamily: "secondary.fontFamily", letterSpacing: 1.3}}
+        // className="logout-button"
         onClick={() => {
           navigate("edit");
           toggleEditModal();
         }}
       >
-        Edit
-      </button>
+        {/* <span style={{display: "flex", justifyContent: "center"}}> */}
+          Edit
+          {/* </span> */}
+      </Button>
       <MyAdds />
-      <button className="logout-button" onClick={onButtonClick}>
+      <Button variant="contained" 
+      sx={{fontFamily: "secondary.fontFamily", letterSpacing: 1.3}}
+      // className="logout-button" 
+      onClick={onButtonClick}>
         Logout
-      </button>
+      </Button>
       <DeleteUser id={id} />
     </div>
   );

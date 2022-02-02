@@ -35,7 +35,7 @@ export const MyAdds = () => {
           <p>{add.title}</p>
           <p>{add.description}</p>
           <p>{add.createdAt}</p>
-          <p>id: {add._id}</p>
+          {/* <p>id: {add._id}</p> */}
           <p>
             {add.budget} {add.currency}
           </p>

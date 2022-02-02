@@ -9,7 +9,7 @@ import add from "../reducers/add";
 import styled from "styled-components";
 import AddFilter from "./AddFilter";
 import SingleAddModal from "./SingleAddModal";
-import { StyledButton } from "./Buttons/StyledButtons";
+// import { StyledButton } from "./Buttons/StyledButtons";
 import { SearchBar } from "./SearchBar";
 import IconSwitcher from "./IconSwitcher";
 
@@ -142,25 +142,19 @@ const AddsList = () => {
 
   return (
     <>
-      <StyledButton
+      <Button variant="contained"
         onClick={() => {
           navigate("create");
           toggleModal();
         }}
       >
         Create add
-      </StyledButton>
+      </Button>
       <AddListSection onClick={() => setModalActive(false)}>
         <SingleAddModal />
+        <Box sx={{display: "flex", flexDirection: "row"}}>
         <SearchBar setSearchValue={setSearchValue} searchValue={searchValue} />
-        <div>
-          <AddForm
-            toggleModal={toggleModal}
-            onClose={() => setModalActive(false)}
-            isModalActive={isModalActive}
-            filteredAddItems={filteredAddItems}
-          />
-          <AddFilter
+        <AddFilter
             filter={filter}
             sort={sort}
             type={type}
@@ -170,6 +164,15 @@ const AddsList = () => {
             onSortByTimeChange={onSortByTimeChange}
             // sortedAddItems={sortedAddItems}
           />
+          </Box>
+        <div>
+          <AddForm
+            toggleModal={toggleModal}
+            onClose={() => setModalActive(false)}
+            isModalActive={isModalActive}
+            filteredAddItems={filteredAddItems}
+          />
+          
         </div>
         <AddWrapper>
           {filteredAddItems.length === 0 ? (
@@ -204,7 +207,7 @@ const AddsList = () => {
                     <img
                       src={IconSwitcher(item.category)}
                       style={{ width: 38, height: 38 }}
-                    />
+                    alt="icon"/>
                   </Box>
                   <Typography
                     sx={{
@@ -243,34 +246,6 @@ const AddsList = () => {
                   </Button>
                 </CardActions>
               </Card>
-
-              // <AddCard
-              //   key={item._id}
-              //   onClick={() => {
-              //     navigate(item._id);
-              //   }}
-              // >
-              //   <TagWrapper>
-              //     <p>
-              //       {item.typeOf} {item.category}
-              //     </p>
-              //     <p>{moment(item.createdAt).fromNow()}</p>
-              //     <p>Posted by: {item.user?.username}</p>
-              //   </TagWrapper>
-              //   <h2>{item.title}</h2>
-
-              //   {/* <p>{item.description}</p> */}
-              //   <img src={IconSwitcher(item.category)} />
-
-              //   <p>
-              //     Budget is {item.budget}
-              //     {item.currency}
-              //   </p>
-
-              //   {/* Utkommenderat för att vi inte har nån authentication  */}
-              //   {/* <p>{item.user.username}</p>
-              //   <p>{item.user.email}</p> */}
-              // </AddCard>
             ))
           )}
         </AddWrapper>

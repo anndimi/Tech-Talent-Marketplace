@@ -62,6 +62,12 @@ export const UserSchema = new mongoose.Schema({
     default: () => Date.now(),
     timestamps: true,
   },
+  // likedAdd:[
+  // {  
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: "Add",
+  // },
+  // ],
   add: [
     {
       type: mongoose.Schema.Types.ObjectId,
