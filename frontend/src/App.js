@@ -24,6 +24,7 @@ import Inspiration from "./pages/Inspiration";
 import SingleAddModal from "./components/SingleAddModal";
 import { EditProfile } from "./components/EditProfile";
 import { UploadImg } from "./components/UploadImg";
+import { Footer } from "./components/Footer";
 
 const reducer = combineReducers({
   user: user.reducer,
@@ -75,6 +76,7 @@ const App = () => {
           <Route path="/inspiration" element={<Inspiration />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <Footer />
       </BrowserRouter>
     </Provider>
   );

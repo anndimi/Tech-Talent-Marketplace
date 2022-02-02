@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import add from "../../reducers/add";
+import Button from "@mui/material/Button";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 import { API_URL } from "../../utils/constants";
 
@@ -40,7 +42,16 @@ const DeleteAdd = ({ myAddsId }) => {
     });
   };
 
-  return <button onClick={onDeleteClick}>Delete Add</button>;
+  return (
+    <Button
+      sx={{ backgroundColor: "secondary.blue" }}
+      variant="contained"
+      onClick={onDeleteClick}
+      startIcon={<DeleteIcon />}
+    >
+      Delete Add
+    </Button>
+  );
 };
 
 export default DeleteAdd;

@@ -12,13 +12,15 @@ import { UploadImg } from "./UploadImg";
 import { MyAdds } from "./MyAdds";
 import { API_URL } from "../utils/constants";
 import { useParams } from "react-router-dom";
-import DeleteUser from "./Buttons/DeleteUser";
+import DeleteUser from "./elements/DeleteUser";
 import dummyUser from "../assets/dummy-user.png";
-import IconButton from '@mui/material/IconButton';
-import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import IconButton from "@mui/material/IconButton";
+import PhotoCamera from "@mui/icons-material/PhotoCamera";
 // import Input from '@mui/material/Input'
-import Button from '@mui/material/Button'
-import { styled } from '@mui/material/styles'
+import Button from "@mui/material/Button";
+import { styled } from "@mui/material/styles";
+import { Box } from "@mui/system";
+import { Typography } from "@mui/material";
 
 // const ProfileImage = styled.img`
 //   width: 100px;
@@ -27,9 +29,9 @@ import { styled } from '@mui/material/styles'
 //   object-fit: cover;
 // `;
 
-const hiddenInput = styled("input")({
-  display: "none"
-})
+const HiddenInput = styled("input")({
+  display: "none",
+});
 
 export const UserProfile = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
@@ -70,10 +72,46 @@ export const UserProfile = () => {
 
   return (
     <div>
-      <h1>Welcome to your page, {username}!</h1>
-      
-      <img style={{width: '100px', height: "100px", borderRadius: "50%", objectfitCover: "cover" }} src={image || dummyUser} alt="User Profile image" alt="profile" />
-      
+      <Box sx={{ display: "flex", justifyContent: "space-between", margin: 2 }}>
+        <Typography
+          sx={{
+            fontFamily: "primary.fontFamily",
+            fontWeight: "700",
+            fontSize: 30,
+            padding: 0,
+          }}
+        >
+          Welcome to your page, {username}!
+        </Typography>
+        <Button
+          variant="contained"
+          sx={{
+            fontFamily: "secondary.fontFamily",
+            letterSpacing: 1.3,
+            backgroundColor: "secondary.blue",
+          }}
+          onClick={onButtonClick}
+        >
+          Logout
+        </Button>
+      </Box>
+
+      <img
+        style={{
+          width: "150px",
+          height: "150px",
+          borderRadius: "50%",
+          objectfitCover: "cover",
+          backgroundPosition: "center",
+          borderColor: "#233540",
+          border: "solid 5px",
+          marginLeft: "10px",
+        }}
+        src={image || dummyUser}
+        alt="User Profile image"
+        alt="profile"
+      />
+
       {/* <button
         onClick={() => {
           navigate("edit/image");
@@ -83,11 +121,16 @@ export const UserProfile = () => {
         Upload profile image
       </button> */}
       <label htmlFor="icon-button-file">
-        <hiddenInput accept="image/*" id="icon-button-file" type="file" />
-        <IconButton color="primary" aria-label="upload picture" component="span" onClick={() => {
-          navigate("edit/image");
-          toggleImageModal();
-        }}>
+        {/* <HiddenInput accept="image/*" id="icon-button-file" type="file" /> */}
+        <IconButton
+          color="primary"
+          aria-label="upload picture"
+          component="span"
+          onClick={() => {
+            navigate("edit/image");
+            toggleImageModal();
+          }}
+        >
           <PhotoCamera />
         </IconButton>
       </label>
@@ -120,26 +163,23 @@ export const UserProfile = () => {
           <img src={githubIcon} alt="github-icon" />
         </a>
       </section>
-      <Button variant="contained" 
-      sx={{fontFamily: "secondary.fontFamily", letterSpacing: 1.3}}
-        // className="logout-button"
+      <Button
+        variant="contained"
+        sx={{
+          fontFamily: "secondary.fontFamily",
+          letterSpacing: 1.3,
+          backgroundColor: "secondary.blue",
+          margin: 1,
+        }}
         onClick={() => {
           navigate("edit");
           toggleEditModal();
         }}
       >
-        {/* <span style={{display: "flex", justifyContent: "center"}}> */}
-          Edit
-          {/* </span> */}
-      </Button>
-      <MyAdds />
-      <Button variant="contained" 
-      sx={{fontFamily: "secondary.fontFamily", letterSpacing: 1.3}}
-      // className="logout-button" 
-      onClick={onButtonClick}>
-        Logout
+        Edit
       </Button>
       <DeleteUser id={id} />
+      <MyAdds />
     </div>
   );
 };

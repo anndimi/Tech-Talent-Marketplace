@@ -1,30 +1,31 @@
 import React from "react";
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
 // import InputLabel from '@mui/material/InputLabel';
 // import InputAdornment from '@mui/material/InputAdornment';
 
 export const SearchBar = ({ searchValue, setSearchValue }) => {
   return (
-      <Box
+    <Box
       component="form"
       sx={{
-        '& > :not(style)': { m: 1, width: '160px' },
+        "& > :not(style)": { m: 1, width: "160px" },
         fontWeight: 600,
-        fontFamily: "primary.fontFamily"
-          }}
+        fontFamily: "primary.fontFamily",
+        alignSelf: "flex-end",
+      }}
       noValidate
       autoComplete="off"
     >
-        {/* <InputAdornment position="start">
+      {/* <InputAdornment position="start">
               <p>🔎</p>
           </InputAdornment> */}
-      <TextField 
-      id="standard-basic" 
-      label="🔎 Search " 
-      variant="standard" 
-      value={searchValue}
-      onChange={(event) => setSearchValue(event.target.value)} 
+      <TextField
+        id="standard-basic"
+        label="🔎 Search "
+        variant="standard"
+        value={searchValue}
+        onChange={(event) => setSearchValue(event.target.value)}
       />
     </Box>
   );

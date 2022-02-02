@@ -3,12 +3,14 @@ import React from "react";
 // import { useSelector, useDispatch } from "react-redux";
 // import { API_URL } from "../utils/constants";
 // import add from "../reducers/add";
+import { useState } from "react";
 import Box from "@mui/material/Box";
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
+import { SearchBar } from "./SearchBar";
 
 const AddFilter = ({
   filter,
@@ -20,9 +22,27 @@ const AddFilter = ({
   onSortByTimeChange,
   sortedAddItems,
 }) => {
+  const [searchValue, setSearchValue] = useState("");
+
+  // const onFilterChange = (event) => {
+  //   setFilter(event.target.value);
+  // };
+
+  // const onSortByTimeChange = (event) => {
+  //   setSort(event.target.value);
+  //   // sortedAddItems();
+  // };
+
+  // const onTypeChange = (event) => {
+  //   setType(event.target.value);
+  // };
+
   return (
-    <Box>
-    <FormControl variant="standard" sx={{ m: 1, width: '160px' }}>
+    <Box
+      sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+    >
+      <SearchBar setSearchValue={setSearchValue} searchValue={searchValue} />
+      <FormControl variant="standard" sx={{ m: 1, width: "160px" }}>
         <InputLabel id="demo-simple-select-standard-label">Category</InputLabel>
         <Select
           labelId="demo-simple-select-standard-label"
@@ -46,11 +66,10 @@ const AddFilter = ({
           <MenuItem value="Financial Consulting">Financial Consulting</MenuItem>
           <MenuItem value="Analytics">Analytics</MenuItem>
           <MenuItem value="Game Developer">Game Developer</MenuItem>
-          
         </Select>
       </FormControl>
 
-      <FormControl variant="standard" sx={{ m: 1, width: '160px' }}>
+      <FormControl variant="standard" sx={{ m: 1, width: "160px" }}>
         <InputLabel id="demo-simple-select-standard-label">Time</InputLabel>
         <Select
           labelId="demo-simple-select-standard-label"
@@ -69,7 +88,7 @@ const AddFilter = ({
         </Select>
       </FormControl>
 
-      <FormControl variant="standard" sx={{ m: 1, width: '160px' }}>
+      <FormControl variant="standard" sx={{ m: 1, width: "160px" }}>
         <InputLabel id="demo-simple-select-standard-label">Type</InputLabel>
         <Select
           labelId="demo-simple-select-standard-label"
@@ -85,7 +104,9 @@ const AddFilter = ({
           <MenuItem value="Join as">Join as</MenuItem>
         </Select>
       </FormControl>
-      <Button variant="contained" onClick={onFilterReset}>Reset</Button>
+      <Button variant="contained" onClick={onFilterReset}>
+        Reset
+      </Button>
     </Box>
   );
 };

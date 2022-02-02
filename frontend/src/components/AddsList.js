@@ -22,6 +22,8 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
+let humanize = require("humanize-number");
+
 const AddListSection = styled.section`
   /* padding: 20px; */
 `;
@@ -47,7 +49,6 @@ const AddWrapper = styled.div`
   flex-direction: row;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 15px;
 `;
 const TagWrapper = styled.div`
   display: flex;
@@ -142,19 +143,23 @@ const AddsList = () => {
 
   return (
     <>
-      <Button variant="contained"
+      <Button
+        variant="contained"
         onClick={() => {
           navigate("create");
           toggleModal();
         }}
       >
-        Create add
+        +
       </Button>
       <AddListSection onClick={() => setModalActive(false)}>
         <SingleAddModal />
-        <Box sx={{display: "flex", flexDirection: "row"}}>
-        <SearchBar setSearchValue={setSearchValue} searchValue={searchValue} />
-        <AddFilter
+        <Box>
+          {/* <SearchBar
+            setSearchValue={setSearchValue}
+            searchValue={searchValue}
+          /> */}
+          <AddFilter
             filter={filter}
             sort={sort}
             type={type}
@@ -164,7 +169,8 @@ const AddsList = () => {
             onSortByTimeChange={onSortByTimeChange}
             // sortedAddItems={sortedAddItems}
           />
-          </Box>
+        </Box>
+
         <div>
           <AddForm
             toggleModal={toggleModal}
@@ -172,7 +178,6 @@ const AddsList = () => {
             isModalActive={isModalActive}
             filteredAddItems={filteredAddItems}
           />
-          
         </div>
         <AddWrapper>
           {filteredAddItems.length === 0 ? (
@@ -184,7 +189,7 @@ const AddsList = () => {
                 onClick={() => {
                   navigate(item._id);
                 }}
-                sx={{ width: 350 }}
+                sx={{ width: 350, margin: 2 }}
               >
                 <CardContent>
                   <Box
@@ -207,7 +212,8 @@ const AddsList = () => {
                     <img
                       src={IconSwitcher(item.category)}
                       style={{ width: 38, height: 38 }}
-                    alt="icon"/>
+                      alt="icon"
+                    />
                   </Box>
                   <Typography
                     sx={{
@@ -230,20 +236,33 @@ const AddsList = () => {
                       fontFamily: "secondary.fontFamily",
                     }}
                   >
-                    Budget is {item.budget}
+                    Budget is {humanize(item.budget)}
                     {item.currency}
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Typography sx={{ fontFamily: "secondary.fontFamily" }}>
-                    Posted by:
-                  </Typography>
-                  <Button
-                    size="small"
-                    sx={{ fontFamily: "secondary.fontFamily" }}
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                    }}
                   >
-                    {item.user?.username}
-                  </Button>
+                    <Typography
+                      sx={{
+                        fontFamily: "secondary.fontFamily",
+                      }}
+                    >
+                      Posted by:
+                    </Typography>
+                    <Button
+                      size="small"
+                      sx={{
+                        fontFamily: "secondary.fontFamily",
+                      }}
+                    >
+                      {item.user?.username}
+                    </Button>
+                  </Box>
                 </CardActions>
               </Card>
             ))

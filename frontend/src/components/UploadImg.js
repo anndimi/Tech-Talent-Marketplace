@@ -5,15 +5,16 @@ import { API_URL } from "../utils/constants";
 import user from "../reducers/user";
 import styled from "styled-components";
 import closeIcon from "../assets/close.png";
-import { CloseButton } from "./Buttons/StyledButtons";
+import { CloseButton } from "./elements/StyledButtons";
+import { ModalWrapper, ModalCard, ModalHeader } from "./elements/Modal";
 
-const EditModalWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-`;
+// const EditModalWrapper = styled.div`
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   width: 100%;
+//   height: 100%;
+// `;
 const EditModal = styled.div`
   &.edit-modal-active {
     padding: 0 0 10px 0;
@@ -69,33 +70,41 @@ export const UploadImg = ({
     onClose(navigate(`/userprofile/${id}`));
   };
 
-  return (
-    <>
-      <EditModalWrapper>
-        <EditModal
-          className={
-            isImageModalActive ? "edit-modal-active" : "edit-modal-inactive"
-          }
-          onClick={(e) => e.stopPropagation()}
-        >
-          <CloseButton
-            onClick={() => {
-              navigate(`/userprofile/${id}`);
-              toggleImageModal();
-            }}
+  if (isImageModalActive) {
+    document.body.style.overflow = "hidden";
+    return (
+      <>
+        <ModalWrapper>
+          <ModalCard
+            className={
+              isImageModalActive ? "edit-modal-active" : "edit-modal-inactive"
+            }
+            onClick={(e) => e.stopPropagation()}
           >
-            <img src={closeIcon} alt="close window" />
-          </CloseButton>
-          <h1>edit your profile image</h1>
-          <form onSubmit={handleFormSubmit}>
-            <label>
-              Upload profile Image.
-              <input type="file" ref={fileInput} />
-            </label>
-            <button type="submit">Save</button>
-          </form>
-        </EditModal>
-      </EditModalWrapper>
-    </>
-  );
+            <ModalHeader>
+              <h1>edit your profile image</h1>
+              <CloseButton
+                onClick={() => {
+                  navigate(`/userprofile/${id}`);
+                  toggleImageModal();
+                }}
+              >
+                <img src={closeIcon} alt="close window" />
+              </CloseButton>
+            </ModalHeader>
+            <form onSubmit={handleFormSubmit}>
+              <label>
+                Upload profile Image.
+                <input type="file" ref={fileInput} />
+              </label>
+              <button type="submit">Save</button>
+            </form>
+          </ModalCard>
+        </ModalWrapper>
+      </>
+    );
+  } else {
+    document.body.style.overflow = "visible";
+    return null;
+  }
 };

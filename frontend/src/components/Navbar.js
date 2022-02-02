@@ -5,7 +5,7 @@ import Open from "../assets/menu.png";
 import Close from "../assets/close.png";
 import logoImg from "../assets/logo.png";
 import { useSelector } from "react-redux";
-import { SignOutButton } from "./Buttons/StyledButtons";
+import { SignOutButton } from "./elements/StyledButtons";
 // import AddForm from "./AddForm";
 
 const HeaderContainer = styled.div`

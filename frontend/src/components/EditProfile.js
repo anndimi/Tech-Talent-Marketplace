@@ -4,47 +4,18 @@ import { API_URL } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import closeIcon from "../assets/close.png";
-import { CloseButton } from "./Buttons/StyledButtons";
+import { CloseButton } from "./elements/StyledButtons";
 import { useNavigate } from "react-router-dom";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import { ModalWrapper, ModalCard, ModalHeader } from "./elements/Modal";
 
 import user from "../reducers/user";
-
-const EditModalWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-`;
-const EditModal = styled.div`
-  &.edit-modal-active {
-    padding: 0 0 10px 0;
-    z-index: 10;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    gap: 50px;
-    align-items: center;
-    position: absolute;
-    top: 20%;
-    background: #212427;
-    color: #ffffff;
-    width: 50%;
-    height: 90%;
-    border-radius: 15px;
-    overflow-y: scroll;
-  }
-  &.edit-modal-inactive {
-    display: none;
-  }
-  /* form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 20px;
-    width: 60%;
-  } */
-`;
 
 export const EditProfile = ({
   isEditModalActive,
@@ -112,101 +83,121 @@ export const EditProfile = ({
 
   // console.log("hello from", userInfo.location);
   // console.log("your name is", userInfo.name);
+  if (isEditModalActive) {
+    document.body.style.overflow = "hidden";
+    return (
+      <>
+        <ModalWrapper>
+          <ModalCard onClick={(e) => e.stopPropagation()}>
+            <ModalHeader>
+              <Typography
+                sx={{
+                  fontFamily: "primary.fontFamily",
+                  fontSize: 28,
+                  fontWeight: 600,
+                }}
+              >
+                Edit your profile
+              </Typography>
+              <Button
+                sx={{ alignSelf: "flex-start", paddingTop: 1.5 }}
+                onClick={() => {
+                  navigate(`/userprofile/${id}`);
+                  toggleEditModal();
+                }}
+              >
+                <img
+                  style={{ height: 35, width: 35 }}
+                  src={closeIcon}
+                  alt="close window"
+                />
+              </Button>
+            </ModalHeader>
 
-  return (
-    <>
-      <EditModalWrapper
-      // onClick={() => {
-      //   navigate("userprofile");
-      //   toggleEditModal();
-      // }}
-      >
-        <EditModal
-          className={
-            isEditModalActive ? "edit-modal-active" : "edit-modal-inactive"
-          }
-          onClick={(e) => e.stopPropagation()}
-        >
-          <CloseButton
-            onClick={() => {
-              navigate(`/userprofile/${id}`);
-              toggleEditModal();
-            }}
-          >
-            <img src={closeIcon} alt="close window" />
-          </CloseButton>
-          <h1>edit your profile</h1>
+            <form onSubmit={onFormSubmit}>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 2.5,
+                  margin: 4,
+                }}
+              >
+                <TextField
+                  sx={{ fontStyle: "italic" }}
+                  id="filled-basic"
+                  label="Name"
+                  variant="filled"
+                  defaultValue={userInfo.name}
+                  onChange={(e) =>
+                    setUserInfo({ ...userInfo, name: e.target.value })
+                  }
+                />
+                <TextField
+                  sx={{ fontStyle: "italic" }}
+                  id="filled-basic"
+                  label="Location"
+                  variant="filled"
+                  defaultValue={userInfo.location}
+                  onChange={(e) =>
+                    setUserInfo({ ...userInfo, location: e.target.value })
+                  }
+                />
+                <TextField
+                  sx={{ fontStyle: "italic" }}
+                  id="filled-basic"
+                  label="Bio"
+                  rows={3}
+                  multiline
+                  variant="filled"
+                  defaultValue={userInfo.bio}
+                  onChange={(e) =>
+                    setUserInfo({ ...userInfo, bio: e.target.value })
+                  }
+                />
+                <TextField
+                  sx={{ fontStyle: "italic" }}
+                  id="filled-basic"
+                  label="LinkedIn"
+                  variant="filled"
+                  placeholder="https://..."
+                  defaultValue={userInfo.linkedIn}
+                  onChange={(e) =>
+                    setUserInfo({ ...userInfo, linkedIn: e.target.value })
+                  }
+                />
+                <TextField
+                  sx={{ fontStyle: "italic" }}
+                  id="filled-basic"
+                  label="Github"
+                  variant="filled"
+                  placeholder="https://..."
+                  defaultValue={userInfo.github}
+                  onChange={(e) =>
+                    setUserInfo({ ...userInfo, github: e.target.value })
+                  }
+                />
 
-          {/* <p>Username: {userInfo.name}</p> */}
-          <form onSubmit={onFormSubmit}>
-            {/* <label htmlFor="image">Profile image</label>
-            <input
-              ref={fileInput}
-              accept="image/png, image/jpeg"
-              id="image"
-              type="file"
-              value={userInfo.imageUrl ? userInfo.imageUrl : ""}
-              placeholder="image"
-              onChange={(e) => {
-                console.log("changes", e.target.value);
-                setUserInfo({ ...userInfo, imageUrl: e.target.value });
-              }}
-            /> */}
+                <Button
+                  variant="contained"
+                  type="submit"
+                  sx={{
+                    fontFamily: "secondary.fontFamily",
+                    letterSpacing: 1.3,
 
-            <label htmlFor="name">Name</label>
-            <input
-              id="name"
-              type="text"
-              defaultValue={userInfo.name}
-              placeholder="name"
-              onChange={(e) =>
-                setUserInfo({ ...userInfo, name: e.target.value })
-              }
-            />
-            <label htmlFor="location">Location</label>
-            <input
-              id="location"
-              type="text"
-              defaultValue={userInfo.location}
-              placeholder="location"
-              onChange={(e) =>
-                setUserInfo({ ...userInfo, location: e.target.value })
-              }
-            />
-            <label htmlFor="bio">Bio</label>
-            <input
-              id="bio"
-              type="textarea"
-              defaultValue={userInfo.bio}
-              placeholder="bio"
-              onChange={(e) =>
-                setUserInfo({ ...userInfo, bio: e.target.value })
-              }
-            />
-            <label htmlFor="linkedin">LinkedIn</label>
-            <input
-              id="linkedin"
-              type="text"
-              placeholder="LinkedIn"
-              defaultValue={userInfo.linkedIn}
-              onChange={(e) =>
-                setUserInfo({ ...userInfo, linkedIn: e.target.value })
-              }
-            />
-            <label htmlFor="github">Github</label>
-            <input
-              id="github"
-              type="text"
-              placeholder="GitHub"
-              defaultValue={userInfo.github}
-              onChange={(e) =>
-                setUserInfo({ ...userInfo, github: e.target.value })
-              }
-            />
-            <button type="submit">Save changes</button>
-          </form>
-        </EditModal>
-      </EditModalWrapper>
-    </>
-  );
+                    margin: 1,
+                  }}
+                >
+                  Save changes
+                </Button>
+              </Box>
+            </form>
+          </ModalCard>
+        </ModalWrapper>
+      </>
+    );
+  } else {
+    document.body.style.overflow = "visible";
+    return null;
+  }
 };

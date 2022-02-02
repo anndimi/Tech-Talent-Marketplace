@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { API_URL } from "../../utils/constants";
 import swal from "sweetalert";
 import { useNavigate } from "react-router-dom";
+import Button from "@mui/material/Button";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const DeleteUser = ({ id }) => {
   const navigate = useNavigate();
@@ -36,7 +38,21 @@ const DeleteUser = ({ id }) => {
     });
   };
 
-  return <button onClick={onDeleteClick}>Delete user</button>;
+  return (
+    <Button
+      sx={{
+        fontFamily: "secondary.fontFamily",
+        letterSpacing: 1.3,
+        backgroundColor: "secondary.blue",
+        margin: 1,
+      }}
+      variant="contained"
+      onClick={onDeleteClick}
+      startIcon={<DeleteIcon />}
+    >
+      Delete user
+    </Button>
+  );
 };
 
 export default DeleteUser;

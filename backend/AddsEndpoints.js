@@ -55,12 +55,16 @@ export const DeleteAdd = async (req, res) => {
 //RegExp to search for queries in frontend
 export const GetAllAdds = async (req, res) => {
   const { title, description } = req.query;
+  let today = new Date();
+  let last30days = new Date(today.setDate(today.getDate() + 30));
   try {
     const allAdds = await Add.find({
       title: new RegExp(title, "i"),
       description: new RegExp(description, "i"),
+      // createdAt: createdAt + 30 < today,
+      createdAt: { $lt: today, $lt: last30days },
     })
-      .sort({ createdAt: "desc" })
+      .sort({ createdAt: "desc" }) //sorterar
       .populate("user", {
         username: 1,
         email: 1,
