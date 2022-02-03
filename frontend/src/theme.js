@@ -7,7 +7,7 @@ const theme = createTheme({
     },
     secondary: {
       main: "#F8C53A",
-      text: "#141414",
+      text: "#4C4C4C",
       overlay: "#51637099",
       aubergine: "#704462",
       yellow: "#F9F871",

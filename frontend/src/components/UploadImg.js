@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { API_URL } from "../utils/constants";
 import user from "../reducers/user";
 import styled from "styled-components";
-import closeIcon from "../assets/close.png";
+import closeIcon from "../assets/icons/close.png";
 import { CloseButton } from "./elements/StyledButtons";
 import { ModalWrapper, ModalCard, ModalHeader } from "./elements/Modal";
 import Typography from "@mui/material/Typography";

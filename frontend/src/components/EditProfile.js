@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { API_URL } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import closeIcon from "../assets/close.png";
+import closeIcon from "../assets/icons/close.png";
 import { CloseButton } from "./elements/StyledButtons";
 import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";

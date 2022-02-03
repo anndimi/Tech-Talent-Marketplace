@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import Open from "../assets/menu.png";
-import Close from "../assets/close.png";
-import logoImg from "../assets/logo.png";
+import Open from "../assets/icons/menu.png";
+import Close from "../assets/icons/close.png";
+import logoImg from "../assets/icons/logo.png";
 import { useSelector } from "react-redux";
 import { SignOutButton } from "./elements/StyledButtons";
 // import AddForm from "./AddForm";

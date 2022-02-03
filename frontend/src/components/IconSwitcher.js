@@ -1,16 +1,16 @@
 import React from "react";
-import analyticsIcon from "../assets/analytics-icon.png";
-import appIcon from "../assets/app-icon.png";
-import backendIcon from "../assets/backend-icon.png";
-import chatbotIcon from "../assets/chatbot-icon.png";
-import designIcon from "../assets/design-icon.png";
-import financialIcon from "../assets/financial-icon.png";
-import frontendIcon from "../assets/frontend-icon.png";
-import fullstackIcon from "../assets/fullstack-icon.png";
-import gameIcon from "../assets/game-icon.png";
-import lawIcon from "../assets/law-icon.png";
-import leadIcon from "../assets/lead-icon.png";
-import qaIcon from "../assets/qa-icon.png";
+import analyticsIcon from "../assets/icons/analytics-icon.png";
+import appIcon from "../assets/icons/app-icon.png";
+import backendIcon from "../assets/icons/backend-icon.png";
+import chatbotIcon from "../assets/icons/chatbot-icon.png";
+import designIcon from "../assets/icons/design-icon.png";
+import financialIcon from "../assets/icons/financial-icon.png";
+import frontendIcon from "../assets/icons/frontend-icon.png";
+import fullstackIcon from "../assets/icons/fullstack-icon.png";
+import gameIcon from "../assets/icons/game-icon.png";
+import lawIcon from "../assets/icons/law-icon.png";
+import leadIcon from "../assets/icons/lead-icon.png";
+import qaIcon from "../assets/icons/qa-icon.png";
 
 const IconSwitcher = (category) => {
   switch (category) {

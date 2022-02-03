@@ -5,17 +5,18 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import moment from "moment";
 // import styled from "styled-components";
-import linkedinIcon from "../assets/linkedin-icon.png";
-import githubIcon from "../assets/github-icon.png";
+import linkedinIcon from "../assets/icons/linkedin-icon.png";
+import githubIcon from "../assets/icons/github-icon.png";
 import { EditProfile } from "./EditProfile";
 import { UploadImg } from "./UploadImg";
 import { MyAdds } from "./MyAdds";
 import { API_URL } from "../utils/constants";
 import { useParams } from "react-router-dom";
 import DeleteUser from "./elements/DeleteUser";
-import dummyUser from "../assets/dummy-user.png";
+import dummyUser from "../assets/icons/dummy-user.png";
 import IconButton from "@mui/material/IconButton";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
+import UserBg from "../assets/images/user-bg.jpg";
 
 import Button from "@mui/material/Button";
 // import { styled } from "@mui/material/styles";
@@ -32,13 +33,20 @@ import Paper from "@mui/material/Paper";
 import CardContent from "@mui/material/CardContent";
 import Fab from "@mui/material/Fab";
 import EditIcon from "@mui/icons-material/Edit";
+import styled from "styled-components";
 
-// const ProfileImage = styled.img`
-//   width: 100px;
-//   height: 100px;
-//   border-radius: 50%;
-//   object-fit: cover;
-// `;
+const StyledUserImage = styled.div`
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url(${UserBg});
+  height: 350px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+`;
 
 export const UserProfile = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
@@ -93,69 +101,85 @@ export const UserProfile = () => {
 
   return (
     <div>
-      <Box sx={{ display: "flex", justifyContent: "space-between", margin: 2 }}>
-        <Button
-          variant="contained"
-          sx={{
-            fontFamily: "secondary.fontFamily",
-            letterSpacing: 1.3,
-            backgroundColor: "secondary.blue",
-          }}
-          onClick={onButtonClick}
-        >
-          Logout
-        </Button>
-      </Box>
-      <Box sx={{ display: "flex" }}>
-        <img
-          style={{
-            width: "150px",
-            height: "150px",
-            borderRadius: "50%",
-            objectfitCover: "cover",
-            backgroundPosition: "center",
-            borderColor: "#233540",
-            border: "solid 5px",
-            marginLeft: "10px",
-          }}
-          src={image || dummyUser}
-          alt="User Profile image"
-          alt="profile"
-        />
-        <Typography
-          sx={{
-            fontFamily: "primary.fontFamily",
-            fontWeight: "700",
-            fontSize: 30,
-            padding: 0,
-            alignSelf: "end",
-          }}
-        >
-          {username}
-        </Typography>
+      <Box>
+        <StyledUserImage />
+        <Box
+          sx={{ display: "flex", justifyContent: "space-between", margin: 2 }}
+        ></Box>
+        <Box sx={{ display: "flex" }}>
+          <img
+            style={{
+              width: "150px",
+              height: "150px",
+              borderRadius: "50%",
+              objectfitCover: "cover",
+              backgroundPosition: "center",
+              // borderStyle: "none",
+              border: "solid 5px #faf8f8",
+              marginLeft: "120px",
+              marginTop: "25px",
+              zIndex: 3,
+              outline: 0,
+            }}
+            src={image || dummyUser}
+            alt="User Profile image"
+            alt="profile"
+          />
+          <Box sx={{ zIndex: 4, marginLeft: 2 }}>
+            <Box sx={{ marginTop: 4 }}>
+              <Typography
+                sx={{
+                  fontFamily: "primary.fontFamily",
+                  fontWeight: "700",
+                  fontSize: 30,
+                  padding: 0,
+                  alignSelf: "end",
+                  zIndex: 3,
+                  color: "white",
+                }}
+              >
+                {username}
+              </Typography>
+              <Typography
+                sx={{
+                  padding: 0,
+                  fontFamily: "primary.fontFamily",
+                  color: "white",
+                }}
+              >
+                Member since {moment(created).format("MMMM Do YYYY")}
+              </Typography>
+            </Box>
+            <Box sx={{ marginTop: 2, marginBottom: 2 }}>
+              <Fab
+                onClick={() => {
+                  navigate("edit");
+                  toggleEditModal();
+                }}
+                sx={{ height: 50, width: 50 }}
+              >
+                <EditIcon />
+              </Fab>
+              <label htmlFor="icon-button-file">
+                <IconButton
+                  color="primary"
+                  aria-label="upload picture"
+                  component="span"
+                  onClick={() => {
+                    navigate("edit/image");
+                    toggleImageModal();
+                  }}
+                >
+                  <Fab sx={{ height: 50, width: 50 }}>
+                    <PhotoCamera />
+                  </Fab>
+                </IconButton>
+              </label>
+            </Box>
+          </Box>
+        </Box>
       </Box>
 
-      {/* <button
-        onClick={() => {
-          navigate("edit/image");
-          toggleImageModal();
-        }}
-      >
-        Upload profile image
-      </button> */}
-      <label htmlFor="icon-button-file">
-        <IconButton
-          color="primary"
-          aria-label="upload picture"
-          component="span"
-          onClick={() => {
-            navigate("edit/image");
-            toggleImageModal();
-          }}
-        >
-          <PhotoCamera />
-        </IconButton>
-      </label>
       <section
         onClick={() => {
           setEditModalActive(false);
@@ -173,69 +197,53 @@ export const UserProfile = () => {
           toggleImageModal={toggleImageModal}
           onClose={() => setImageModalActive(false)}
         />
-        <Box sx={{ display: "flex", justifyContent: "center" }}>
-          <TableContainer component={Paper} sx={{ width: "70%" }}>
+        <Box sx={{ display: "flex", justifyContent: "center", padding: 3 }}>
+          <TableContainer component={Paper} sx={{ width: "60%" }}>
             <Table sx={{ minWidth: "650" }} aria-label="simple table">
               <TableBody>
                 {rows.map((row) => (
                   <TableRow
                     key={row.key}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    sx={{
+                      "&:last-child td, &:last-child th": { border: 0 },
+                      fontFamily: "primary.fontFamily",
+                    }}
                   >
                     <TableCell component="th" scope="row">
                       {row.key}
                     </TableCell>
                     <TableCell component="th" scope="row"></TableCell>
 
-                    <TableCell align="center">{row.value}</TableCell>
+                    <TableCell align="left">{row.value}</TableCell>
                   </TableRow>
                 ))}
-                <TableCell align="right">
-                  <CardContent></CardContent>
+                <TableCell align="left">
+                  <a href={linkedIn} target="_blank" rel="noopener noreferrer">
+                    <img src={linkedinIcon} alt="linkedin-icon" />
+                  </a>
+                  <a href={gitHub} target="_blank" rel="noopener noreferrer">
+                    <img src={githubIcon} alt="github-icon" />
+                  </a>
                 </TableCell>
-                <TableCell align="left"></TableCell>
               </TableBody>
             </Table>
           </TableContainer>
         </Box>
-        <Fab
-          onClick={() => {
-            navigate("edit");
-            toggleEditModal();
-          }}
-        >
-          <EditIcon />
-        </Fab>
-        <Button
-          variant="contained"
-          sx={{
-            fontFamily: "secondary.fontFamily",
-            letterSpacing: 1.3,
-            backgroundColor: "secondary.blue",
-            margin: 1,
-          }}
-          onClick={() => {
-            navigate("edit");
-            toggleEditModal();
-          }}
-        >
-          Edit
-        </Button>
-        <p>Member since {moment(created).format("MMMM Do YYYY")}</p>
-        <p>Name: {name}</p>
-        <p>Location: {location}</p>
-        <p>Bio: {userBio}</p>
-        <p>Your email is {email}</p>
-        <a href={linkedIn} target="_blank" rel="noopener noreferrer">
-          <img src={linkedinIcon} alt="linkedin-icon" />
-        </a>
-        <a href={gitHub} target="_blank" rel="noopener noreferrer">
-          <img src={githubIcon} alt="github-icon" />
-        </a>
       </section>
+      <MyAdds />
 
       <DeleteUser id={id} />
-      <MyAdds />
+      <Button
+        variant="contained"
+        sx={{
+          fontFamily: "secondary.fontFamily",
+          letterSpacing: 1.3,
+          backgroundColor: "secondary.blue",
+        }}
+        onClick={onButtonClick}
+      >
+        Sign out
+      </Button>
     </div>
   );
 };

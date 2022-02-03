@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 // import { StyledButton } from "./Buttons/StyledButtons";
-import closeIcon from "../assets/close.png";
+import closeIcon from "../assets/icons/close.png";
 import moment from "moment";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
