@@ -25,3 +25,8 @@ code {
 ::-webkit-scrollbar-thumb {
   background: #51637099;
 }
+
+#root {
+  position: relative;
+  height: 100%;
+}

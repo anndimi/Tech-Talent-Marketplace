@@ -100,9 +100,7 @@ const AddsList = () => {
   useEffect(() => {
     const options = {
       method: "GET",
-      headers: {
-        // Authorization: accessToken,
-      },
+    
     };
     fetch(API_URL(`adds?title=${searchValue}`), options)
       .then((res) => res.json())
@@ -119,10 +117,18 @@ const AddsList = () => {
       });
   }, [searchValue, dispatch]);
 
-  // ,[accessToken] add to line above
 
   return (
     <>
+            <Button
+              variant="contained"
+              onClick={() => {
+                navigate("create");
+                toggleModal();
+              }}
+            >
+              +
+            </Button>
       <AddListSection onClick={() => setModalActive(false)}>
         <SingleAddModal />
         <Box
@@ -133,15 +139,6 @@ const AddsList = () => {
             flexWrap: "wrap",
           }}
         >
-          <Button
-            variant="contained"
-            onClick={() => {
-              navigate("create");
-              toggleModal();
-            }}
-          >
-            +
-          </Button>
           {/* <SearchBar
             setSearchValue={setSearchValue}
             searchValue={searchValue}

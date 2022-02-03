@@ -7,6 +7,8 @@ import { CloseButton } from "./elements/StyledButtons";
 import styled from "styled-components";
 import closeIcon from "../assets/icons/close.png";
 import { useNavigate } from "react-router-dom";
+import {ModalWrapper, ModalCard, ModalHeader} from "./elements/Modal"
+import { Typography, TextField, Box,InputLabel, MenuItem, FormControl, Select, Button, Input } from "@mui/material";
 
 const Section = styled.section`
   width: 100%;
@@ -26,13 +28,7 @@ const SectionOverlay = styled.div`
   background-color: rgba(0, 0, 0, 0.5); */
 `;
 
-const ModalWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-`;
+
 
 const AddModal = styled.div`
   &.modal-active {
@@ -175,20 +171,35 @@ const AddForm = ({ isModalActive, onClose, toggleModal }) => {
       <Section>
         <SectionOverlay>
           <ModalWrapper>
-            <AddModal
+            <ModalCard sx={{overflowY: "auto"}}
               className={isModalActive ? "modal-active" : "modal-inactive"}
               onClick={(e) => e.stopPropagation()}
             >
-              <CloseButton
+              <ModalHeader sx={{display:"flex", alignItems:"center",justifyContent:"space-between" ,bgcolor: "secondary.main", padding: 1.5 }}>
+                <Typography
+                sx={{
+                  fontFamily: "primary.fontFamily",
+                  fontSize: 20,
+                  fontWeight: 700,
+                }}
+              >
+                Create add
+              </Typography>
+              <Button sx={{ alignSelf: "flex-start" }}
                 onClick={() => {
                   toggleModal();
                   navigate("");
                 }}
               >
-                <img src={closeIcon} alt="close window" />
-              </CloseButton>
-
+                <img src={closeIcon} alt="close window" style={{height:35, width:35}}/>
+              </Button>
+</ModalHeader>
               <form onSubmit={onFormSubmit}>
+              <Box sx={{display: "flex",
+                  flexDirection: "column",
+                  gap: 2.5,
+                  margin: 4,}}>
+
                 <RadioButtonsContainer>
                   <label htmlFor="Looking for">Looking for </label>
                   <input
@@ -211,105 +222,79 @@ const AddForm = ({ isModalActive, onClose, toggleModal }) => {
                     onChange={(e) => setTypeOf(e.target.value)}
                   />
                 </RadioButtonsContainer>
-                <LabelInput>
-                  <label htmlFor="category">Category </label>
-                  <select
-                    value={info.category}
+              
+                <Select variant="filled" labelId="demo-simple-select-standard-label" id="demo-simple-select-standard" lable="Category"  value={info.category}
                     required
                     onChange={(e) =>
                       setInfo({ ...info, category: e.target.value })
-                    }
-                  >
-                    <option hidden value="">
-                      Category
-                    </option>
-                    <option value="Frontend">Frontend</option>
-                    <option value="Backend">Backend</option>
-                    <option value="Graphics and Design">
-                      Graphics and Design
-                    </option>
-                    <option value="Fullstack">Fullstack</option>
-                    <option value="App Developer">App Developer</option>
-                    <option value="Chatbots">Chatbots</option>
-                    <option value="Project Lead">Project Lead</option>
-                    <option value="QA">QA</option>
-                    <option value="Legal Consulting">Legal Consulting</option>
-                    <option value="Financial Consulting">
-                      Financial Consulting
-                    </option>
-                    <option value="Analytics">Analytics</option>
-                    <option value="Game Developer">Game Developer</option>
-                  </select>
-                </LabelInput>
-                <LabelInput>
-                  <label htmlFor="title">Title </label>
-                  <input
-                    id="title"
-                    type="text"
-                    placeholder="A cathing title.."
-                    value={info.title}
-                    required
-                    onChange={(e) =>
-                      setInfo({ ...info, title: e.target.value })
-                    }
-                  ></input>
-                </LabelInput>
+                    }> 
+                    
+                <MenuItem value="Frontend">Frontend</MenuItem>
+          <MenuItem value="Backend">Backend</MenuItem>
+          <MenuItem value="Graphics and Design">Graphics and Design</MenuItem>
+          <MenuItem value="Fullstack">Fullstack</MenuItem>
+          <MenuItem value="App Developer">App Developer</MenuItem>
+          <MenuItem value="Chatbots">Chatbots</MenuItem>
+          <MenuItem value="Project Lead">Project Lead</MenuItem>
+          <MenuItem value="QA">QA</MenuItem>
+          <MenuItem value="Legal Consulting">Legal Consulting</MenuItem>
+          <MenuItem value="Financial Consulting">Financial Consulting</MenuItem>
+          <MenuItem value="Analytics">Analytics</MenuItem>
+          <MenuItem value="Game Developer">Game Developer</MenuItem>
+                </Select>
 
-                <LabelInput>
-                  <label htmlFor="description">Description </label>
-                  <textarea
-                    id="title"
-                    type="text"
-                    value={info.description}
-                    placeholder="Describe the opportunity.."
-                    autoComplete="off"
-                    required
-                    onChange={(e) =>
-                      setInfo({ ...info, description: e.target.value })
-                    }
-                  />
-                </LabelInput>
+                <TextField id="filled-basic"
+                  label="Title"
+                  variant="filled" placeholder="A cathing title.."
+                  value={info.title}
+                  required
+                  onChange={(e) =>
+                    setInfo({ ...info, title: e.target.value })
+                  }></TextField>
+                
+                <TextField id="filled-basic"
+                  label="Description"
+                  variant="filled"    value={info.description}
+                  placeholder="Describe the opportunity.."
+                  autoComplete="off"
+                  rows={3}
+                  multiline
+                  required
+                  onChange={(e) =>
+                    setInfo({ ...info, description: e.target.value })
+                  }> </TextField>
 
-                <LabelInput>
-                  <label htmlFor="password">Budget </label>
-                  <input
-                    required
-                    id="budget"
-                    type="number"
-                    min="0"
-                    value={info.budget}
-                    onChange={(e) =>
-                      setInfo({ ...info, budget: e.target.value })
-                    }
-                  ></input>
-                </LabelInput>
 
-                <LabelInput>
-                  <label htmlFor="currency">Currency</label>
-                  <select
-                    value={info.currency}
+
+            <TextField id="filled-basic"
+                  label="Budget"
+                  variant="filled"     required type="number"
+                  min="0"
+                  value={info.budget}
+                  onChange={(e) =>
+                    setInfo({ ...info, budget: e.target.value })
+                  }></TextField>
+
+<Select variant="filled" labelId="demo-simple-select-standard-label" d="demo-simple-select-standard" label="Currency"   value={info.currency}
                     required
                     onChange={(e) =>
                       setInfo({ ...info, currency: e.target.value })
-                    }
-                  >
-                    {/* <option hidden>Choose</option> */}
-                    <option hidden value="">
-                      Choose
-                    </option>
-                    <option value="SEK">SEK</option>
-                    <option value="EUR">EUR</option>
-                    <option value="USD">USD</option>
-                    <option value="NOK">NOK</option>
-                    <option value="GBP">GBP</option>
-                    <option value="DKK">DKK</option>
-                    <option value="CNY">CNY</option>
-                  </select>
-                </LabelInput>
+                    }>
+    <MenuItem value="SEK">SEK</MenuItem>
+    <MenuItem value="EUR">EUR</MenuItem>
+    <MenuItem value="USD">USD</MenuItem>
+    <MenuItem value="NOK">NOK</MenuItem>
+    <MenuItem value="GBP">GBP</MenuItem>
+    <MenuItem value="DKK">DKK</MenuItem>
+    <MenuItem value="CNY">CNY</MenuItem>
+                    </Select>
 
-                <StyledButton type="submit">Submit</StyledButton>
+                
+
+                <Button variant="contained" type="submit">Submit</Button>
+                </Box>
               </form>
-            </AddModal>
+            </ModalCard>
           </ModalWrapper>
         </SectionOverlay>
       </Section>

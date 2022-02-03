@@ -6,9 +6,10 @@ import { Link } from "react-router-dom";
 const FooterWrapper = styled.div`
   background-color: #342c42;
   color: white;
-
+  margin-top:30px;
   text-align: center;
   padding: 30px;
+
 `;
 
 const LogoContainer = styled.img`
@@ -25,12 +26,15 @@ const LogoContainer = styled.img`
 const GroupWrapper = styled.div`
   display: flex;
   flex-direction: column;
+
 `;
 
 const LinkWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  max-width:600px;
+  margin: auto;
 `;
 
 const Links = styled.a`
@@ -57,6 +61,7 @@ const StyledLink = styled(Link)`
 const Heading = styled.h3`
   color: #f8c53a;
   margin: 10px;
+  text-decoration:underline;
 `;
 
 const Title = styled.h2`
@@ -68,15 +73,27 @@ const Title = styled.h2`
 const Year = styled.p`
   margin: 10px 0px 0px 0px;
   padding: 0;
+  font-size:10px;
+`;
+
+const LogoTitleAligner = styled.div`
+display: flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+@media (min-width: 600px) {
+    flex-direction: row;
+    margin-bottom:10px;
+  }
 `;
 
 export const Footer = () => {
   return (
     <FooterWrapper>
-      <div>
+      <LogoTitleAligner>
         <LogoContainer />
         <Title>Tech Talent Marketplace</Title>
-      </div>
+      </LogoTitleAligner>
 
       <LinkWrapper>
         <GroupWrapper>
@@ -88,11 +105,11 @@ export const Footer = () => {
         </GroupWrapper>
 
         <GroupWrapper>
-          <Heading>Our service</Heading>
-          <Links href="#">About TTM</Links>
+          <Heading>Product</Heading>
+          <Links href="#">Partner with us</Links>
           <StyledLink to="/signup">Sign in</StyledLink>
-          <Links href="#">Terms of use</Links>
-          <Links href="#">Terms of use</Links>
+          <Links href="#">Help</Links>
+          <Links href="#">Business</Links>
         </GroupWrapper>
 
         <GroupWrapper>
@@ -103,7 +120,7 @@ export const Footer = () => {
           <Links href="#">Github</Links>
         </GroupWrapper>
       </LinkWrapper>
-      <Year>2022</Year>
+      <Year>© 2022</Year>
     </FooterWrapper>
   );
 };

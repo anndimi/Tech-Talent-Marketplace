@@ -4,7 +4,7 @@ import { Box } from "@mui/material";
 
 export const Startpage = () => {
   return (
-    <Box>
+    <Box sx={{display: "block"}}>
       <HeroImage />
       <Box
         sx={{
