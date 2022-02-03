@@ -19,7 +19,7 @@ const StyledHeroImage = styled.div`
 
 const HeroImage = () => {
   return (
-    <Box sx={{ height: "100vh" }}>
+    <Box sx={{ height: "100%" }}>
       <StyledHeroImage>
         <Typography
           sx={{

@@ -17,7 +17,7 @@ import dummyUser from "../assets/icons/dummy-user.png";
 import IconButton from "@mui/material/IconButton";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import UserBg from "../assets/images/user-bg.jpg";
-
+import useMediaQuery from "@mui/material/useMediaQuery";
 import Button from "@mui/material/Button";
 // import { styled } from "@mui/material/styles";
 import { Box } from "@mui/system";
@@ -87,6 +87,8 @@ export const UserProfile = () => {
     dispatch(user.actions.setAccessToken(null));
   };
 
+  const matches = useMediaQuery((theme) => theme.breakpoints.up("tablet"));
+
   const createData = (key, value) => {
     return { key, value };
   };
@@ -100,7 +102,7 @@ export const UserProfile = () => {
   ];
 
   return (
-    <div>
+    <>
       <Box>
         <StyledUserImage />
         <Box
@@ -112,11 +114,11 @@ export const UserProfile = () => {
               width: "150px",
               height: "150px",
               borderRadius: "50%",
-              objectfitCover: "cover",
+              objectFit: "cover",
               backgroundPosition: "center",
               // borderStyle: "none",
               border: "solid 5px #faf8f8",
-              marginLeft: "120px",
+              marginLeft: "10%",
               marginTop: "25px",
               zIndex: 3,
               outline: 0,
@@ -198,7 +200,7 @@ export const UserProfile = () => {
           onClose={() => setImageModalActive(false)}
         />
         <Box sx={{ display: "flex", justifyContent: "center", padding: 3 }}>
-          <TableContainer component={Paper} sx={{ width: "60%" }}>
+          <TableContainer component={Paper} sx={{ width: "80%" }}>
             <Table sx={{ minWidth: "650" }} aria-label="simple table">
               <TableBody>
                 {rows.map((row) => (
@@ -209,12 +211,18 @@ export const UserProfile = () => {
                       fontFamily: "primary.fontFamily",
                     }}
                   >
-                    <TableCell component="th" scope="row">
+                    <TableCell
+                      component="th"
+                      scope="row"
+                      sx={{ wordBreak: "break-word" }}
+                    >
                       {row.key}
                     </TableCell>
                     <TableCell component="th" scope="row"></TableCell>
 
-                    <TableCell align="left">{row.value}</TableCell>
+                    <TableCell align="left" sx={{ wordBreak: "break-word" }}>
+                      {row.value}
+                    </TableCell>
                   </TableRow>
                 ))}
                 <TableCell align="left">
@@ -231,19 +239,20 @@ export const UserProfile = () => {
         </Box>
       </section>
       <MyAdds />
-
-      <DeleteUser id={id} />
-      <Button
-        variant="contained"
-        sx={{
-          fontFamily: "secondary.fontFamily",
-          letterSpacing: 1.3,
-          backgroundColor: "secondary.blue",
-        }}
-        onClick={onButtonClick}
-      >
-        Sign out
-      </Button>
-    </div>
+      <Box sx={{ display: "flex", justifyContent: "space-evenly" }}>
+        <DeleteUser id={id} />
+        <Button
+          variant="contained"
+          sx={{
+            fontFamily: "secondary.fontFamily",
+            letterSpacing: 1.3,
+            margin: 1,
+          }}
+          onClick={onButtonClick}
+        >
+          Sign out
+        </Button>
+      </Box>
+    </>
   );
 };

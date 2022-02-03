@@ -20,15 +20,14 @@ export const ModalWrapper = styled(Box)({
 export const ModalCard = styled(Card)({
   width: 500,
   zIndex: 11,
-  height: "70%",
+  height: "615px",
   position: "fixed",
-  top: "20%",
+  // top: "20%",
 });
 
 export const ModalHeader = styled(Box)({
   display: "flex",
   justifyContent: "space-between",
   color: "white",
-  paddingTop: 1,
-  paddingBottom: 4,
+  padding: 10,
 });

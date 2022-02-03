@@ -3,6 +3,7 @@ html {
 }
 
 body {
+  box-sizing: border-box;
   font-family: "Spartan", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -15,4 +16,12 @@ body {
 
 code {
   font-family: "Spartan", sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #51637099;
 }
