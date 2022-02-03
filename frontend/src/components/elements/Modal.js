@@ -9,7 +9,7 @@ export const ModalWrapper = styled(Box)({
   backgroundColor: "#51637099",
   position: "fixed",
   top: 0,
-  zIndex: 1,
+  zIndex: 10,
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
@@ -19,14 +19,13 @@ export const ModalWrapper = styled(Box)({
 
 export const ModalCard = styled(Card)({
   width: 500,
-  zIndex: 2,
+  zIndex: 11,
   height: "70%",
   position: "fixed",
   top: "20%",
 });
 
 export const ModalHeader = styled(Box)({
-  backgroundColor: "#233540",
   display: "flex",
   justifyContent: "space-between",
   color: "white",

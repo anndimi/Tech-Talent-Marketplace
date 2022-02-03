@@ -1,5 +1,6 @@
 import { AddSchema } from "./Schemas/add";
 import mongoose from "mongoose";
+import moment from "moment";
 
 const Add = mongoose.model("Add", AddSchema);
 
@@ -55,15 +56,18 @@ export const DeleteAdd = async (req, res) => {
 //RegExp to search for queries in frontend
 export const GetAllAdds = async (req, res) => {
   const { title, description } = req.query;
-  let today = new Date();
-  let last30days = new Date(today.setDate(today.getDate() + 30));
+  // let today = new Date();
+  // let last30days = new Date(today.setDate(today.getDate() + 1));
+
   try {
+    // let currentDate = moment();
     const allAdds = await Add.find({
       title: new RegExp(title, "i"),
       description: new RegExp(description, "i"),
       // createdAt: createdAt + 30 < today,
-      createdAt: { $lt: today, $lt: last30days },
+      // createdAt: { $lt: today, $lt: last30days },
     })
+      // .filter((date) => moment(date).isSame(currentDate, "day"))
       .sort({ createdAt: "desc" }) //sorterar
       .populate("user", {
         username: 1,

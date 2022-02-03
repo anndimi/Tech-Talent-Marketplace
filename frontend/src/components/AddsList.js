@@ -28,32 +28,12 @@ const AddListSection = styled.section`
   /* padding: 20px; */
 `;
 
-const AddCard = styled.div`
-  border: solid 1px #212427;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
-    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-  margin: 10px;
-  padding: 10px;
-  cursor: pointer;
-  box-sizing: border-box;
-  width: 45%;
-
-  @media (max-width: 500px) {
-    width: 90%;
-  }
-`;
-
 const AddWrapper = styled.div`
   word-wrap: break-word;
   display: flex;
   flex-direction: row;
   justify-content: center;
   flex-wrap: wrap;
-`;
-const TagWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin: 0px;
 `;
 
 const AddsList = () => {
@@ -143,18 +123,25 @@ const AddsList = () => {
 
   return (
     <>
-      <Button
-        variant="contained"
-        onClick={() => {
-          navigate("create");
-          toggleModal();
-        }}
-      >
-        +
-      </Button>
       <AddListSection onClick={() => setModalActive(false)}>
         <SingleAddModal />
-        <Box>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexWrap: "wrap",
+          }}
+        >
+          <Button
+            variant="contained"
+            onClick={() => {
+              navigate("create");
+              toggleModal();
+            }}
+          >
+            +
+          </Button>
           {/* <SearchBar
             setSearchValue={setSearchValue}
             searchValue={searchValue}
@@ -189,7 +176,7 @@ const AddsList = () => {
                 onClick={() => {
                   navigate(item._id);
                 }}
-                sx={{ width: 350, margin: 2 }}
+                sx={{ width: 350, margin: 2, cursor: "pointer" }}
               >
                 <CardContent>
                   <Box

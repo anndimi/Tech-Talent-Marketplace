@@ -89,12 +89,12 @@ export const EditProfile = ({
       <>
         <ModalWrapper>
           <ModalCard onClick={(e) => e.stopPropagation()}>
-            <ModalHeader>
+            <ModalHeader sx={{ bgcolor: "secondary.main" }}>
               <Typography
                 sx={{
                   fontFamily: "primary.fontFamily",
                   fontSize: 28,
-                  fontWeight: 600,
+                  fontWeight: 700,
                 }}
               >
                 Edit your profile

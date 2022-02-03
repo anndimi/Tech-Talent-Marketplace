@@ -7,6 +7,9 @@ import styled from "styled-components";
 import closeIcon from "../assets/close.png";
 import { CloseButton } from "./elements/StyledButtons";
 import { ModalWrapper, ModalCard, ModalHeader } from "./elements/Modal";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
 
 // const EditModalWrapper = styled.div`
 //   display: flex;
@@ -81,23 +84,66 @@ export const UploadImg = ({
             }
             onClick={(e) => e.stopPropagation()}
           >
-            <ModalHeader>
-              <h1>edit your profile image</h1>
-              <CloseButton
+            <ModalHeader sx={{ bgcolor: "secondary.main" }}>
+              <Typography
+                sx={{
+                  fontFamily: "primary.fontFamily",
+                  fontSize: 28,
+                  fontWeight: 600,
+                }}
+              >
+                Edit your profile image
+              </Typography>
+
+              {/* <CloseButton
                 onClick={() => {
                   navigate(`/userprofile/${id}`);
                   toggleImageModal();
                 }}
               >
                 <img src={closeIcon} alt="close window" />
-              </CloseButton>
+              </CloseButton> */}
+
+              <Button
+                sx={{ alignSelf: "flex-start", paddingTop: 1.5 }}
+                onClick={() => {
+                  navigate(`/userprofile/${id}`);
+                  toggleImageModal();
+                }}
+              >
+                <img
+                  style={{ height: 35, width: 35 }}
+                  src={closeIcon}
+                  alt="close window"
+                />
+              </Button>
             </ModalHeader>
             <form onSubmit={handleFormSubmit}>
-              <label>
-                Upload profile Image.
-                <input type="file" ref={fileInput} />
-              </label>
-              <button type="submit">Save</button>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 2.5,
+                  margin: 4,
+                }}
+              >
+                <label style={{ fontWeight: 600 }}>
+                  Upload profile Image.
+                  <input type="file" ref={fileInput} />
+                </label>
+                <Button
+                  variant="contained"
+                  type="submit"
+                  sx={{
+                    fontFamily: "secondary.fontFamily",
+                    letterSpacing: 1.3,
+
+                    margin: 1,
+                  }}
+                >
+                  Save
+                </Button>
+              </Box>
             </form>
           </ModalCard>
         </ModalWrapper>

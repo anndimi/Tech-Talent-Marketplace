@@ -11,16 +11,17 @@ import { SignOutButton } from "./elements/StyledButtons";
 const HeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  background: #289d8e;
+
   color: #ffffff;
 `;
 
 const Logo = styled.div`
   margin-left: 20px;
+  z-index: 1;
 `;
 
 const LogoImage = styled.img`
-  width: 120px;
+  width: 200px;
 `;
 
 const HamburgerNav = styled.div`
@@ -57,7 +58,7 @@ const PopUpNav = styled.nav`
     font-weight: bold;
     background: black;
     justify-content: center;
-    background-color: #289d8e;
+    background-color: #342c42;
     @media (min-width: 768px) {
       width: 250px;
     }
@@ -74,6 +75,7 @@ const StyledLink = styled(Link)`
   padding: 10px;
   &:hover {
     text-decoration: underline;
+    color: #f8c53a;
   }
 `;
 

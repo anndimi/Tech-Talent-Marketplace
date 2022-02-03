@@ -1,9 +1,10 @@
 import React from "react";
+import HeroImage from "../components/elements/HeroImage";
 
 export const Startpage = () => {
   return (
     <>
-      <h1>This is startpage</h1>
+      <HeroImage />
     </>
   );
 };

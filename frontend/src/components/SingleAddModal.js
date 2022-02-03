@@ -14,6 +14,9 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import { Divider } from "@mui/material";
+import userIcon from "../assets/icons/user-icon.png";
+import mailIcon from "../assets/icons/mail-icon.png";
 
 const SingleAddModal = () => {
   // const [isModalActive, setModalActive] = useState(false);
@@ -38,11 +41,19 @@ const SingleAddModal = () => {
     document.body.style.overflow = "hidden";
     return (
       <ModalWrapper>
-        <ModalCard>
-          <ModalHeader>
+        <ModalCard
+          sx={{
+            overflowY: "auto",
+          }}
+        >
+          <ModalHeader sx={{ bgcolor: "secondary.main", padding: 1.5 }}>
             <Box sx={{ display: "flex", flexDirection: "column" }}>
               <Typography
-                sx={{ fontFamily: "primary.fontFamily", fontSize: 20 }}
+                sx={{
+                  fontFamily: "primary.fontFamily",
+                  fontSize: 20,
+                  fontWeight: 700,
+                }}
               >
                 {add.typeOf} {add.category}
               </Typography>
@@ -52,6 +63,7 @@ const SingleAddModal = () => {
                   fontSize: 15,
                   fontStyle: "italic",
                   paddingTop: 0,
+                  fontWeight: 600,
                 }}
               >
                 {moment(add.createdAt).fromNow()}
@@ -70,7 +82,6 @@ const SingleAddModal = () => {
           </ModalHeader>
           <CardContent
             sx={{
-              overflowY: "auto",
               wordBreak: "break-word",
               height: "100%",
             }}
@@ -97,16 +108,40 @@ const SingleAddModal = () => {
               {add.title}
             </Typography>
 
-            <Typography>{add.description}</Typography>
-            <Typography>
+            <Typography sx={{ fontFamily: "secondary.fontFamily" }}>
+              {add.description}
+            </Typography>
+            <Typography sx={{ fontFamily: "secondary.fontFamily" }}>
               Budget is {add.budget}
               {add.currency}
             </Typography>
-            <Typography>{add.user?.username}</Typography>
-            <Typography>
-              Contact:{" "}
-              {accessToken ? add.user?.email : `Sign in to get contact details`}
-            </Typography>
+            <Divider variant="middle">
+              <Typography sx={{ fontFamily: "secondary.fontFamily" }}>
+                Contact Details{" "}
+              </Typography>
+            </Divider>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-around",
+                paddingBottom: 4,
+              }}
+            >
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <img src={userIcon} style={{ height: 20, width: 20 }} />
+                <Typography sx={{ fontFamily: "secondary.fontFamily" }}>
+                  {add.user?.username}
+                </Typography>
+              </Box>
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <img src={mailIcon} style={{ height: 20, width: 20 }} />
+                <Typography sx={{ fontFamily: "secondary.fontFamily" }}>
+                  {accessToken
+                    ? add.user?.email
+                    : `Sign in to get contact details`}
+                </Typography>
+              </Box>
+            </Box>
           </CardContent>
         </ModalCard>
       </ModalWrapper>

@@ -3,11 +3,15 @@ import { createTheme } from "@mui/material/styles";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#233540",
+      main: "#704462",
     },
     secondary: {
-      main: "#51637099",
-      blue: "#51909C",
+      main: "#F8C53A",
+      text: "#141414",
+      overlay: "#51637099",
+      aubergine: "#704462",
+      yellow: "#F9F871",
+      purple: "#342C42",
     },
   },
   typography: {

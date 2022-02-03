@@ -16,11 +16,22 @@ import DeleteUser from "./elements/DeleteUser";
 import dummyUser from "../assets/dummy-user.png";
 import IconButton from "@mui/material/IconButton";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
-// import Input from '@mui/material/Input'
+
 import Button from "@mui/material/Button";
-import { styled } from "@mui/material/styles";
+// import { styled } from "@mui/material/styles";
 import { Box } from "@mui/system";
 import { Typography } from "@mui/material";
+//Table
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import CardContent from "@mui/material/CardContent";
+import Fab from "@mui/material/Fab";
+import EditIcon from "@mui/icons-material/Edit";
 
 // const ProfileImage = styled.img`
 //   width: 100px;
@@ -28,10 +39,6 @@ import { Typography } from "@mui/material";
 //   border-radius: 50%;
 //   object-fit: cover;
 // `;
-
-const HiddenInput = styled("input")({
-  display: "none",
-});
 
 export const UserProfile = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
@@ -51,6 +58,8 @@ export const UserProfile = () => {
   const [isImageModalActive, setImageModalActive] = useState(false);
   const [myImage, setMyImage] = useState("");
   const { id } = useParams();
+  console.log(id, "id");
+  console.log(accessToken, "accesstoken");
 
   const toggleEditModal = () => {
     setEditModalActive(!isEditModalActive);
@@ -70,19 +79,21 @@ export const UserProfile = () => {
     dispatch(user.actions.setAccessToken(null));
   };
 
+  const createData = (key, value) => {
+    return { key, value };
+  };
+
+  const rows = [
+    createData("Username", username),
+    createData("Fullname", name),
+    createData("Email", email),
+    createData("Location", location),
+    createData("Bio", userBio),
+  ];
+
   return (
     <div>
       <Box sx={{ display: "flex", justifyContent: "space-between", margin: 2 }}>
-        <Typography
-          sx={{
-            fontFamily: "primary.fontFamily",
-            fontWeight: "700",
-            fontSize: 30,
-            padding: 0,
-          }}
-        >
-          Welcome to your page, {username}!
-        </Typography>
         <Button
           variant="contained"
           sx={{
@@ -95,22 +106,34 @@ export const UserProfile = () => {
           Logout
         </Button>
       </Box>
-
-      <img
-        style={{
-          width: "150px",
-          height: "150px",
-          borderRadius: "50%",
-          objectfitCover: "cover",
-          backgroundPosition: "center",
-          borderColor: "#233540",
-          border: "solid 5px",
-          marginLeft: "10px",
-        }}
-        src={image || dummyUser}
-        alt="User Profile image"
-        alt="profile"
-      />
+      <Box sx={{ display: "flex" }}>
+        <img
+          style={{
+            width: "150px",
+            height: "150px",
+            borderRadius: "50%",
+            objectfitCover: "cover",
+            backgroundPosition: "center",
+            borderColor: "#233540",
+            border: "solid 5px",
+            marginLeft: "10px",
+          }}
+          src={image || dummyUser}
+          alt="User Profile image"
+          alt="profile"
+        />
+        <Typography
+          sx={{
+            fontFamily: "primary.fontFamily",
+            fontWeight: "700",
+            fontSize: 30,
+            padding: 0,
+            alignSelf: "end",
+          }}
+        >
+          {username}
+        </Typography>
+      </Box>
 
       {/* <button
         onClick={() => {
@@ -121,7 +144,6 @@ export const UserProfile = () => {
         Upload profile image
       </button> */}
       <label htmlFor="icon-button-file">
-        {/* <HiddenInput accept="image/*" id="icon-button-file" type="file" /> */}
         <IconButton
           color="primary"
           aria-label="upload picture"
@@ -151,6 +173,54 @@ export const UserProfile = () => {
           toggleImageModal={toggleImageModal}
           onClose={() => setImageModalActive(false)}
         />
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <TableContainer component={Paper} sx={{ width: "70%" }}>
+            <Table sx={{ minWidth: "650" }} aria-label="simple table">
+              <TableBody>
+                {rows.map((row) => (
+                  <TableRow
+                    key={row.key}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      {row.key}
+                    </TableCell>
+                    <TableCell component="th" scope="row"></TableCell>
+
+                    <TableCell align="center">{row.value}</TableCell>
+                  </TableRow>
+                ))}
+                <TableCell align="right">
+                  <CardContent></CardContent>
+                </TableCell>
+                <TableCell align="left"></TableCell>
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
+        <Fab
+          onClick={() => {
+            navigate("edit");
+            toggleEditModal();
+          }}
+        >
+          <EditIcon />
+        </Fab>
+        <Button
+          variant="contained"
+          sx={{
+            fontFamily: "secondary.fontFamily",
+            letterSpacing: 1.3,
+            backgroundColor: "secondary.blue",
+            margin: 1,
+          }}
+          onClick={() => {
+            navigate("edit");
+            toggleEditModal();
+          }}
+        >
+          Edit
+        </Button>
         <p>Member since {moment(created).format("MMMM Do YYYY")}</p>
         <p>Name: {name}</p>
         <p>Location: {location}</p>
@@ -163,21 +233,7 @@ export const UserProfile = () => {
           <img src={githubIcon} alt="github-icon" />
         </a>
       </section>
-      <Button
-        variant="contained"
-        sx={{
-          fontFamily: "secondary.fontFamily",
-          letterSpacing: 1.3,
-          backgroundColor: "secondary.blue",
-          margin: 1,
-        }}
-        onClick={() => {
-          navigate("edit");
-          toggleEditModal();
-        }}
-      >
-        Edit
-      </Button>
+
       <DeleteUser id={id} />
       <MyAdds />
     </div>

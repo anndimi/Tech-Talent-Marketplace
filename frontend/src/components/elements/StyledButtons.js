@@ -53,6 +53,7 @@ const StyledSignOutButton = styled.button`
   margin: 15px 0;
   &:hover {
     text-decoration: underline;
+    color: #f8c53a;
   }
 `;
 
