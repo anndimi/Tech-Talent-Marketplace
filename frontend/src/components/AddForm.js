@@ -30,15 +30,15 @@ const Section = styled.section`
   }
 `;
 
-const SectionOverlay = styled.div`
-  /* width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5); */
-`;
+// const SectionOverlay = styled.div`
+//   /* width: 100%;
+//   height: 100%;
+//   top: 0;
+//   left: 0;
+//   right: 0;
+//   bottom: 0;
+//   background-color: rgba(0, 0, 0, 0.5); */
+// `;
 
 const AddModal = styled.div`
   &.modal-active {
@@ -179,7 +179,7 @@ const AddForm = ({ isModalActive, onClose, toggleModal }) => {
   return (
     <>
       <Section>
-        <SectionOverlay>
+        <Box>
           <ModalWrapper>
             <ModalCard
               sx={{ overflowY: "auto" }}
@@ -365,7 +365,7 @@ const AddForm = ({ isModalActive, onClose, toggleModal }) => {
               </form>
             </ModalCard>
           </ModalWrapper>
-        </SectionOverlay>
+        </Box>
       </Section>
     </>
   );

@@ -1,8 +1,4 @@
 import React from "react";
-// import { useNavigate, generatePath, useParams } from "react-router-dom";
-// import { useSelector, useDispatch } from "react-redux";
-// import { API_URL } from "../utils/constants";
-// import add from "../reducers/add";
 import { useState } from "react";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
@@ -54,7 +50,6 @@ const AddFilter = ({
           id="demo-simple-select-standard"
           value={filter}
           onChange={onFilterChange}
-          // label="Category"
         >
           <MenuItem value="">
             <em>None</em>
