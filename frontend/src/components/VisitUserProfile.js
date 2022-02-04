@@ -1,6 +1,6 @@
 import React from "react";
 import user from "../reducers/user";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import moment from "moment";
@@ -11,7 +11,6 @@ import { EditProfile } from "./EditProfile";
 import { UploadImg } from "./UploadImg";
 import { MyAdds } from "./MyAdds";
 import { API_URL } from "../utils/constants";
-import { useParams } from "react-router-dom";
 import DeleteUser from "./elements/DeleteUser";
 import dummyUser from "../assets/icons/dummy-user.png";
 import IconButton from "@mui/material/IconButton";
@@ -48,34 +47,12 @@ const StyledUserImage = styled.div`
   right: 0;
 `;
 
-export const UserProfile = () => {
+export const VisitUserProfile = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
-  const username = useSelector((store) => store.user.username);
-  const name = useSelector((store) => store.user.name);
-  const email = useSelector((store) => store.user.email);
-  const location = useSelector((store) => store.user.location);
-  const userBio = useSelector((store) => store.user.bio);
-  const linkedIn = useSelector((store) => store.user.linkedIn);
-  const gitHub = useSelector((store) => store.user.github);
-  const created = useSelector((store) => store.user.created);
-  const image = useSelector((store) => store.user.image);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const [isEditModalActive, setEditModalActive] = useState(false);
-  const [isImageModalActive, setImageModalActive] = useState(false);
-  const [myImage, setMyImage] = useState("");
+  const [visitInfo, setVisitInfo] = useState("");
   const { id } = useParams();
-  console.log(id, "id");
-  console.log(accessToken, "accesstoken");
-
-  const toggleEditModal = () => {
-    setEditModalActive(!isEditModalActive);
-  };
-
-  const toggleImageModal = () => {
-    setImageModalActive(!isImageModalActive);
-  };
 
   useEffect(() => {
     if (!accessToken) {
@@ -87,6 +64,13 @@ export const UserProfile = () => {
     dispatch(user.actions.setAccessToken(null));
   };
 
+  useEffect(() => {
+    fetch(API_URL(`userprofile/${id}`))
+      .then((res) => res.json())
+      .then((data) => setVisitInfo(data.response));
+    console.log(visitInfo);
+  }, []);
+
   const matches = useMediaQuery((theme) => theme.breakpoints.up("tablet"));
 
   const createData = (key, value) => {
@@ -94,11 +78,11 @@ export const UserProfile = () => {
   };
 
   const rows = [
-    createData("Username", username),
-    createData("Fullname", name),
-    createData("Email", email),
-    createData("Location", location),
-    createData("Bio", userBio),
+    createData("Username", visitInfo.username),
+    createData("Fullname", visitInfo.name),
+    createData("Email", visitInfo.email),
+    createData("Location", visitInfo.location),
+    createData("Bio", visitInfo.userBio),
   ];
 
   return (
@@ -123,7 +107,7 @@ export const UserProfile = () => {
               zIndex: 3,
               outline: 0,
             }}
-            src={image || dummyUser}
+            src={visitInfo.image?.imageUrl || dummyUser}
             alt="User Profile image"
             alt="profile"
           />
@@ -141,7 +125,7 @@ export const UserProfile = () => {
                   wordBreak: "break-word",
                 }}
               >
-                {username}
+                {visitInfo.username}
               </Typography>
               <Typography
                 sx={{
@@ -150,59 +134,17 @@ export const UserProfile = () => {
                   color: "white",
                 }}
               >
-                Member since {moment(created).format("MMMM Do YYYY")}
+                Member since {moment(visitInfo.created).format("MMMM Do YYYY")}
               </Typography>
-            </Box>
-            <Box sx={{ marginTop: 2, marginBottom: 2 }}>
-              <Fab
-                onClick={() => {
-                  navigate("edit");
-                  toggleEditModal();
-                }}
-                sx={{ height: 50, width: 50 }}
-              >
-                <EditIcon />
-              </Fab>
-              <label htmlFor="icon-button-file">
-                <IconButton
-                  color="primary"
-                  aria-label="upload picture"
-                  component="span"
-                  onClick={() => {
-                    navigate("edit/image");
-                    toggleImageModal();
-                  }}
-                >
-                  <Fab sx={{ height: 50, width: 50 }}>
-                    <PhotoCamera />
-                  </Fab>
-                </IconButton>
-              </label>
             </Box>
           </Box>
         </Box>
       </Box>
 
-      <section
-        onClick={() => {
-          setEditModalActive(false);
-          setImageModalActive(false);
-          navigate(`/userprofile/${id}`);
-        }}
-      >
-        <EditProfile
-          isEditModalActive={isEditModalActive}
-          toggleEditModal={toggleEditModal}
-          onClose={() => setEditModalActive(false)}
-        />
-        <UploadImg
-          isImageModalActive={isImageModalActive}
-          toggleImageModal={toggleImageModal}
-          onClose={() => setImageModalActive(false)}
-        />
+      <section>
         <Divider variant="middle">
           <Typography sx={{ fontFamily: "secondary.fontFamily", fontSize: 20 }}>
-            My information
+            Information
           </Typography>
         </Divider>
         <Box sx={{ display: "flex", justifyContent: "center", padding: 3 }}>
@@ -231,10 +173,18 @@ export const UserProfile = () => {
                   </TableRow>
                 ))}
                 <TableCell align="left">
-                  <a href={linkedIn} target="_blank" rel="noopener noreferrer">
+                  <a
+                    href={visitInfo.linkedIn}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <img src={linkedinIcon} alt="linkedin-icon" />
                   </a>
-                  <a href={gitHub} target="_blank" rel="noopener noreferrer">
+                  <a
+                    href={visitInfo.gitHub}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <img src={githubIcon} alt="github-icon" />
                   </a>
                 </TableCell>
@@ -244,25 +194,6 @@ export const UserProfile = () => {
         </Box>
       </section>
       <MyAdds />
-      <Divider variant="middle">
-        <Typography sx={{ fontFamily: "secondary.fontFamily", fontSize: 20 }}>
-          Manage account
-        </Typography>
-      </Divider>
-      <Box sx={{ display: "flex", justifyContent: "space-evenly", padding: 4 }}>
-        <DeleteUser id={id} />
-        <Button
-          variant="contained"
-          sx={{
-            fontFamily: "secondary.fontFamily",
-            letterSpacing: 1.3,
-            margin: 1,
-          }}
-          onClick={onButtonClick}
-        >
-          Sign out
-        </Button>
-      </Box>
     </>
   );
 };

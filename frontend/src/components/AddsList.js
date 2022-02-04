@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { API_URL } from "../utils/constants";
 import AddForm from "./AddForm";
@@ -63,6 +63,7 @@ const AddsList = () => {
   // const accessToken = useSelector((store) => store.user.accessToken);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { id } = useParams();
 
   const toggleModal = () => {
     setModalActive(!isModalActive);
@@ -191,12 +192,13 @@ const AddsList = () => {
             filteredAddItems.map((item) => (
               <Card
                 key={item._id}
-                onClick={() => {
-                  navigate(item._id);
-                }}
                 sx={{ width: 350, margin: 2, cursor: "pointer" }}
               >
-                <CardContent>
+                <CardContent
+                  onClick={() => {
+                    navigate(item._id);
+                  }}
+                >
                   <Box
                     sx={{ display: "flex", justifyContent: "space-between" }}
                   >
@@ -260,6 +262,9 @@ const AddsList = () => {
                       Posted by:
                     </Typography>
                     <Button
+                      onClick={() => {
+                        navigate(`userprofile/${item.user._id}/visit`);
+                      }}
                       size="small"
                       sx={{
                         fontFamily: "secondary.fontFamily",

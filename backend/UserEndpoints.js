@@ -6,7 +6,6 @@ const User = mongoose.model("User", UserSchema);
 const Image = mongoose.model("Image", ImageSchema);
 // const Add = mongoose.model("Add", AddSchema);
 
-
 export const GetSingleUser = async (req, res) => {
   const { id } = req.params;
 
@@ -99,33 +98,6 @@ export const PostImage = async (req, res) => {
   }
 };
 
-// export const PatchImage = async (req, res) => {
-//   const { id } = req.params;
-
-//   try {
-//     const queriedUser = await User.findById(id);
-//     if (queriedUser) {
-//       const queriedImage = await Image.findById(imageId);
-//       if (queriedImage) {
-//         const updatedUser = await User.findByIdAndUpdate(
-//           id,
-//           {
-//             $push: { image: queriedImage },
-//           },
-//           { new: true }
-//         );
-//         res.status(200).json({ response: updatedUser, success: true });
-//       } else {
-//         res.status(404).json({ response: "Image not found", success: false });
-//       }
-//     } else {
-//       res.status(404).json({ response: "User not found", success: false });
-//     }
-//   } catch (error) {
-//     res.status(400).json({ response: error, success: false });
-//   }
-// };
-
 export const GetImage = async (req, res) => {
   const { id } = req.params;
 
@@ -141,17 +113,30 @@ export const GetImage = async (req, res) => {
   }
 };
 
-
-// export const likedAdd =  async (req, res) => {
-//   const { id } = req.params;
-//   try {
-//     const updatedUser = await User.findById(id).populate("add")
-//     if (updatedUser) {
-//       res.status(201).json({ response: updatedUser, success: true });
-//     } else {
-//       res.status(404).json({ response: "User not found", success: false });
-//     }
-//   } catch (error) {
-//     res.status(400).json({ response: error, success: false });
-//   }
-// }
+export const likedAdd = async (req, res) => {
+  const { addId, userId } = req.params;
+  console.log(addId, userId, "first");
+  try {
+    console.log(addId, userId, "second");
+    const updatedLikedAdd = await Add.findById(addId, {
+      add,
+    }).save();
+    console.log(updatedLikedAdd, "third");
+    if (updatedLikedAdd) {
+      const likedByUser = await User.findByIdAndUpdate(
+        userId,
+        {
+          $push: { likedAdd: updatedLikedAdd },
+        },
+        {
+          new: true,
+        }
+      );
+      res.status(201).json({ response: likedByUser, success: true });
+    } else {
+      res.status(404).json({ response: "No liked adds", success: false });
+    }
+  } catch (error) {
+    res.status(400).json({ response: error, success: false });
+  }
+};

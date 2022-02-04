@@ -20,6 +20,7 @@ import NotFound from "./components/NotFound";
 import Navbar from "./components/Navbar";
 import ContactPage from "./pages/ContactPage";
 import AboutPage from "./pages/AboutPage";
+import { VisitUserProfile } from "./components/VisitUserProfile";
 import Inspiration from "./pages/Inspiration";
 import SingleAddModal from "./components/SingleAddModal";
 import { EditProfile } from "./components/EditProfile";
@@ -73,6 +74,10 @@ const App = () => {
             <Route path="edit" element={<EditProfile />} />
             <Route path="edit/image" element={<UploadImg />} />
           </Route>
+          <Route
+            path="/adds/userprofile/:id/visit"
+            element={<VisitUserProfile />}
+          />
 
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/about" element={<AboutPage />} />
