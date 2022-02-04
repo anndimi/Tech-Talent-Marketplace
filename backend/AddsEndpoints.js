@@ -56,8 +56,8 @@ export const DeleteAdd = async (req, res) => {
 //RegExp to search for queries in frontend
 export const GetAllAdds = async (req, res) => {
   const { title, description } = req.query;
-  // let today = new Date();
-  // let last30days = new Date(today.setDate(today.getDate() + 1));
+  // const today = new Date();
+  // const last30days = new Date(today.setDate(today.getDate() + 1));
 
   try {
     // let currentDate = moment();
@@ -65,7 +65,7 @@ export const GetAllAdds = async (req, res) => {
       title: new RegExp(title, "i"),
       description: new RegExp(description, "i"),
       // createdAt: createdAt + 30 < today,
-      // createdAt: { $lt: today, $lt: last30days },
+      // createdAt: { $gte: today, $lt: last30days },
     })
       // .filter((date) => moment(date).isSame(currentDate, "day"))
       .sort({ createdAt: "desc" }) //sorterar
