@@ -39,7 +39,12 @@ const AddFilter = ({
 
   return (
     <Box
-      sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flexWrap: "wrap",
+      }}
     >
       <SearchBar setSearchValue={setSearchValue} searchValue={searchValue} />
       <FormControl variant="standard" sx={{ m: 1, width: "160px" }}>
@@ -49,7 +54,7 @@ const AddFilter = ({
           id="demo-simple-select-standard"
           value={filter}
           onChange={onFilterChange}
-          label="Category"
+          // label="Category"
         >
           <MenuItem value="">
             <em>None</em>
@@ -104,7 +109,16 @@ const AddFilter = ({
           <MenuItem value="Join as">Join as</MenuItem>
         </Select>
       </FormControl>
-      <Button variant="contained" onClick={onFilterReset}>
+      <Button
+        sx={{
+          alignSelf: "center",
+          fontFamily: "secondary.fontFamily",
+          letterSpacing: 1,
+          fontSize: 16,
+        }}
+        variant="contained"
+        onClick={onFilterReset}
+      >
         Reset
       </Button>
     </Box>

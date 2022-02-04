@@ -6,10 +6,9 @@ import { Link } from "react-router-dom";
 const FooterWrapper = styled.div`
   background-color: #342c42;
   color: white;
-  margin-top:30px;
+  margin-top: 20px;
   text-align: center;
   padding: 30px;
-
 `;
 
 const LogoContainer = styled.img`
@@ -26,14 +25,13 @@ const LogoContainer = styled.img`
 const GroupWrapper = styled.div`
   display: flex;
   flex-direction: column;
-
 `;
 
 const LinkWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  max-width:600px;
+  max-width: 600px;
   margin: auto;
 `;
 
@@ -61,7 +59,7 @@ const StyledLink = styled(Link)`
 const Heading = styled.h3`
   color: #f8c53a;
   margin: 10px;
-  text-decoration:underline;
+  text-decoration: underline;
 `;
 
 const Title = styled.h2`
@@ -73,54 +71,63 @@ const Title = styled.h2`
 const Year = styled.p`
   margin: 10px 0px 0px 0px;
   padding: 0;
-  font-size:10px;
+  font-size: 10px;
 `;
 
 const LogoTitleAligner = styled.div`
-display: flex;
-align-items:center;
-justify-content:center;
-flex-direction:column;
-@media (min-width: 600px) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  @media (min-width: 600px) {
     flex-direction: row;
-    margin-bottom:10px;
+    margin-bottom: 10px;
   }
 `;
 
 export const Footer = () => {
   return (
-    <FooterWrapper>
-      <LogoTitleAligner>
-        <LogoContainer />
-        <Title>Tech Talent Marketplace</Title>
-      </LogoTitleAligner>
+    <div
+      style={{
+        position: "absolute",
+        left: 0,
+        right: 0,
+        display: "block",
+      }}
+    >
+      <FooterWrapper>
+        <LogoTitleAligner>
+          <LogoContainer />
+          <Title>Tech Talent Marketplace</Title>
+        </LogoTitleAligner>
 
-      <LinkWrapper>
-        <GroupWrapper>
-          <Heading>Company</Heading>
-          <Links href="#">Terms of use</Links>
-          <Links href="#">About us</Links>
-          <Links href="#">Press</Links>
-          <Links href="#">Contact</Links>
-        </GroupWrapper>
+        <LinkWrapper>
+          <GroupWrapper>
+            <Heading>Company</Heading>
+            <Links href="#">Terms of use</Links>
+            <Links href="#">About us</Links>
+            <Links href="#">Press</Links>
+            <Links href="#">Contact</Links>
+          </GroupWrapper>
 
-        <GroupWrapper>
-          <Heading>Product</Heading>
-          <Links href="#">Partner with us</Links>
-          <StyledLink to="/signup">Sign in</StyledLink>
-          <Links href="#">Help</Links>
-          <Links href="#">Business</Links>
-        </GroupWrapper>
+          <GroupWrapper>
+            <Heading>Product</Heading>
+            <Links href="#">Partner with us</Links>
+            <StyledLink to="/signup">Sign in</StyledLink>
+            <Links href="#">Help</Links>
+            <Links href="#">Business</Links>
+          </GroupWrapper>
 
-        <GroupWrapper>
-          <Heading>Socials</Heading>
-          <Links href="#">Twitter</Links>
-          <Links href="#">Facebook</Links>
-          <Links href="#">Instagram</Links>
-          <Links href="#">Github</Links>
-        </GroupWrapper>
-      </LinkWrapper>
-      <Year>© 2022</Year>
-    </FooterWrapper>
+          <GroupWrapper>
+            <Heading>Socials</Heading>
+            <Links href="#">Twitter</Links>
+            <Links href="#">Facebook</Links>
+            <Links href="#">Instagram</Links>
+            <Links href="#">Github</Links>
+          </GroupWrapper>
+        </LinkWrapper>
+        <Year>© 2022</Year>
+      </FooterWrapper>
+    </div>
   );
 };

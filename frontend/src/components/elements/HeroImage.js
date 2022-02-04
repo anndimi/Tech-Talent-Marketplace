@@ -7,7 +7,7 @@ import { Box } from "@mui/material";
 const StyledHeroImage = styled.div`
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
     url(${heroBg});
-  height: 100%;
+  height: 100vh;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -19,7 +19,7 @@ const StyledHeroImage = styled.div`
 
 const HeroImage = () => {
   return (
-    <Box sx={{ height: "100%" }}>
+    <Box sx={{ height: "100vh" }}>
       <StyledHeroImage>
         <Typography
           sx={{
@@ -29,7 +29,7 @@ const HeroImage = () => {
             left: "50%",
             transform: "translate(-50%, -50%)",
             color: "secondary.main",
-            fontSize: 40,
+            fontSize: 50,
             fontWeight: 600,
             fontFamily: "primary.fontFamily",
           }}

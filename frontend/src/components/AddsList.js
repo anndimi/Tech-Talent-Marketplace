@@ -12,7 +12,8 @@ import SingleAddModal from "./SingleAddModal";
 // import { StyledButton } from "./Buttons/StyledButtons";
 import { SearchBar } from "./SearchBar";
 import IconSwitcher from "./IconSwitcher";
-
+import UserBg from "../assets/images/user-bg.jpg";
+import plusIcon from "../assets/icons/plus-icon.png";
 //Material UI Card
 
 import Box from "@mui/material/Box";
@@ -23,6 +24,19 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
 let humanize = require("humanize-number");
+
+const StyledAddsImage = styled.div`
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url(${UserBg});
+  height: 250px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+`;
 
 const AddListSection = styled.section`
   /* padding: 20px; */
@@ -100,7 +114,6 @@ const AddsList = () => {
   useEffect(() => {
     const options = {
       method: "GET",
-    
     };
     fetch(API_URL(`adds?title=${searchValue}`), options)
       .then((res) => res.json())
@@ -117,43 +130,51 @@ const AddsList = () => {
       });
   }, [searchValue, dispatch]);
 
-
   return (
     <>
-            <Button
-              variant="contained"
-              onClick={() => {
-                navigate("create");
-                toggleModal();
-              }}
-            >
-              +
-            </Button>
-      <AddListSection onClick={() => setModalActive(false)}>
-        <SingleAddModal />
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            flexWrap: "wrap",
-          }}
-        >
-          {/* <SearchBar
+      <StyledAddsImage />
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          flexWrap: "wrap",
+          marginTop: 7,
+        }}
+      >
+        {/* <SearchBar
             setSearchValue={setSearchValue}
             searchValue={searchValue}
           /> */}
-          <AddFilter
-            filter={filter}
-            sort={sort}
-            type={type}
-            onFilterChange={onFilterChange}
-            onTypeChange={onTypeChange}
-            onFilterReset={onFilterReset}
-            onSortByTimeChange={onSortByTimeChange}
-            // sortedAddItems={sortedAddItems}
-          />
-        </Box>
+        <AddFilter
+          filter={filter}
+          sort={sort}
+          type={type}
+          onFilterChange={onFilterChange}
+          onTypeChange={onTypeChange}
+          onFilterReset={onFilterReset}
+          onSortByTimeChange={onSortByTimeChange}
+          // sortedAddItems={sortedAddItems}
+        />
+      </Box>
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
+        <Button
+          variant="contained"
+          sx={{ marginTop: 2 }}
+          onClick={() => {
+            navigate("create");
+            toggleModal();
+          }}
+        >
+          <Typography sx={{ fontFamily: "secondary.fontFamily" }}>
+            Create add
+          </Typography>
+          {/* <img style={{ width: 40, height: 40 }} src={plusIcon} /> */}
+        </Button>
+      </Box>
+
+      <AddListSection onClick={() => setModalActive(false)}>
+        <SingleAddModal />
 
         <div>
           <AddForm

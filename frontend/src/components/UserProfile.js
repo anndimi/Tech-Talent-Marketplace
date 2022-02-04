@@ -21,7 +21,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import Button from "@mui/material/Button";
 // import { styled } from "@mui/material/styles";
 import { Box } from "@mui/system";
-import { Typography } from "@mui/material";
+import { Typography, Divider } from "@mui/material";
 //Table
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -208,7 +208,7 @@ export const UserProfile = () => {
                     key={row.key}
                     sx={{
                       "&:last-child td, &:last-child th": { border: 0 },
-                      fontFamily: "primary.fontFamily",
+                      fontFamily: "secondary.fontFamily",
                     }}
                   >
                     <TableCell
@@ -239,7 +239,12 @@ export const UserProfile = () => {
         </Box>
       </section>
       <MyAdds />
-      <Box sx={{ display: "flex", justifyContent: "space-evenly" }}>
+      <Divider variant="middle">
+        <Typography sx={{ fontFamily: "secondary.fontFamily" }}>
+          Manage account
+        </Typography>
+      </Divider>
+      <Box sx={{ display: "flex", justifyContent: "space-evenly", padding: 4 }}>
         <DeleteUser id={id} />
         <Button
           variant="contained"

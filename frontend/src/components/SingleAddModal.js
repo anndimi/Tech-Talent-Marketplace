@@ -18,6 +18,8 @@ import { Divider } from "@mui/material";
 import userIcon from "../assets/icons/user-icon.png";
 import mailIcon from "../assets/icons/mail-icon.png";
 
+let humanize = require("humanize-number");
+
 const SingleAddModal = () => {
   // const [isModalActive, setModalActive] = useState(false);
   const [add, setAdd] = useState({});
@@ -83,7 +85,7 @@ const SingleAddModal = () => {
           <CardContent
             sx={{
               wordBreak: "break-word",
-              height: "100%",
+              // height: "100%",
             }}
           >
             <Box

@@ -106,8 +106,8 @@ const Navbar = () => {
         >
           {accessToken ? (
             <>
-            <StyledLink to="/">Home</StyledLink>
-              <StyledLink to="/adds/create">Create Add</StyledLink>
+              <StyledLink to="/">Home</StyledLink>
+              {/* <StyledLink to="/adds/create">Create Add</StyledLink> */}
               <StyledLink to="/adds">Adds</StyledLink>
               <StyledLink to={`/userprofile/${id}`}>My Profile</StyledLink>
               <StyledLink to="/inspiration">Inspiration</StyledLink>
@@ -117,7 +117,7 @@ const Navbar = () => {
             </>
           ) : (
             <>
-            <StyledLink to="/">Home</StyledLink>
+              <StyledLink to="/">Home</StyledLink>
               <StyledLink to="/signup">Sign up/ Sign in</StyledLink>
               {/* <StyledLink to="/adds/create">Create Add</StyledLink> */}
               <StyledLink to="/adds">Adds</StyledLink>

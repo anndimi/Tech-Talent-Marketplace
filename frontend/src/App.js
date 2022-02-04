@@ -25,6 +25,9 @@ import SingleAddModal from "./components/SingleAddModal";
 import { EditProfile } from "./components/EditProfile";
 import { UploadImg } from "./components/UploadImg";
 import { Footer } from "./components/Footer";
+import Link from "@mui/material/Link";
+import Box from "@mui/material/Box";
+import upArrow from "./assets/icons/up-arrow.png";
 
 const reducer = combineReducers({
   user: user.reducer,
@@ -76,6 +79,11 @@ const App = () => {
           <Route path="/inspiration" element={<Inspiration />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <Box sx={{ display: "flex", justifyContent: "center", marginTop: 3 }}>
+          <Link href="#">
+            <img src={upArrow} />
+          </Link>
+        </Box>
         <Footer />
       </BrowserRouter>
     </Provider>

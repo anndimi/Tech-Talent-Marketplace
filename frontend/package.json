@@ -22,6 +22,7 @@
     "react-expire": "^1.0.2",
     "react-grid-carousel": "^1.0.1",
     "react-lottie": "^1.2.3",
+    "react-material-ui-carousel": "^3.1.1",
     "react-query": "^3.34.12",
     "react-redux": "^7.2.6",
     "react-router-dom": "^6.2.1",

@@ -4,17 +4,9 @@ import { Box } from "@mui/material";
 
 export const Startpage = () => {
   return (
-    <Box sx={{display: "block"}}>
+    <Box sx={{ display: "block" }}>
       <HeroImage />
-      <Box
-        sx={{
-          width: "50%",
-          padding: 5,
-          position: "relative",
-
-          top: "100vh",
-        }}
-      >
+      <Box>
         <h1>Find your next dream team</h1>
         <p>
           When people come together they'll find inspiration, best practices and
