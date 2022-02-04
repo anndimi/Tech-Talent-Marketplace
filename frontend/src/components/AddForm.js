@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { useSelector, useDispatch, batch } from "react-redux";
 import add from "../reducers/add";
 import { API_URL } from "../utils/constants";
-import { StyledButton } from "./elements/StyledButtons";
-import { CloseButton } from "./elements/StyledButtons";
 import styled from "styled-components";
 import closeIcon from "../assets/icons/close.png";
 import { useNavigate } from "react-router-dom";

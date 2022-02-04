@@ -57,6 +57,7 @@ const AddsList = () => {
   const [searchValue, setSearchValue] = useState("");
 
   const addItems = useSelector((store) => store.add.items);
+  const userId = useSelector((store) => store.user.userId)
 
   const [isModalActive, setModalActive] = useState(false);
 
@@ -263,7 +264,12 @@ const AddsList = () => {
                     </Typography>
                     <Button
                       onClick={() => {
-                        navigate(`userprofile/${item.user._id}/visit`);
+                        if(item.user._id === userId) {
+                          navigate(`/userprofile/${userId}`)
+                        } else {
+                          navigate(`userprofile/${item.user._id}/visit`);
+                        }
+                        
                       }}
                       size="small"
                       sx={{

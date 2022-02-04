@@ -8,7 +8,7 @@ import { Card } from "@mui/material";
 import IconSwitcher from "./IconSwitcher";
 import moment from "moment";
 // import Carousel from "react-grid-carousel";
-import { Carousel } from "react-responsive-carousel";
+// import { Carousel } from "react-responsive-carousel";
 import { CardContent, Divider } from "@mui/material";
 
 let humanize = require("humanize-number");

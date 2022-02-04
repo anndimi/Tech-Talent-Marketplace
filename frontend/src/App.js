@@ -74,10 +74,8 @@ const App = () => {
             <Route path="edit" element={<EditProfile />} />
             <Route path="edit/image" element={<UploadImg />} />
           </Route>
-          <Route
-            path="/adds/userprofile/:id/visit"
-            element={<VisitUserProfile />}
-          />
+          
+            <Route path="adds/userprofile/:id/visit" element={<VisitUserProfile/>}/>
 
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/about" element={<AboutPage />} />
