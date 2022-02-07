@@ -94,17 +94,20 @@ const AddsList = () => {
   // });
 
   const sortedList = (adds) => {
-    console.log(adds);
+    
     if (sort === "Old") {
-      adds.reverse();
-      // adds.sort(function (a, b) {
-      //   console.log(b, a);
-      //   return new Date(b.createdAt) - new Date(a.createdAt);
-      // });
+      console.log(adds.sort((a, b) => {
+        return b.createdAt - a.createdAt
+      }));
+      return adds.sort((a, b) => {
+        return b.createdAt - a.createdAt
+      });
     } else {
+      console.log(adds);
       return adds;
     }
   };
+
 
   const onFilterReset = () => {
     setFilter("");
@@ -123,10 +126,6 @@ const AddsList = () => {
     if (type) {
       return item.typeOf === type;
     }
-    if (sort) {
-      return item;
-    }
-
     return item;
   });
 
