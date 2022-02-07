@@ -1,6 +1,7 @@
 import React from "react";
 import UserBg from "../assets/images/user-bg.jpg";
 import styled from "styled-components";
+import { UpArrow } from "../components/elements/UpArrow";
 
 const StyledImage = styled.div`
   background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
@@ -59,6 +60,7 @@ const Inspiration = () => {
           caramels sesame snaps.
         </p>
       </InspirationContainer>
+      <UpArrow />
     </>
   );
 };

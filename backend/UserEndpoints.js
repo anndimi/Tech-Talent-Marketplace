@@ -112,31 +112,3 @@ export const GetImage = async (req, res) => {
     res.status(400).json({ response: error, success: false });
   }
 };
-
-export const likedAdd = async (req, res) => {
-  const { addId, userId } = req.params;
-  console.log(addId, userId, "first");
-  try {
-    console.log(addId, userId, "second");
-    const updatedLikedAdd = await Add.findById(addId, {
-      add,
-    }).save();
-    console.log(updatedLikedAdd, "third");
-    if (updatedLikedAdd) {
-      const likedByUser = await User.findByIdAndUpdate(
-        userId,
-        {
-          $push: { likedAdd: updatedLikedAdd },
-        },
-        {
-          new: true,
-        }
-      );
-      res.status(201).json({ response: likedByUser, success: true });
-    } else {
-      res.status(404).json({ response: "No liked adds", success: false });
-    }
-  } catch (error) {
-    res.status(400).json({ response: error, success: false });
-  }
-};

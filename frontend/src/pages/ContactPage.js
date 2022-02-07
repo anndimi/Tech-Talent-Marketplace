@@ -1,5 +1,5 @@
 import React from "react";
-
+import { UpArrow } from "../components/elements/UpArrow";
 import styled from "styled-components";
 import UserBg from "../assets/images/user-bg.jpg";
 
@@ -48,6 +48,7 @@ const ContactPage = () => {
         <h2>Header</h2>
         <h2>Another header</h2>
       </ContactContainer>
+      <UpArrow />
     </>
   );
 };

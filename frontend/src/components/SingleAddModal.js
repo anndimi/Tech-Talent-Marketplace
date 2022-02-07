@@ -17,6 +17,7 @@ import Typography from "@mui/material/Typography";
 import { Divider } from "@mui/material";
 import userIcon from "../assets/icons/user-icon.png";
 import mailIcon from "../assets/icons/mail-icon.png";
+import LikedAdd from "./LikedAdd";
 
 let humanize = require("humanize-number");
 
@@ -142,6 +143,7 @@ const SingleAddModal = () => {
                     ? add.user?.email
                     : `Sign in to get contact details`}
                 </Typography>
+                <LikedAdd />
               </Box>
             </Box>
           </CardContent>

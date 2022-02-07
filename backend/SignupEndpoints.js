@@ -15,6 +15,7 @@ export const SignupUser = async (req, res) => {
     linkedIn,
     github,
     created,
+    likedAdd,
   } = req.body;
 
   try {
@@ -34,6 +35,7 @@ export const SignupUser = async (req, res) => {
       linkedIn,
       github,
       created,
+      likedAdd,
     }).save();
 
     res.status(201).json({
@@ -48,6 +50,7 @@ export const SignupUser = async (req, res) => {
         linkedIn: newUser.linkedIn,
         github: newUser.github,
         created: newUser.created,
+        likedAdd: newUser.likedAdd,
       },
       success: true,
     });

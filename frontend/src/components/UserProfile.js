@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import user from "../reducers/user";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
 import moment from "moment";
 // import styled from "styled-components";
 import linkedinIcon from "../assets/icons/linkedin-icon.png";
@@ -34,6 +33,7 @@ import CardContent from "@mui/material/CardContent";
 import Fab from "@mui/material/Fab";
 import EditIcon from "@mui/icons-material/Edit";
 import styled from "styled-components";
+import { UpArrow } from "./elements/UpArrow";
 
 const StyledUserImage = styled.div`
   background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
@@ -263,6 +263,7 @@ export const UserProfile = () => {
           Sign out
         </Button>
       </Box>
+      <UpArrow />
     </>
   );
 };

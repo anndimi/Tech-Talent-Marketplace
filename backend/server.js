@@ -14,14 +14,19 @@ import { ImageSchema } from "./Schemas/image";
 import { SignupUser } from "./SignupEndpoints";
 import { SigninUser } from "./SigninEndpoints";
 import { PostAdd } from "./PostAddEndpoints";
-import { EditAdd, GetSingleAdd, DeleteAdd, GetAllAdds } from "./AddsEndpoints";
+import {
+  EditAdd,
+  GetSingleAdd,
+  DeleteAdd,
+  GetAllAdds,
+  likedAdd,
+} from "./AddsEndpoints";
 import {
   EditUser,
   DeleteUser,
   GetSingleUser,
   GetImage,
   PostImage,
-  likedAdd,
 } from "./UserEndpoints";
 
 const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/auth";

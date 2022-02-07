@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import UserBg from "../assets/images/user-bg.jpg";
+import { UpArrow } from "../components/elements/UpArrow";
 
 const StyledImage = styled.div`
   background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
@@ -47,6 +48,7 @@ const AboutPage = () => {
         <h2>The idea</h2>
         <h2>The idea</h2>
       </AboutContainer>
+      <UpArrow />
     </>
   );
 };

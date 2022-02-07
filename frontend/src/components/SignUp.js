@@ -5,6 +5,21 @@ import swal from "sweetalert";
 import user from "../reducers/user";
 import { API_URL } from "../utils/constants";
 import "../signup.css";
+import styled from "styled-components";
+import UserBg from "../assets/images/user-bg.jpg";
+
+const StyledUserImage = styled.div`
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url(${UserBg});
+  height: 200px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+`;
 
 const SignUp = () => {
   const [username, setUsername] = useState("");
@@ -56,6 +71,7 @@ const SignUp = () => {
             dispatch(user.actions.setGithub(data.response.github));
             dispatch(user.actions.setAccessToken(data.response.accessToken));
             dispatch(user.actions.setCreated(data.response.created));
+            dispatch(user.actions.setLikedAdd(data.response.likedAdd));
             // dispatch(user.actions.setImageUrl(data.response.imageUrl));
             dispatch(user.actions.setError(null));
             navigate(`/userprofile/${data.response.id}`);
@@ -73,6 +89,7 @@ const SignUp = () => {
             dispatch(user.actions.setLinkedIn(null));
             dispatch(user.actions.setGithub(null));
             dispatch(user.actions.setBio(null));
+            dispatch(user.actions.setLikedAdd(null));
             // dispatch(user.actions.setImageUrl(null));
             dispatch(user.actions.setError(data.error));
           });
@@ -102,100 +119,105 @@ const SignUp = () => {
         </label> */
 
   return (
-    <section className="signup-container">
-      <div
-        className={`container ${isContainerActive ? "right-panel-active" : ""}`}
-      >
-        <div className="form-container sign-up-container">
-          {/* Sign up form */}
-          <form className="signup-form" action="#" onSubmit={onFormSubmit}>
-            <h1>Create Account</h1>
-            <div className="social-container"></div>
-            <input
-              className="signup-input"
-              type="text"
-              value={username}
-              placeholder="Username"
-              onChange={(e) => setUsername(e.target.value)}
-            />
-            <input
-              className="signup-input"
-              type="email"
-              value={email}
-              placeholder="Email"
-              onChange={(e) => setEmail(e.target.value)}
-            />
+    <>
+      <StyledUserImage />
+      <section className="signup-container">
+        <div
+          className={`container ${
+            isContainerActive ? "right-panel-active" : ""
+          }`}
+        >
+          <div className="form-container sign-up-container">
+            {/* Sign up form */}
+            <form className="signup-form" action="#" onSubmit={onFormSubmit}>
+              <h1>Create Account</h1>
+              <div className="social-container"></div>
+              <input
+                className="signup-input"
+                type="text"
+                value={username}
+                placeholder="Username"
+                onChange={(e) => setUsername(e.target.value)}
+              />
+              <input
+                className="signup-input"
+                type="email"
+                value={email}
+                placeholder="Email"
+                onChange={(e) => setEmail(e.target.value)}
+              />
 
-            <input
-              className="signup-input"
-              type="password"
-              value={password}
-              placeholder="Password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <button className="signup-button">Sign Up</button>
-          </form>
-        </div>
-        <div className="form-container sign-in-container">
-          {/* Sign in form */}
-          <form className="signup-form" action="#" onSubmit={onFormSubmit}>
-            <h1>Sign in</h1>
-            <div className="social-container"></div>
+              <input
+                className="signup-input"
+                type="password"
+                value={password}
+                placeholder="Password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <button className="signup-button">Sign Up</button>
+            </form>
+          </div>
+          <div className="form-container sign-in-container">
+            {/* Sign in form */}
+            <form className="signup-form" action="#" onSubmit={onFormSubmit}>
+              <h1>Sign in</h1>
+              <div className="social-container"></div>
 
-            <input
-              className="signup-input"
-              id="username"
-              type="text"
-              value={username}
-              placeholder="Username"
-              onChange={(e) => setUsername(e.target.value)}
-            />
-            <input
-              className="signup-input"
-              id="password"
-              type="password"
-              value={password}
-              placeholder="Password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
+              <input
+                className="signup-input"
+                id="username"
+                type="text"
+                value={username}
+                placeholder="Username"
+                onChange={(e) => setUsername(e.target.value)}
+              />
+              <input
+                className="signup-input"
+                id="password"
+                type="password"
+                value={password}
+                placeholder="Password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
 
-            <button className="signup-button">Sign In</button>
-          </form>
-        </div>
-        <div className="overlay-container">
-          <div className="overlay">
-            <div className="overlay-panel overlay-left">
-              <h1>Welcome Back!</h1>
-              <p>Sign in to keep your connection with us.</p>
-              <button
-                className="signup-button ghost"
-                id="signIn"
-                onClick={() => {
-                  setMode("signin");
-                  setIsContainerActive(false);
-                }}
-              >
-                Sign In
-              </button>
-            </div>
-            <div className="overlay-panel overlay-right">
-              <h1>Don't have an account?</h1>
-              <p>Sign up and start your journey with us!</p>
-              <button
-                className="signup-button ghost"
-                id="signUp"
-                onClick={() => {
-                  setMode("signup");
-                  setIsContainerActive(true);
-                }}
-              >
-                Sign Up
-              </button>
+              <button className="signup-button">Sign In</button>
+            </form>
+          </div>
+          <div className="overlay-container">
+            <div className="overlay">
+              <div className="overlay-panel overlay-left">
+                <h1>Welcome Back!</h1>
+                <p>Sign in to keep your connection with us.</p>
+                <button
+                  className="signup-button ghost"
+                  id="signIn"
+                  onClick={() => {
+                    setMode("signin");
+                    setIsContainerActive(false);
+                  }}
+                >
+                  Sign In
+                </button>
+              </div>
+              <div className="overlay-panel overlay-right">
+                <h1>Don't have an account?</h1>
+                <p>Sign up and start your journey with us!</p>
+                <button
+                  className="signup-button ghost"
+                  id="signUp"
+                  onClick={() => {
+                    setMode("signup");
+                    setIsContainerActive(true);
+                  }}
+                >
+                  Sign Up
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 

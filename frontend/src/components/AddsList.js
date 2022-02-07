@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-
+import { UpArrow } from "./elements/UpArrow";
 import { API_URL } from "../utils/constants";
 import AddForm from "./AddForm";
 import moment from "moment";
@@ -57,7 +57,7 @@ const AddsList = () => {
   const [searchValue, setSearchValue] = useState("");
 
   const addItems = useSelector((store) => store.add.items);
-  const userId = useSelector((store) => store.user.userId)
+  const userId = useSelector((store) => store.user.userId);
 
   const [isModalActive, setModalActive] = useState(false);
 
@@ -264,12 +264,11 @@ const AddsList = () => {
                     </Typography>
                     <Button
                       onClick={() => {
-                        if(item.user._id === userId) {
-                          navigate(`/userprofile/${userId}`)
+                        if (item.user._id === userId) {
+                          navigate(`/userprofile/${userId}`);
                         } else {
                           navigate(`userprofile/${item.user._id}/visit`);
                         }
-                        
                       }}
                       size="small"
                       sx={{
@@ -285,6 +284,7 @@ const AddsList = () => {
           )}
         </AddWrapper>
       </AddListSection>
+      <UpArrow />
     </>
   );
 };

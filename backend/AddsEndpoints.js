@@ -1,10 +1,12 @@
 import { AddSchema } from "./Schemas/add";
+import { UserSchema } from "./Schemas/user";
+
 import mongoose from "mongoose";
 import moment from "moment";
 
 const Add = mongoose.model("Add", AddSchema);
+const User = mongoose.model("User", UserSchema);
 
-//Updates the add info that are edited. Ignores the other key & values with the $set operator
 export const EditAdd = async (req, res) => {
   const updatedAddInfo = req.body;
   const { id } = req.params;
@@ -76,5 +78,30 @@ export const GetAllAdds = async (req, res) => {
     res.status(201).json({ response: allAdds, success: true });
   } catch (error) {
     res.status(400).json({ error: "No adds found!", success: false });
+  }
+};
+
+export const likedAdd = async (req, res) => {
+  const { addId, userId } = req.params;
+
+  try {
+    const updatedLikedAdd = await Add.findById(addId);
+
+    if (updatedLikedAdd) {
+      const likedByUser = await User.findByIdAndUpdate(
+        userId,
+        {
+          $push: { likedAdd: updatedLikedAdd },
+        },
+        {
+          new: true,
+        }
+      );
+      res.status(201).json({ response: likedByUser, success: true });
+    } else {
+      res.status(404).json({ response: "No liked adds", success: false });
+    }
+  } catch (error) {
+    res.status(400).json({ response: error, success: false });
   }
 };
