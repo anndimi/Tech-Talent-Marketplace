@@ -4,34 +4,24 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import moment from "moment";
-// import styled from "styled-components";
 import linkedinIcon from "../assets/icons/linkedin-icon.png";
 import githubIcon from "../assets/icons/github-icon.png";
-import { EditProfile } from "./EditProfile";
-import { UploadImg } from "./UploadImg";
 import { MyAdds } from "./MyAdds";
 import { API_URL } from "../utils/constants";
-import DeleteUser from "./elements/DeleteUser";
 import dummyUser from "../assets/icons/dummy-user.png";
-import IconButton from "@mui/material/IconButton";
-import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import UserBg from "../assets/images/user-bg.jpg";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import Button from "@mui/material/Button";
-// import { styled } from "@mui/material/styles";
-import { Box } from "@mui/system";
-import { Typography, Divider } from "@mui/material";
-//Table
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import CardContent from "@mui/material/CardContent";
-import Fab from "@mui/material/Fab";
-import EditIcon from "@mui/icons-material/Edit";
+import {
+  Typography,
+  Divider,
+  Box,
+  useMediaQuery,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+  Paper,
+} from "@mui/material";
 import styled from "styled-components";
 
 const StyledUserImage = styled.div`
@@ -100,7 +90,6 @@ export const VisitUserProfile = () => {
               borderRadius: "50%",
               objectFit: "cover",
               backgroundPosition: "center",
-              // borderStyle: "none",
               border: "solid 5px #faf8f8",
               marginLeft: "10%",
               marginTop: "25px",

@@ -105,3 +105,62 @@ export const likedAdd = async (req, res) => {
     res.status(400).json({ response: error, success: false });
   }
 };
+
+export const unlikedAdd = async (req, res) => {
+  const { addId, userId } = req.params;
+
+  try {
+    const updatedLikedAdd = await Add.findById(addId);
+
+    if (updatedLikedAdd) {
+      const likedByUser = await User.findByIdAndUpdate(
+        userId,
+        {
+          $pop: { likedAdd: updatedLikedAdd },
+        },
+        {
+          new: true,
+        }
+      );
+      res.status(201).json({ response: likedByUser, success: true });
+    } else {
+      res.status(404).json({ response: "No liked adds", success: false });
+    }
+  } catch (error) {
+    res.status(400).json({ response: error, success: false });
+  }
+};
+
+export const deleteLike = async (req, res) => {
+  const { addId, userId } = req.params;
+  try {
+    const findAdd = await Add.findById(addId);
+
+    if (findAdd) {
+      const deleteLike = await User.findByIdAndDelete(userId, {
+        likedAdd: addId,
+      });
+      res.status(200).json({ response: deleteLike, success: true });
+    } else {
+      res.status(404).json({ response: "No liked adds", success: false });
+    }
+  } catch (error) {
+    res.status(400).json({ error: "Add id not found!", success: false });
+  }
+};
+
+// export const unlikedAdd = async (req, res) => {
+//   const { addId, userId } = req.params;
+
+//   try {
+//     const updatedUnlikedAdd = await Add.findById(addId);
+
+//     if (updatedUnlikedAdd) {
+
+//     }
+//     const unlikedAdd = await Add.findByIdAndDelete(id);
+//     res.status(200).json({ response: unlikedAdd, success: true });
+//   } catch (error) {
+//     res.status(400).json({ error: "Add id not found!", success: false });
+//   }
+// };

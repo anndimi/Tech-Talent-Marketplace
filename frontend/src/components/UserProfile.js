@@ -3,35 +3,32 @@ import user from "../reducers/user";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import moment from "moment";
-// import styled from "styled-components";
 import linkedinIcon from "../assets/icons/linkedin-icon.png";
 import githubIcon from "../assets/icons/github-icon.png";
 import { EditProfile } from "./EditProfile";
 import { UploadImg } from "./UploadImg";
 import { MyAdds } from "./MyAdds";
-import { API_URL } from "../utils/constants";
 import { useParams } from "react-router-dom";
 import DeleteUser from "./elements/DeleteUser";
 import dummyUser from "../assets/icons/dummy-user.png";
-import IconButton from "@mui/material/IconButton";
-import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import UserBg from "../assets/images/user-bg.jpg";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import Button from "@mui/material/Button";
-// import { styled } from "@mui/material/styles";
-import { Box } from "@mui/system";
-import { Typography, Divider } from "@mui/material";
-//Table
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import CardContent from "@mui/material/CardContent";
-import Fab from "@mui/material/Fab";
+import {
+  IconButton,
+  Box,
+  Typography,
+  Divider,
+  Button,
+  useMediaQuery,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+  Paper,
+  Fab,
+} from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
+import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import styled from "styled-components";
 import { UpArrow } from "./elements/UpArrow";
 
@@ -122,6 +119,7 @@ export const UserProfile = () => {
               marginTop: "25px",
               zIndex: 3,
               outline: 0,
+              backgroundColor: "#F8C53A",
             }}
             src={image || dummyUser}
             alt="User Profile image"
@@ -225,7 +223,7 @@ export const UserProfile = () => {
                       {row.key}
                     </TableCell>
 
-                    <TableCell align="left" sx={{ wordBreak: "break-word" }}>
+                    <TableCell align="center" sx={{ wordBreak: "break-word" }}>
                       {row.value}
                     </TableCell>
                   </TableRow>

@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import moment from "moment";
+import styled from "styled-components";
+
 import { UpArrow } from "./elements/UpArrow";
 import { API_URL } from "../utils/constants";
 import AddForm from "./AddForm";
-import moment from "moment";
 import add from "../reducers/add";
-import styled from "styled-components";
 import AddFilter from "./AddFilter";
 import SingleAddModal from "./SingleAddModal";
-// import { StyledButton } from "./Buttons/StyledButtons";
 import { SearchBar } from "./SearchBar";
 import IconSwitcher from "./IconSwitcher";
 import UserBg from "../assets/images/user-bg.jpg";
 import plusIcon from "../assets/icons/plus-icon.png";
-//Material UI Card
+// import { StyledButton } from "./Buttons/StyledButtons";
 
+//Material UI Card
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -58,6 +59,7 @@ const AddsList = () => {
 
   const addItems = useSelector((store) => store.add.items);
   const userId = useSelector((store) => store.user.userId);
+  const createdAt = useSelector((store) => store.add.createdAt);
 
   const [isModalActive, setModalActive] = useState(false);
 
@@ -70,10 +72,6 @@ const AddsList = () => {
     setModalActive(!isModalActive);
   };
 
-  const onSortByTimeChange = (event) => {
-    setSort(event.target.value);
-    // sortedAddItems();
-  };
   const onTypeChange = (event) => {
     setType(event.target.value);
   };
@@ -82,16 +80,37 @@ const AddsList = () => {
     setFilter(event.target.value);
   };
 
+  const onSortByTimeChange = (event) => {
+    setSort(event.target.value);
+  };
+  // const dateSort = addItems.sort((a, b) => {
+  //   return new Date(b.createdAt) - new Date(a.createdAt);
+
+  //   if (sort === "Old") {
+  //     return dateSort;
+  //   } else {
+  //     return addItems;
+  //   }
+  // });
+
+  const sortedList = (adds) => {
+    console.log(adds);
+    if (sort === "Old") {
+      adds.reverse();
+      // adds.sort(function (a, b) {
+      //   console.log(b, a);
+      //   return new Date(b.createdAt) - new Date(a.createdAt);
+      // });
+    } else {
+      return adds;
+    }
+  };
+
   const onFilterReset = () => {
     setFilter("");
     setSort("");
     setType("");
   };
-
-  // const sortedByTimeAddItems = addItems.sort((a, b) => {
-  //a.title - b.title
-  // return addItems
-  // });
 
   //Kanske filteredAddItems.sort (vi tar det på måndag)
   const filteredAddItems = addItems.filter((item) => {
@@ -104,14 +123,22 @@ const AddsList = () => {
     if (type) {
       return item.typeOf === type;
     }
+    if (sort) {
+      return item;
+    }
+
     return item;
   });
 
-  // const sortedAddItems = filteredAddItems.sort((oldestAdds, newestAdds) => {
-  //   sort === "Oldest" &&
-  //     return new Date(oldestAdds.createdDate) - new Date(newestAdds.createdDate);
+  // const onSort = (sort) => {
+  //   if (sort === "Oldest") {
+  //     return filteredAddItems.reverse();
+  //   } else {
+  //     return filteredAddItems;
+  //   }
+  // };
 
-  // });
+  // console.log(filteredAddItems.reverse());
 
   useEffect(() => {
     const options = {
@@ -144,10 +171,7 @@ const AddsList = () => {
           marginTop: 7,
         }}
       >
-        {/* <SearchBar
-            setSearchValue={setSearchValue}
-            searchValue={searchValue}
-          /> */}
+        <SearchBar setSearchValue={setSearchValue} searchValue={searchValue} />
         <AddFilter
           filter={filter}
           sort={sort}
@@ -156,6 +180,7 @@ const AddsList = () => {
           onTypeChange={onTypeChange}
           onFilterReset={onFilterReset}
           onSortByTimeChange={onSortByTimeChange}
+          // onSort={onSort}
           // sortedAddItems={sortedAddItems}
         />
       </Box>
@@ -188,9 +213,11 @@ const AddsList = () => {
         </div>
         <AddWrapper>
           {filteredAddItems.length === 0 ? (
-            <h1>No adds</h1>
+            <div style={{ marginTop: "40px" }}>
+              <h1>No adds</h1>
+            </div>
           ) : (
-            filteredAddItems.map((item) => (
+            sortedList(filteredAddItems).map((item) => (
               <Card
                 key={item._id}
                 sx={{ width: 350, margin: 2, cursor: "pointer" }}

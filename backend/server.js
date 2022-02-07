@@ -20,6 +20,8 @@ import {
   DeleteAdd,
   GetAllAdds,
   likedAdd,
+  deleteLike,
+  unlikedAdd,
 } from "./AddsEndpoints";
 import {
   EditUser,
@@ -151,6 +153,8 @@ app.patch("/userprofile/:id/edit", EditUser);
 app.delete("/userprofile/:id/delete", DeleteUser);
 
 app.post("/adds/:addId/like/:userId", likedAdd);
+app.post("/adds/:addId/unlike/:userId", unlikedAdd);
+app.delete("/adds/:addId/deletelike/:userId", deleteLike);
 
 // Start the server
 app.listen(port, () => {

@@ -1,8 +1,6 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-// import InputLabel from '@mui/material/InputLabel';
-// import InputAdornment from '@mui/material/InputAdornment';
 
 export const SearchBar = ({ searchValue, setSearchValue }) => {
   return (
@@ -17,9 +15,6 @@ export const SearchBar = ({ searchValue, setSearchValue }) => {
       noValidate
       autoComplete="off"
     >
-      {/* <InputAdornment position="start">
-              <p>🔎</p>
-          </InputAdornment> */}
       <TextField
         id="standard-basic"
         label="🔎 Search "

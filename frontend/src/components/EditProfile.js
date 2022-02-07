@@ -25,7 +25,6 @@ export const EditProfile = ({
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const [users, setUsers] = useState("");
 
   const name = useSelector((store) => store.user.name);
   const location = useSelector((store) => store.user.location);
@@ -39,10 +38,7 @@ export const EditProfile = ({
     bio: bio,
     linkedIn: linkedIn,
     github: github,
-    // imageUrl: "",
   });
-
-  // console.log("userID:", userId);
 
   const onFormSubmit = (event) => {
     event.preventDefault();
@@ -67,7 +63,6 @@ export const EditProfile = ({
           dispatch(user.actions.setLinkedIn(data.response.linkedIn));
           dispatch(user.actions.setGithub(data.response.github));
           dispatch(user.actions.setError(null));
-          // navigate(`/userprofile/${id}`);
         } else {
           dispatch(user.actions.setName(null));
           dispatch(user.actions.setLocation(null));
@@ -75,14 +70,11 @@ export const EditProfile = ({
           dispatch(user.actions.setLinkedIn(null));
           dispatch(user.actions.setGithub(null));
           dispatch(user.actions.setError(data.response));
-          // navigate(`/userprofile/${id}`);
         }
       });
     onClose(navigate(`/userprofile/${id}`));
   };
 
-  // console.log("hello from", userInfo.location);
-  // console.log("your name is", userInfo.name);
   if (isEditModalActive) {
     document.body.style.overflow = "hidden";
     return (

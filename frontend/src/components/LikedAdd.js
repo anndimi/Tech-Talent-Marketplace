@@ -9,7 +9,7 @@ import { API_URL } from "../utils/constants";
 const LikedAdd = () => {
   const dispatch = useDispatch();
   const userId = useSelector((store) => store.user.userId);
-  const likedArray = useSelector((store) => store.user.likedAdd.likedAdd);
+  const likedArray = useSelector((store) => store.user.likedAdd?.likedAdd);
   console.log(likedArray);
   const { id } = useParams();
 

@@ -1,12 +1,10 @@
 import React from "react";
-import { useState } from "react";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
-import { SearchBar } from "./SearchBar";
 
 const AddFilter = ({
   filter,
@@ -18,8 +16,6 @@ const AddFilter = ({
   onSortByTimeChange,
   sortedAddItems,
 }) => {
-  const [searchValue, setSearchValue] = useState("");
-
   // const onFilterChange = (event) => {
   //   setFilter(event.target.value);
   // };
@@ -42,7 +38,6 @@ const AddFilter = ({
         flexWrap: "wrap",
       }}
     >
-      <SearchBar setSearchValue={setSearchValue} searchValue={searchValue} />
       <FormControl variant="standard" sx={{ m: 1, width: "160px" }}>
         <InputLabel id="demo-simple-select-standard-label">Category</InputLabel>
         <Select
@@ -81,10 +76,8 @@ const AddFilter = ({
           <MenuItem value="">
             <em>None</em>
           </MenuItem>
-          <MenuItem value="Oldest">Oldest to newest</MenuItem>
-          <MenuItem value="Newest">Newest to oldest</MenuItem>
-          <MenuItem value="AZ">A - Z</MenuItem>
-          <MenuItem value="ZA">Z - A</MenuItem>
+          <MenuItem value="Old">Oldest first</MenuItem>
+          <MenuItem value="New">Newest first</MenuItem>
         </Select>
       </FormControl>
 

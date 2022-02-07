@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-// import { StyledButton } from "./Buttons/StyledButtons";
 import closeIcon from "../assets/icons/close.png";
 import moment from "moment";
 import { useNavigate, useParams } from "react-router-dom";
@@ -8,13 +6,15 @@ import { useSelector } from "react-redux";
 import { API_URL } from "../utils/constants";
 import IconSwitcher from "./IconSwitcher";
 import { ModalWrapper, ModalCard, ModalHeader } from "./elements/Modal";
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import { Divider } from "@mui/material";
+import {
+  Divider,
+  Box,
+  Card,
+  CardActions,
+  CardContent,
+  Button,
+  Typography,
+} from "@mui/material";
 import userIcon from "../assets/icons/user-icon.png";
 import mailIcon from "../assets/icons/mail-icon.png";
 import LikedAdd from "./LikedAdd";
@@ -22,14 +22,9 @@ import LikedAdd from "./LikedAdd";
 let humanize = require("humanize-number");
 
 const SingleAddModal = () => {
-  // const [isModalActive, setModalActive] = useState(false);
   const [add, setAdd] = useState({});
   const navigate = useNavigate();
   const accessToken = useSelector((store) => store.user.accessToken);
-
-  // const toggleModal = () => {
-  //   setModalActive(!isModalActive);
-  // };
 
   const { id } = useParams();
 
@@ -86,7 +81,6 @@ const SingleAddModal = () => {
           <CardContent
             sx={{
               wordBreak: "break-word",
-              // height: "100%",
             }}
           >
             <Box

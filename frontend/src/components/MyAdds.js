@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {useSelector} from "react-redux"
+import { useSelector } from "react-redux";
 import { API_URL } from "../utils/constants";
 import { useParams } from "react-router-dom";
 import DeleteAdd from "./elements/DeleteAdd";
@@ -8,28 +8,24 @@ import { Typography } from "@mui/material";
 import { Card } from "@mui/material";
 import IconSwitcher from "./IconSwitcher";
 import moment from "moment";
-// import Carousel from "react-grid-carousel";
-// import { Carousel } from "react-responsive-carousel";
 import { CardContent, Divider } from "@mui/material";
 
 let humanize = require("humanize-number");
 
 export const MyAdds = () => {
-  const userId = useSelector((store) => store.user.userId)
+  const userId = useSelector((store) => store.user.userId);
   const [myAdds, setMyAdds] = useState([]);
   const { id } = useParams();
 
   useEffect(() => {
     const options = {
       method: "GET",
-     
     };
     fetch(API_URL(`userprofile/${id}`), options)
       .then((res) => res.json())
       .then((data) => {
         setMyAdds(data.response.add);
         console.log(data.response.add);
-        console.log(myAdds._id);
       });
   }, [id, myAdds._id]);
 
@@ -51,7 +47,6 @@ export const MyAdds = () => {
           paddingBottom: 4,
         }}
       >
-        {/* <Carousel> */}
         {myAdds.map((add) => (
           <Card
             sx={{
@@ -122,12 +117,11 @@ export const MyAdds = () => {
                 Budget: {humanize(add.budget)} {add.currency}
               </Typography>
             </CardContent>
-            {id === userId && <DeleteAdd myAddsId={add._id} /> }
-            
+            {id === userId && <DeleteAdd myAddsId={add._id} />}
+
             {/* <button onClick={() => editAdd()}>Edit this add</button> */}
           </Card>
         ))}
-        {/* </Carousel> */}
       </Box>
     </>
   );

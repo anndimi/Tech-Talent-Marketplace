@@ -5,19 +5,9 @@ import { API_URL } from "../utils/constants";
 import user from "../reducers/user";
 import styled from "styled-components";
 import closeIcon from "../assets/icons/close.png";
-import { CloseButton } from "./elements/StyledButtons";
 import { ModalWrapper, ModalCard, ModalHeader } from "./elements/Modal";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
+import { Button, Box, Typography } from "@mui/material";
 
-// const EditModalWrapper = styled.div`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   width: 100%;
-//   height: 100%;
-// `;
 const EditModal = styled.div`
   &.edit-modal-active {
     padding: 0 0 10px 0;

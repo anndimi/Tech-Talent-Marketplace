@@ -27,28 +27,15 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [isContainerActive, setIsContainerActive] = useState("");
   const [mode, setMode] = useState("signin");
-  // const mode = useSelector((store) => store.user.mode);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const { id } = useParams();
-  // const fileInput = useRef();
-  // console.log(id, "first");
 
   const onFormSubmit = (event) => {
-    // console.log("hej");
     event.preventDefault();
-
-    // const formData = new FormData(event.target);
-
-    // formData.append("username", username);
-    // formData.append("password", password);
-    // formData.append("email", email);
-    // formData.append("image", fileInput.current.files[0]);
 
     const options = {
       method: "POST",
-      // body: formData,
       headers: {
         "Content-Type": "application/json",
       },
@@ -72,10 +59,8 @@ const SignUp = () => {
             dispatch(user.actions.setAccessToken(data.response.accessToken));
             dispatch(user.actions.setCreated(data.response.created));
             dispatch(user.actions.setLikedAdd(data.response.likedAdd));
-            // dispatch(user.actions.setImageUrl(data.response.imageUrl));
             dispatch(user.actions.setError(null));
             navigate(`/userprofile/${data.response.id}`);
-            // console.log(data.response.id, "data res");
           });
         } else {
           batch(() => {
@@ -90,7 +75,6 @@ const SignUp = () => {
             dispatch(user.actions.setGithub(null));
             dispatch(user.actions.setBio(null));
             dispatch(user.actions.setLikedAdd(null));
-            // dispatch(user.actions.setImageUrl(null));
             dispatch(user.actions.setError(data.error));
           });
 
@@ -101,22 +85,7 @@ const SignUp = () => {
           });
         }
       });
-
-    // if (accessToken) {
-    //   navigate(`/userprofile/${id}`);
-    // }
   };
-
-  // useEffect(() => {
-  //   if (accessToken) {
-  //     navigate(`/userprofile/${id}`);
-  //   }
-  // }, [accessToken, navigate, id]);
-
-  /* <label>
-          Profile image:
-          <input type="file" ref={fileInput} />
-        </label> */
 
   return (
     <>
