@@ -133,10 +133,18 @@ const SingleAddModal = () => {
               <Box sx={{ display: "flex", alignItems: "center" }}>
                 <img src={mailIcon} style={{ height: 20, width: 20 }} />
                 <Typography sx={{ fontFamily: "secondary.fontFamily" }}>
-                  {accessToken
-                    ? add.user?.email
-                    : `Sign in to get contact details`}
+                  {accessToken ? (
+                    <a
+                      href={`mailto:${add.user?.email}`}
+                      style={{ pointer: "cursor" }}
+                    >
+                      {add.user?.email}
+                    </a>
+                  ) : (
+                    `Sign in to get contact details`
+                  )}
                 </Typography>
+
                 <LikedAdd />
               </Box>
             </Box>

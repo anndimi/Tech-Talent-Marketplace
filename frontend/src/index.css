@@ -4,7 +4,7 @@ html {
 
 body {
   box-sizing: border-box;
-  font-family: "Spartan", sans-serif;
+  font-family: "Spartan", "Urbanist", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /* display: flex;
