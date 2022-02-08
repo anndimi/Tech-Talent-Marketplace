@@ -104,7 +104,8 @@ const LinkHeading = styled.div`
   display: flex;
   flex-direction: column;
   border-top: 3px solid black;
-  text-align: center;
+  width: 100%;
+
   h2 {
     font-weight: 600;
     font-size: 25px;
@@ -116,7 +117,7 @@ const LinkHeading = styled.div`
     font-size: 20px;
     margin: 0;
     margin-bottom: 10px;
-    text-align: center;
+    align-self: center;
   }
 `;
 const Wrapper = styled.div`

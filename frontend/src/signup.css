@@ -69,6 +69,7 @@ a {
   padding: 0 50px;
   height: 100%;
   text-align: center;
+  padding-top: 15px;
 }
 
 .signup-input {
@@ -233,6 +234,9 @@ a {
   .container {
     width: 768px;
     min-height: 480px;
+  }
+  .signup-form {
+    padding-top: 0;
   }
   .sign-in-container {
     top: 0;
