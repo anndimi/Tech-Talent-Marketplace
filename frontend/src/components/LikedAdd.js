@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import user from "../reducers/user";
 import { API_URL } from "../utils/constants";
+import { Fab } from "@mui/material";
+import BookmarkRoundedIcon from "@mui/icons-material/BookmarkRounded";
 
 const LikedAdd = () => {
   const dispatch = useDispatch();
@@ -37,7 +39,18 @@ const LikedAdd = () => {
 
   return (
     <>
-      <button onClick={onAddLike}>Like</button>
+      <Fab
+        sx={{
+          marginRight: 5,
+          "&:hover": { color: "#F8C53A" },
+          "&:clicked": { color: "#F8C53A" },
+        }}
+        onClick={onAddLike}
+      >
+        <BookmarkRoundedIcon />
+      </Fab>
+
+      {/* <button onClick={onAddLike}>Like</button> */}
     </>
   );
 };

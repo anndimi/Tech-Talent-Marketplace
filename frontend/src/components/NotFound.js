@@ -3,19 +3,7 @@ import styled from "styled-components";
 import Lottie from "react-lottie";
 import animationData from "../lotties/NotFountLottie.json";
 import UserBg from "../assets/images/user-bg.jpg";
-
-const StyledUserImage = styled.div`
-  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-    url(${UserBg});
-  height: 200px;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-`;
+import { StyledHeaderImage } from "./elements/HeroImage";
 
 const PageContainer = styled.div`
   display: flex;
@@ -47,7 +35,7 @@ const NotFound = () => {
 
   return (
     <>
-      <StyledUserImage />
+      <StyledHeaderImage />
       <PageContainer>
         <ErrorCode>404</ErrorCode>
         <h2>Page not found</h2>

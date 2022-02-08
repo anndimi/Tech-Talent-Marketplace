@@ -144,9 +144,10 @@ const SingleAddModal = () => {
                     `Sign in to get contact details`
                   )}
                 </Typography>
-
-                <LikedAdd />
               </Box>
+            </Box>
+            <Box sx={{ display: "flex", justifyContent: "end" }}>
+              <LikedAdd />
             </Box>
           </CardContent>
         </ModalCard>

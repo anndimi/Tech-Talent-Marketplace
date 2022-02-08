@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from "react";
-import user from "../reducers/user";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import moment from "moment";
+import { useParams } from "react-router-dom";
+import styled from "styled-components";
+
+import user from "../reducers/user";
 import linkedinIcon from "../assets/icons/linkedin-icon.png";
 import githubIcon from "../assets/icons/github-icon.png";
 import { EditProfile } from "./EditProfile";
 import { UploadImg } from "./UploadImg";
 import { MyAdds } from "./MyAdds";
-import { useParams } from "react-router-dom";
+import { UpArrow } from "./elements/UpArrow";
+import { StyledHeaderImage } from "./elements/HeroImage";
 import DeleteUser from "./elements/DeleteUser";
 import dummyUser from "../assets/icons/dummy-user.png";
-import UserBg from "../assets/images/user-bg.jpg";
+
 import {
   IconButton,
   Box,
@@ -29,20 +33,61 @@ import {
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
-import styled from "styled-components";
-import { UpArrow } from "./elements/UpArrow";
 
-const StyledUserImage = styled.div`
-  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-    url(${UserBg});
-  height: 350px;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+const ProfileContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  @media (min-width: 768px) {
+    margin-left: 15%;
+    flex-direction: row;
+    justify-content: initial;
+    img {
+      margin-left: 15px;
+    }
+  }
+`;
+
+const ProfileWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  @media (min-width: 768px) {
+    justify-content: initial;
+    align-items: initial;
+  }
+`;
+
+const ProfileInfo = styled.div`
+  margin-top: 4px;
+  text-align: center;
+  z-index: 3;
+  @media (min-width: 768px) {
+    margin-left: 10px;
+    text-align: left;
+    margin-top: 50px;
+  }
+`;
+
+const ProfileInfoText = styled.p`
+  font-family: Spartan, sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  margin: 10px;
+  padding: 0;
+  align-self: end;
+  z-index: 3;
+  color: #4c4c4c;
+  word-break: break-word;
+  &.member-since {
+    font-size: 15px;
+    font-weight: 500;
+  }
+  @media (min-width: 768px) {
+    color: #faf8f8;
+  }
 `;
 
 export const UserProfile = () => {
@@ -101,11 +146,11 @@ export const UserProfile = () => {
   return (
     <>
       <Box>
-        <StyledUserImage />
+        <StyledHeaderImage style={{ height: 290 }} />
         <Box
           sx={{ display: "flex", justifyContent: "space-between", margin: 2 }}
         ></Box>
-        <Box sx={{ display: "flex" }}>
+        <ProfileContainer>
           <img
             style={{
               width: "150px",
@@ -113,9 +158,7 @@ export const UserProfile = () => {
               borderRadius: "50%",
               objectFit: "cover",
               backgroundPosition: "center",
-              // borderStyle: "none",
               border: "solid 5px #faf8f8",
-              marginLeft: "10%",
               marginTop: "25px",
               zIndex: 3,
               outline: 0,
@@ -125,39 +168,20 @@ export const UserProfile = () => {
             alt="User Profile image"
             alt="profile"
           />
-          <Box sx={{ zIndex: 4, marginLeft: 2 }}>
-            <Box sx={{ marginTop: 4 }}>
-              <Typography
-                sx={{
-                  fontFamily: "primary.fontFamily",
-                  fontWeight: "700",
-                  fontSize: 30,
-                  padding: 0,
-                  alignSelf: "end",
-                  zIndex: 3,
-                  color: "white",
-                  wordBreak: "break-word",
-                }}
-              >
-                {username}
-              </Typography>
-              <Typography
-                sx={{
-                  padding: 0,
-                  fontFamily: "primary.fontFamily",
-                  color: "white",
-                }}
-              >
+          <ProfileWrapper>
+            <ProfileInfo>
+              <ProfileInfoText>{username}</ProfileInfoText>
+              <ProfileInfoText className="member-since">
                 Member since {moment(created).format("MMMM Do YYYY")}
-              </Typography>
-            </Box>
-            <Box sx={{ marginTop: 2, marginBottom: 2 }}>
+              </ProfileInfoText>
+            </ProfileInfo>
+            <div style={{ marginTop: 1, marginBottom: 2, marginLeft: 20 }}>
               <Fab
                 onClick={() => {
                   navigate("edit");
                   toggleEditModal();
                 }}
-                sx={{ height: 50, width: 50 }}
+                sx={{ height: 50, width: 50, "&:hover": { color: "#F8C53A" } }}
               >
                 <EditIcon />
               </Fab>
@@ -171,14 +195,20 @@ export const UserProfile = () => {
                     toggleImageModal();
                   }}
                 >
-                  <Fab sx={{ height: 50, width: 50 }}>
+                  <Fab
+                    sx={{
+                      height: 50,
+                      width: 50,
+                      "&:hover": { color: "#F8C53A" },
+                    }}
+                  >
                     <PhotoCamera />
                   </Fab>
                 </IconButton>
               </label>
-            </Box>
-          </Box>
-        </Box>
+            </div>
+          </ProfileWrapper>
+        </ProfileContainer>
       </Box>
 
       <section
@@ -204,7 +234,10 @@ export const UserProfile = () => {
           </Typography>
         </Divider>
         <Box sx={{ display: "flex", justifyContent: "center", padding: 3 }}>
-          <TableContainer component={Paper} sx={{ width: "80%" }}>
+          <TableContainer
+            component={Paper}
+            sx={{ width: "80%", maxWidth: 700 }}
+          >
             <Table sx={{ minWidth: "650" }} aria-label="simple table">
               <TableBody>
                 {rows.map((row) => (

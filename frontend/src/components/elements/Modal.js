@@ -22,7 +22,8 @@ export const ModalCard = styled(Card)({
   zIndex: 11,
   height: "615px",
   position: "fixed",
-  // top: "20%",
+  width: "80%",
+  maxWidth: "600px",
 });
 
 export const ModalHeader = styled(Box)({

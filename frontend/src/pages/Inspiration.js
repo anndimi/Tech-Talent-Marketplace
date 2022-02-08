@@ -1,23 +1,28 @@
 import React from "react";
 import UserBg from "../assets/images/user-bg.jpg";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { UpArrow } from "../components/elements/UpArrow";
 import ArticleImg1 from "../assets/images/team-image.jpg";
 import ArticleImg2 from "../assets/images/img1.jpg";
 import ArticleImg3 from "../assets/images/img2.jpg";
 import ArticleImg4 from "../assets/images/img3.jpg";
+import { StyledHeaderImage } from "../components/elements/HeroImage";
 
-const StyledImage = styled.div`
-  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-    url(${UserBg});
-  height: 250px;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+const ImageAnimation = keyframes`
+ 0% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  
+  50% {
+    -webkit-transform: translateY(-3%);
+    transform: translateY(-3%);
+  }
+    
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    }
 `;
 
 const InspirationContainer = styled.div`
@@ -25,12 +30,45 @@ const InspirationContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 100px;
+  margin-top: 110px;
+  width: 400px;
+  h1 {
+    color: #704462;
+    font-size: 40px;
+  }
   p {
     max-width: 60vw;
-    @media (min-width: 768px) {
-      width: 400px;
-    }
+  }
+  @media (min-width: 768px) {
+    width: 100%;
+  }
+`;
+export const Quote = styled.div`
+  width: 100%;
+  text-align: center;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  span {
+    font-weight: 900;
+    color: #f8c53a;
+    font-size: 28px;
+    font-style: none;
+  }
+  .quote {
+    font-size: 26px;
+    font-weight: 500;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
+    line-height: 30px;
+  }
+  .quote-guy {
+    font-style: italic;
   }
 `;
 const ArticleContainer = styled.div`
@@ -43,6 +81,7 @@ const ArticleContainer = styled.div`
 
   @media (min-width: 768px) {
     flex-direction: row;
+    align-items: baseline;
   }
 `;
 
@@ -57,7 +96,7 @@ const Article = styled.div`
   p {
     font-weight: 300;
     font-size: 15px;
-    word-break: break-all;
+    word-break: normal;
     padding: 0px;
     margin: 0px;
     width: 100%;
@@ -72,6 +111,13 @@ const Image = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 3px;
+  transform: ease-in-out;
+  &:hover {
+    animation-name: ${ImageAnimation};
+    animation-duration: 1s;
+    transform: ease-in-out;
+  }
   @media (min-width: 768px) {
     height: 400px;
   }
@@ -79,7 +125,7 @@ const Image = styled.img`
 const Title = styled.h3`
   font-weight: 500;
   font-size: 20px;
-  word-break: break-all;
+  word-break: normal;
   margin: 10px 0px;
   width: 95%;
 `;
@@ -96,7 +142,8 @@ const TopStory = styled.img`
   height: 500px;
   object-fit: cover;
   margin: 0px 20px;
-  @media (max-width: 768px) {
+  border-radius: 3px;
+  @media (max-width: 992px) {
     display: none;
   }
 `;
@@ -136,7 +183,7 @@ const Number = styled.div`
   justify-content: flex-end;
   h3 {
     font-weight: 200;
-    color: purple;
+    color: #704462;
     font-size: 40px;
     margin: 20px 5px;
     letter-spacing: 0.5px;
@@ -146,7 +193,7 @@ const Number = styled.div`
 const LinkContent = styled.div`
   display: flex;
   flex-direction: column;
-  word-break: break-all;
+  word-break: normal;
   justify-content: center;
   border-top: 2px solid black;
   padding: 20px 0px;
@@ -155,6 +202,7 @@ const LinkContent = styled.div`
     font-weight: 600;
     font-size: 20px;
     margin: 0;
+    padding: 0px 5px;
   }
   p {
     font-weight: 400;
@@ -162,63 +210,52 @@ const LinkContent = styled.div`
     margin: 0;
     padding: 5px;
   }
+  .author {
+    font-weight: 300;
+    font-size: 13px;
+    margin: 0;
+    padding: 0px 5px;
+  }
 `;
 
 const Inspiration = () => {
   return (
     <>
-      <StyledImage />
+      <StyledHeaderImage />
       <InspirationContainer>
-        <h1>Inspiration baby!</h1>
-        <p>
-          Cupcake ipsum dolor sit amet pastry. Candy ice cream macaroon marzipan
-          jelly-o powder topping pudding. Marshmallow ice cream tiramisu apple
-          pie cake gummi bears ice cream. Liquorice icing sweet roll caramels
-          liquorice jelly muffin. Bonbon candy marshmallow danish liquorice
-          danish. Apple pie cookie marzipan biscuit chupa chups cake muffin.
-          Croissant chocolate gummies pie dragée chocolate cake biscuit apple
-          pie. Bear claw oat cake sweet roll brownie cake cotton candy. Powder
-          icing powder bonbon lemon drops icing cupcake pie. Tart marzipan
-          cotton candy dessert chupa chups topping cookie pastry icing. Tootsie
-          roll chocolate cake caramels brownie oat cake. Shortbread oat cake
-          tootsie roll cake apple pie. Brownie cotton candy jujubes cookie
-          sesame snaps sesame snaps chocolate sweet chocolate. Cake cake wafer
-          fruitcake dessert shortbread pastry pie. Wafer soufflé marshmallow
-          halvah biscuit dessert candy canes. Muffin marshmallow brownie oat
-          cake oat cake. Chocolate apple pie caramels chupa chups bear claw
-          fruitcake powder cotton candy. Powder pudding cheesecake sesame snaps
-          cotton candy tiramisu lollipop bear claw. Caramels fruitcake cake tart
-          croissant topping. Cupcake danish cupcake sugar plum cookie marzipan
-          cupcake chocolate cake powder. Gummi bears jujubes topping candy canes
-          marzipan. Sesame snaps topping sweet jelly bonbon. Pie soufflé pudding
-          caramels sesame snaps.
-        </p>
+        <h1>Inspiration</h1>
+        <Quote>
+          <p className="quote">
+            <span>"</span>Technology is best when it brings people together
+            <span>"</span>
+          </p>
+          <p className="quote-guy">
+            -Matt Mullenweg, Social Media Entrepreneur
+          </p>
+        </Quote>
         <ArticleContainer>
           <Article>
             <Image src={ArticleImg1} />
-            <Title>This is a very nice heading about an article</Title>
+            <Title>How to succeed when working as a team.</Title>
             <p>
-              This is a very long description about this article that we have
-              written. The article is very relevant to the page and have to be
-              here to fill it out.
+              Working with a new team can be hard. This guide will lead you to
+              make the dream work with your teamwork.
             </p>
           </Article>
           <Article>
             <Image src={ArticleImg2} />
-            <Title>This is a very nice heading about an article</Title>
+            <Title>How I became a frontend developer.</Title>
             <p>
-              This is a very long description about this article that we have
-              written. The article is very relevant to the page and have to be
-              here to fill it out.
+              I needed a change of careers and in two years I managed to go from
+              knowing nothing about code to feeling like I can do it all.
             </p>
           </Article>
           <Article>
             <Image src={ArticleImg3} />
-            <Title>This is a very nice heading about an article</Title>
+            <Title>Are you a game developer?</Title>
             <p>
-              This is a very long description about this article that we have
-              written. The article is very relevant to the page and have to be
-              here to fill it out.
+              There are two new programming languages taking over in the gaming
+              world. Learn these and you will be able to move to any company
             </p>
           </Article>
         </ArticleContainer>
@@ -236,11 +273,11 @@ const Inspiration = () => {
               <LinkContent>
                 <h3>Top 10 npm packages</h3>
                 <p>
-                  {" "}
-                  This is a long description of what this article is about and
-                  to get people to click it
+                  Hack your React application using these 10 npm packages to
+                  save time and code in your components all by writing npm
+                  install ...
                 </p>
-                <p>By Lilla My</p>
+                <p className="author">By Lilla My</p>
               </LinkContent>
             </LinkedCard>
             <LinkedCard>
@@ -248,13 +285,12 @@ const Inspiration = () => {
                 <h3>02</h3>
               </Number>
               <LinkContent>
-                <h3>Hack your project</h3>
+                <h3>Design systems</h3>
                 <p>
-                  {" "}
-                  This is a long description of what this article is about and
-                  to get people to click it
+                  By building a design system my company got better at
+                  communicating about code and design.{" "}
                 </p>
-                <p>By Mumin</p>
+                <p className="author">By Greven</p>
               </LinkContent>
             </LinkedCard>
             <LinkedCard>
@@ -262,13 +298,12 @@ const Inspiration = () => {
                 <h3>03</h3>
               </Number>
               <LinkContent>
-                <h3>Figma for beginners</h3>
+                <h3>Google Analytics</h3>
                 <p>
-                  {" "}
-                  This is a long description of what this article is about and
-                  to get people to click it
+                  Using Google Analytics saved our company. Learn all of the
+                  advantages Analytics have to offer.
                 </p>
-                <p>By random</p>
+                <p className="author">By Cocolady</p>
               </LinkContent>
             </LinkedCard>
           </Wrapper>

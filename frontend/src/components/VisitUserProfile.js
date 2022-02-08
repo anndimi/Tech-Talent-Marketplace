@@ -23,19 +23,7 @@ import {
   Paper,
 } from "@mui/material";
 import styled from "styled-components";
-
-const StyledUserImage = styled.div`
-  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-    url(${UserBg});
-  height: 350px;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-`;
+import { StyledHeaderImage } from "./elements/HeroImage";
 
 export const VisitUserProfile = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
@@ -78,7 +66,7 @@ export const VisitUserProfile = () => {
   return (
     <>
       <Box>
-        <StyledUserImage />
+        <StyledHeaderImage style={{ height: 290 }} />
         <Box
           sx={{ display: "flex", justifyContent: "space-between", margin: 2 }}
         ></Box>
@@ -95,6 +83,7 @@ export const VisitUserProfile = () => {
               marginTop: "25px",
               zIndex: 3,
               outline: 0,
+              backgroundColor: "#F8C53A",
             }}
             src={visitInfo.image?.imageUrl || dummyUser}
             alt="User Profile image"

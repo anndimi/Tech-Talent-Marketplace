@@ -11,17 +11,6 @@ const FooterWrapper = styled.div`
   padding: 30px;
 `;
 
-const LogoContainer = styled.img`
-  height: 100px;
-  width: 100px;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-image: url(${logo});
-  object-fit: cover;
-  border: none;
-`;
-
 const GroupWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -97,7 +86,7 @@ export const Footer = () => {
     >
       <FooterWrapper>
         <LogoTitleAligner>
-          <LogoContainer />
+          <img src={logo} style={{ width: 75, height: 75 }} />
           <Title>Tech Talent Marketplace</Title>
         </LogoTitleAligner>
 

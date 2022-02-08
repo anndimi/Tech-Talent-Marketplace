@@ -45,10 +45,8 @@ const AddModal = styled.div`
     top: 18%;
     background: #212427;
     color: #ffff;
-    width: 50%;
     height: 80%;
     border-radius: 15px;
-
     overflow-y: scroll;
     label {
       font-weight: 600;

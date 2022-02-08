@@ -4,8 +4,10 @@ import styled from "styled-components";
 import Open from "../assets/icons/menu.png";
 import Close from "../assets/icons/close.png";
 import logoImg from "../assets/icons/logo.png";
+
 import { useSelector } from "react-redux";
 import { SignOutButton } from "./elements/StyledButtons";
+import { Typography } from "@mui/material";
 // import AddForm from "./AddForm";
 
 const HeaderContainer = styled.div`
@@ -16,12 +18,22 @@ const HeaderContainer = styled.div`
 `;
 
 const Logo = styled.div`
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-left: 20px;
   z-index: 1;
+  cursor: pointer;
+  div {
+    margin-left: 5px;
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 const LogoImage = styled.img`
-  width: 200px;
+  width: 100px;
 `;
 
 const HamburgerNav = styled.div`
@@ -34,6 +46,7 @@ const HamburgerNav = styled.div`
   width: 60px;
   height: 60px;
   margin-right: 20px;
+  margin-top: 50px;
   &.toggle {
     background-image: url(${Open});
     z-index: 10;
@@ -93,6 +106,27 @@ const Navbar = () => {
       <HeaderContainer>
         <Logo onClick={() => navigate("/")}>
           <LogoImage src={logoImg} />
+          <div>
+            <Typography
+              sx={{
+                fontFamily: "primary.fontFamily",
+                fontSize: 25,
+                fontWeight: 700,
+                padding: 0,
+              }}
+            >
+              Tech Talent
+            </Typography>
+            <Typography
+              sx={{
+                fontFamily: "primary.fontFamily",
+                fontSize: 20,
+                padding: 0,
+              }}
+            >
+              Marketplace
+            </Typography>
+          </div>
         </Logo>
         <HamburgerNav
           className={isActive ? "toggle-active" : "toggle"}

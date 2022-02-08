@@ -12,8 +12,6 @@ import AddFilter from "./AddFilter";
 import SingleAddModal from "./SingleAddModal";
 import { SearchBar } from "./SearchBar";
 import IconSwitcher from "./IconSwitcher";
-import UserBg from "../assets/images/user-bg.jpg";
-import plusIcon from "../assets/icons/plus-icon.png";
 // import { StyledButton } from "./Buttons/StyledButtons";
 
 //Material UI Card
@@ -23,21 +21,9 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import { StyledHeaderImage } from "./elements/HeroImage";
 
 let humanize = require("humanize-number");
-
-const StyledAddsImage = styled.div`
-  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-    url(${UserBg});
-  height: 250px;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-`;
 
 const AddListSection = styled.section`
   /* padding: 20px; */
@@ -94,20 +80,20 @@ const AddsList = () => {
   // });
 
   const sortedList = (adds) => {
-    
     if (sort === "Old") {
-      console.log(adds.sort((a, b) => {
-        return b.createdAt - a.createdAt
-      }));
+      console.log(
+        adds.sort((a, b) => {
+          return b.createdAt - a.createdAt;
+        })
+      );
       return adds.sort((a, b) => {
-        return b.createdAt - a.createdAt
+        return b.createdAt - a.createdAt;
       });
     } else {
       console.log(adds);
       return adds;
     }
   };
-
 
   const onFilterReset = () => {
     setFilter("");
@@ -160,14 +146,14 @@ const AddsList = () => {
 
   return (
     <>
-      <StyledAddsImage />
+      <StyledHeaderImage />
       <Box
         sx={{
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           flexWrap: "wrap",
-          marginTop: 7,
+          marginTop: 10,
         }}
       >
         <SearchBar setSearchValue={setSearchValue} searchValue={searchValue} />
@@ -229,20 +215,26 @@ const AddsList = () => {
                   <Box
                     sx={{ display: "flex", justifyContent: "space-between" }}
                   >
-                    <Typography
-                      sx={{
-                        fontSize: 14,
-                        padding: 0,
-                        fontFamily: "secondary.fontFamily",
-                        marginBottom: 1,
-                      }}
-                      color="primary.main"
-                      gutterBottom
-                    >
-                      {moment(item.createdAt).fromNow()}
-                      <br />
-                      {item.typeOf} {item.category}
-                    </Typography>
+                    {moment(item.createdAt).add(1, "days").calendar() >
+                    moment().fromNow() ? (
+                      <Typography>hello</Typography>
+                    ) : (
+                      <Typography
+                        //  styling : styling}
+                        sx={{
+                          fontSize: 14,
+                          padding: 0,
+                          fontFamily: "secondary.fontFamily",
+                          marginBottom: 1,
+                        }}
+                        color="primary.main"
+                        gutterBottom
+                      >
+                        {moment(item.createdAt).fromNow()}
+                        <br />
+                        {item.typeOf} {item.category}
+                      </Typography>
+                    )}
                     <img
                       src={IconSwitcher(item.category)}
                       style={{ width: 38, height: 38 }}
