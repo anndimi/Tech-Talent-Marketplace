@@ -55,7 +55,7 @@ const StartPageCard = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 350px;
+  width: 320px;
   &.second-card {
     @media (min-width: 768px) {
       flex-direction: row-reverse;
@@ -133,7 +133,7 @@ const Quote = styled.div`
 const CardImageContainer = styled.div`
   display: flex;
   justify-content: center;
-  width 100%;
+  width: 100%;
   img {
     width: 100%;
     border-radius: 3px;
@@ -148,7 +148,7 @@ const StartPageSection = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 350px;
+  width: 320px;
   border-top: 1px solid #704462;
   h2 {
     font-size: 35px;

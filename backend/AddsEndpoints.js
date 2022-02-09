@@ -58,18 +58,19 @@ export const DeleteAdd = async (req, res) => {
 //RegExp to search for queries in frontend
 export const GetAllAdds = async (req, res) => {
   const { title, description } = req.query;
-  // const today = new Date();
-  // const last30days = new Date(today.setDate(today.getDate() + 1));
 
   try {
     // let currentDate = moment();
     const allAdds = await Add.find({
       title: new RegExp(title, "i"),
       description: new RegExp(description, "i"),
-      // createdAt: createdAt + 30 < today,
-      // createdAt: { $gte: today, $lt: last30days },
+      // $where: function () {
+      //   return (
+      //     new Date(createdAt) > new Date(Date.now() - 2 * 24 * 60 * 60 * 1000)
+      //   );
+      // },
+      // createdAt: { $gte: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000) },
     })
-      // .filter((date) => moment(date).isSame(currentDate, "day"))
       .sort({ createdAt: "desc" }) //sorterar
       .populate("user", {
         username: 1,
@@ -116,7 +117,7 @@ export const unlikedAdd = async (req, res) => {
       const likedByUser = await User.findByIdAndUpdate(
         userId,
         {
-          $pop: { likedAdd: updatedLikedAdd },
+          $pullAll: { likedAdd: [updatedLikedAdd] },
         },
         {
           new: true,

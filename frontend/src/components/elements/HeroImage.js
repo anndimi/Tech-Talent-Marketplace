@@ -32,26 +32,26 @@ const StyledHeroImage = styled.div`
   right: 0;
 `;
 
+const HeroTitle = styled.h1`
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #f8c53a;
+  font-size: 40px;
+  font-family: Spartan, sans-serif;
+  @media (min-width: 768px) {
+    font-size: 50px;
+  }
+`;
+
 const HeroImage = () => {
   const navigate = useNavigate();
   return (
     <Box sx={{ height: "80vh" }}>
       <StyledHeroImage>
-        <Typography
-          sx={{
-            textAlign: "center",
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            color: "secondary.main",
-            fontSize: 50,
-            fontWeight: 600,
-            fontFamily: "primary.fontFamily",
-          }}
-        >
-          Welcome to Tech Talent Marketplace!
-        </Typography>
+        <HeroTitle>Welcome to Tech Talent Marketplace!</HeroTitle>
         <Button
           variant="contained"
           sx={{

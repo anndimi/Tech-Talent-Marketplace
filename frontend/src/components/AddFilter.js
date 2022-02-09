@@ -7,6 +7,19 @@ import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
 import styled from "styled-components";
 
+import RotateLeftOutlinedIcon from "@mui/icons-material/RotateLeftOutlined";
+
+const FilterContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
+`;
+
 const AddFilter = ({
   filter,
   type,
@@ -15,31 +28,10 @@ const AddFilter = ({
   onFilterReset,
   onTypeChange,
   onSortByTimeChange,
-  sortedAddItems,
 }) => {
-  // const onFilterChange = (event) => {
-  //   setFilter(event.target.value);
-  // };
-
-  // const onSortByTimeChange = (event) => {
-  //   setSort(event.target.value);
-  //   // sortedAddItems();
-  // };
-
-  // const onTypeChange = (event) => {
-  //   setType(event.target.value);
-  // };
-
   return (
-    <Box
-      sx={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        flexWrap: "wrap",
-      }}
-    >
-      <FormControl variant="standard" sx={{ m: 1, width: "160px" }}>
+    <FilterContainer>
+      <FormControl variant="standard" sx={{ m: 1, width: "180px" }}>
         <InputLabel id="demo-simple-select-standard-label">Category</InputLabel>
         <Select
           labelId="demo-simple-select-standard-label"
@@ -65,7 +57,7 @@ const AddFilter = ({
         </Select>
       </FormControl>
 
-      <FormControl variant="standard" sx={{ m: 1, width: "160px" }}>
+      <FormControl variant="standard" sx={{ m: 1, width: "180px" }}>
         <InputLabel id="demo-simple-select-standard-label">Time</InputLabel>
         <Select
           labelId="demo-simple-select-standard-label"
@@ -82,7 +74,7 @@ const AddFilter = ({
         </Select>
       </FormControl>
 
-      <FormControl variant="standard" sx={{ m: 1, width: "160px" }}>
+      <FormControl variant="standard" sx={{ m: 1, width: "180px" }}>
         <InputLabel id="demo-simple-select-standard-label">Type</InputLabel>
         <Select
           labelId="demo-simple-select-standard-label"
@@ -98,19 +90,17 @@ const AddFilter = ({
           <MenuItem value="Join as">Join as</MenuItem>
         </Select>
       </FormControl>
+
       <Button
         sx={{
           alignSelf: "center",
-          fontFamily: "secondary.fontFamily",
-          letterSpacing: 1,
-          fontSize: 16,
         }}
         variant="contained"
         onClick={onFilterReset}
       >
-        Reset
+        <RotateLeftOutlinedIcon onClick={onFilterReset} />
       </Button>
-    </Box>
+    </FilterContainer>
   );
 };
 

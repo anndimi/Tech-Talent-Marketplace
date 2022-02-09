@@ -1,9 +1,6 @@
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faTimes } from "@fortawesome/free-solid-svg-icons";
-
 import user from "../../reducers/user";
 
 export const StyledButton = styled.button`
@@ -70,24 +67,3 @@ export const SignOutButton = () => {
     <StyledSignOutButton onClick={onSignOutClick}>Sign out</StyledSignOutButton>
   );
 };
-
-// export const SignInButton = () => {
-//   const dispatch = useDispatch();
-//   const navigate = useNavigate();
-
-//   const onSignInClick = () => {
-//     navigate("/signup");
-//   };
-
-//   return (
-//     <StyledSignOutButton onClick={onSignOutClick}>Sign out</StyledSignOutButton>
-//   );
-// };
-
-// export const CloseButton = () => {
-//   return (
-//     <CloseButton>
-//       {/* <FontAwesomeIcon icon={faTimes} size="3x" color="#212427" /> */}
-//     </CloseButton>
-//   );
-// };

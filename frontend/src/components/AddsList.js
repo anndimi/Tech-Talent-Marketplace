@@ -37,6 +37,14 @@ const AddWrapper = styled.div`
   flex-wrap: wrap;
 `;
 
+const AddFilterContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* margin-top: 100px; */
+`;
+
 const AddsList = () => {
   const [filter, setFilter] = useState("");
   const [sort, setSort] = useState("");
@@ -46,6 +54,7 @@ const AddsList = () => {
   const addItems = useSelector((store) => store.add.items);
   const userId = useSelector((store) => store.user.userId);
   const createdAt = useSelector((store) => store.add.createdAt);
+  const accessToken = useSelector((store) => store.user.accessToken);
 
   const [isModalActive, setModalActive] = useState(false);
 
@@ -147,42 +156,46 @@ const AddsList = () => {
   return (
     <>
       <StyledHeaderImage />
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          flexWrap: "wrap",
-          marginTop: 10,
-        }}
-      >
+      <AddFilterContainer>
         <SearchBar setSearchValue={setSearchValue} searchValue={searchValue} />
-        <AddFilter
-          filter={filter}
-          sort={sort}
-          type={type}
-          onFilterChange={onFilterChange}
-          onTypeChange={onTypeChange}
-          onFilterReset={onFilterReset}
-          onSortByTimeChange={onSortByTimeChange}
-          // onSort={onSort}
-          // sortedAddItems={sortedAddItems}
-        />
-      </Box>
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
-        <Button
-          variant="contained"
-          sx={{ marginTop: 2 }}
-          onClick={() => {
-            navigate("create");
-            toggleModal();
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexWrap: "wrap",
+            marginTop: 2,
           }}
         >
-          <Typography sx={{ fontFamily: "secondary.fontFamily" }}>
-            Create add
-          </Typography>
-          {/* <img style={{ width: 40, height: 40 }} src={plusIcon} /> */}
-        </Button>
+          <AddFilter
+            filter={filter}
+            sort={sort}
+            type={type}
+            onFilterChange={onFilterChange}
+            onTypeChange={onTypeChange}
+            onFilterReset={onFilterReset}
+            onSortByTimeChange={onSortByTimeChange}
+            // onSort={onSort}
+            // sortedAddItems={sortedAddItems}
+          />
+        </Box>
+      </AddFilterContainer>
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
+        {accessToken && (
+          <Button
+            variant="contained"
+            sx={{ marginTop: 2 }}
+            onClick={() => {
+              navigate("create");
+              toggleModal();
+            }}
+          >
+            <Typography sx={{ fontFamily: "secondary.fontFamily" }}>
+              Create add
+            </Typography>
+            {/* <img style={{ width: 40, height: 40 }} src={plusIcon} /> */}
+          </Button>
+        )}
       </Box>
 
       <AddListSection onClick={() => setModalActive(false)}>
@@ -215,7 +228,7 @@ const AddsList = () => {
                   <Box
                     sx={{ display: "flex", justifyContent: "space-between" }}
                   >
-                    {moment(item.createdAt).add(1, "days").calendar() >
+                    {moment(item.createdAt).add(2, "days").calendar() >
                     moment().fromNow() ? (
                       <Typography>hello</Typography>
                     ) : (

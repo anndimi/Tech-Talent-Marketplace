@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import swal from "sweetalert";
+
 import add from "../../reducers/add";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
-
 import { API_URL } from "../../utils/constants";
-
-import swal from "sweetalert";
 
 const DeleteAdd = ({ myAddsId }) => {
   const [setDeleteAnAdd] = useState({});
@@ -34,8 +33,6 @@ const DeleteAdd = ({ myAddsId }) => {
         swal("Poof! Your add has been deleted!", {
           icon: "success",
         });
-
-        // window.location.reload(true);
       } else {
         swal("Your add is safe!");
       }

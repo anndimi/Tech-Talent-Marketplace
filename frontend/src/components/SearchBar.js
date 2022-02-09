@@ -7,17 +7,20 @@ export const SearchBar = ({ searchValue, setSearchValue }) => {
     <Box
       component="form"
       sx={{
-        "& > :not(style)": { m: 1, width: "160px" },
+        marginTop: 10,
+        width: "100%",
         fontWeight: 600,
         fontFamily: "primary.fontFamily",
-        alignSelf: "flex-end",
+        display: "flex",
+        justifyContent: "center",
       }}
       noValidate
       autoComplete="off"
     >
       <TextField
+        sx={{ maxWidth: "400px", width: "70%" }}
         id="standard-basic"
-        label="🔎 Search "
+        label="🔎 Search adds"
         variant="standard"
         value={searchValue}
         onChange={(event) => setSearchValue(event.target.value)}
