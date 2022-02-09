@@ -74,7 +74,7 @@ const LogoTitleAligner = styled.div`
   }
 `;
 
-export const Footer = () => {
+const Footer = () => {
   return (
     <div
       style={{
@@ -120,3 +120,4 @@ export const Footer = () => {
     </div>
   );
 };
+export default Footer;

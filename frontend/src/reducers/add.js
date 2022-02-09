@@ -19,7 +19,9 @@ const add = createSlice({
   reducers: {
     setItems: (store, action) => {
       store.items = action.payload;
-      console.log(action.payload, "this is payload");
+    },
+    addItem: (store, action) => {
+      store.items = [action.payload, ...store.items];
     },
     setAddId: (store, action) => {
       store.addId = action.payload;
@@ -62,8 +64,6 @@ const add = createSlice({
     },
     deleteAdd: (store, action) => {
       store.items = store.items.filter((item) => item._id !== action.payload);
-      console.log(store.items, "items");
-      console.log(action.payload, "payload");
     },
   },
 });

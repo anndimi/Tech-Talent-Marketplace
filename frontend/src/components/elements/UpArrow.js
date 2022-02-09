@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import Link from "@mui/material/Link";
 import upArrow from "../../assets/icons/up-arrow.png";
 
-export const UpArrow = () => {
+const UpArrow = () => {
   return (
     <Box sx={{ display: "flex", justifyContent: "center", marginTop: 6 }}>
       <Link href="#">
@@ -11,3 +11,5 @@ export const UpArrow = () => {
     </Box>
   );
 };
+
+export default UpArrow;

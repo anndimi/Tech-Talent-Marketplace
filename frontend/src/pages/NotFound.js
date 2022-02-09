@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Lottie from "react-lottie";
 import animationData from "../lotties/NotFountLottie.json";
 import UserBg from "../assets/images/user-bg.jpg";
-import { StyledHeaderImage } from "./elements/HeroImage";
+import { StyledHeaderImage } from "../components/elements/HeroImage";
 
 const PageContainer = styled.div`
   display: flex;

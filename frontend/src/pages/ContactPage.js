@@ -1,16 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import { UpArrow } from "../components/elements/UpArrow";
+import UpArrow from "../components/elements/UpArrow";
 import { Box, Card, CardContent, Typography } from "@mui/material";
 import EmailRoundedIcon from "@mui/icons-material/EmailRounded";
 import { StyledHeaderImage } from "../components/elements/HeroImage";
 // import WebAssetRoundedIcon from "@mui/icons-material/WebAssetRounded";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import ColorLensIcon from "@mui/icons-material/ColorLens";
-
-// const PortfolioLink = styled.a`
-
-// `
 
 const ContactContainer = styled.div`
   display: flex;

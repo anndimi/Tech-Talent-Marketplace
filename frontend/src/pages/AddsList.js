@@ -1,33 +1,31 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import add from "../reducers/add";
+import UpArrow from "../components/elements/UpArrow";
+import { API_URL } from "../utils/constants";
+import AddForm from "../components/AddForm";
+import AddFilter from "../components/AddFilter";
+import SingleAddModal from "../components/SingleAddModal";
+import { SearchBar } from "../components/SearchBar";
+import IconSwitcher from "../components/IconSwitcher";
+import { StyledHeaderImage } from "../components/elements/HeroImage";
 import moment from "moment";
 import styled from "styled-components";
-
-import { UpArrow } from "./elements/UpArrow";
-import { API_URL } from "../utils/constants";
-import AddForm from "./AddForm";
-import add from "../reducers/add";
-import AddFilter from "./AddFilter";
-import SingleAddModal from "./SingleAddModal";
-import { SearchBar } from "./SearchBar";
-import IconSwitcher from "./IconSwitcher";
-// import { StyledButton } from "./Buttons/StyledButtons";
-
 //Material UI Card
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import { StyledHeaderImage } from "./elements/HeroImage";
+import {
+  Box,
+  Button,
+  Typography,
+  Card,
+  CardActions,
+  CardContent,
+} from "@mui/material";
+import _ from "lodash";
 
 let humanize = require("humanize-number");
 
-const AddListSection = styled.section`
-  /* padding: 20px; */
-`;
+const AddListSection = styled.section``;
 
 const AddWrapper = styled.div`
   word-wrap: break-word;
@@ -42,7 +40,6 @@ const AddFilterContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* margin-top: 100px; */
 `;
 
 const AddsList = () => {
@@ -50,13 +47,11 @@ const AddsList = () => {
   const [sort, setSort] = useState("");
   const [type, setType] = useState("");
   const [searchValue, setSearchValue] = useState("");
+  const [isModalActive, setModalActive] = useState(false);
 
   const addItems = useSelector((store) => store.add.items);
   const userId = useSelector((store) => store.user.userId);
-  const createdAt = useSelector((store) => store.add.createdAt);
   const accessToken = useSelector((store) => store.user.accessToken);
-
-  const [isModalActive, setModalActive] = useState(false);
 
   // const accessToken = useSelector((store) => store.user.accessToken);
   const navigate = useNavigate();
@@ -78,28 +73,17 @@ const AddsList = () => {
   const onSortByTimeChange = (event) => {
     setSort(event.target.value);
   };
-  // const dateSort = addItems.sort((a, b) => {
-  //   return new Date(b.createdAt) - new Date(a.createdAt);
-
-  //   if (sort === "Old") {
-  //     return dateSort;
-  //   } else {
-  //     return addItems;
-  //   }
-  // });
 
   const sortedList = (adds) => {
+    console.log(sort);
     if (sort === "Old") {
-      console.log(
-        adds.sort((a, b) => {
-          return b.createdAt - a.createdAt;
-        })
+      const sortedArray = _.orderBy(
+        adds,
+        [(obj) => new Date(obj.createdAt)],
+        ["asc"]
       );
-      return adds.sort((a, b) => {
-        return b.createdAt - a.createdAt;
-      });
+      return sortedArray;
     } else {
-      console.log(adds);
       return adds;
     }
   };
@@ -124,16 +108,6 @@ const AddsList = () => {
     return item;
   });
 
-  // const onSort = (sort) => {
-  //   if (sort === "Oldest") {
-  //     return filteredAddItems.reverse();
-  //   } else {
-  //     return filteredAddItems;
-  //   }
-  // };
-
-  // console.log(filteredAddItems.reverse());
-
   useEffect(() => {
     const options = {
       method: "GET",
@@ -141,9 +115,7 @@ const AddsList = () => {
     fetch(API_URL(`adds?title=${searchValue}`), options)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data.success) {
-          console.log(data.response);
           dispatch(add.actions.setItems(data.response));
           dispatch(add.actions.setError(null));
         } else {
@@ -175,8 +147,6 @@ const AddsList = () => {
             onTypeChange={onTypeChange}
             onFilterReset={onFilterReset}
             onSortByTimeChange={onSortByTimeChange}
-            // onSort={onSort}
-            // sortedAddItems={sortedAddItems}
           />
         </Box>
       </AddFilterContainer>
@@ -193,7 +163,6 @@ const AddsList = () => {
             <Typography sx={{ fontFamily: "secondary.fontFamily" }}>
               Create add
             </Typography>
-            {/* <img style={{ width: 40, height: 40 }} src={plusIcon} /> */}
           </Button>
         )}
       </Box>
@@ -233,7 +202,6 @@ const AddsList = () => {
                       <Typography>hello</Typography>
                     ) : (
                       <Typography
-                        //  styling : styling}
                         sx={{
                           fontSize: 14,
                           padding: 0,

@@ -34,7 +34,7 @@ export const PostAdd = async (req, res) => {
     const updatedUser = await User.findByIdAndUpdate(id, {
       $push: { add: newAdd },
     });
-    res.status(201).json({ response: updatedUser, success: true });
+    res.status(201).json({ response: newAdd, success: true });
   } catch (error) {
     res.status(400).json({ response: error, success: false });
   }

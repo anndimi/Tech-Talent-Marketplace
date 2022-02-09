@@ -1,31 +1,17 @@
 import React, { useState } from "react";
+import user from "../reducers/user";
 import { useParams } from "react-router-dom";
 import { API_URL } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components";
 import closeIcon from "../assets/icons/close.png";
-import { CloseButton } from "./elements/StyledButtons";
 import { useNavigate } from "react-router-dom";
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
+import { Box, Button, Typography, TextField } from "@mui/material";
 import { ModalWrapper, ModalCard, ModalHeader } from "./elements/Modal";
 
-import user from "../reducers/user";
-
-export const EditProfile = ({
-  isEditModalActive,
-  toggleEditModal,
-  onClose,
-}) => {
+const EditProfile = ({ isEditModalActive, toggleEditModal, onClose }) => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const name = useSelector((store) => store.user.name);
   const location = useSelector((store) => store.user.location);
   const bio = useSelector((store) => store.user.bio);
@@ -56,7 +42,6 @@ export const EditProfile = ({
       .then((data) => {
         setUserInfo(data.response);
         if (data.success) {
-          console.log(data.response, "success");
           dispatch(user.actions.setName(data.response.name));
           dispatch(user.actions.setLocation(data.response.location));
           dispatch(user.actions.setBio(data.response.bio));
@@ -193,3 +178,5 @@ export const EditProfile = ({
     return null;
   }
 };
+
+export default EditProfile;

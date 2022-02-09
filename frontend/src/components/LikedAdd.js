@@ -1,18 +1,17 @@
-import { badgeUnstyledClasses } from "@mui/base";
-import { menuItemClasses } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { Divider, Typography } from "@mui/material";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import user from "../reducers/user";
 import { API_URL } from "../utils/constants";
 import { Fab } from "@mui/material";
 import BookmarkRoundedIcon from "@mui/icons-material/BookmarkRounded";
+import { Box } from "@mui/system";
 
 const LikedAdd = () => {
   const dispatch = useDispatch();
   const userId = useSelector((store) => store.user.userId);
   const likedArray = useSelector((store) => store.user.likedAdd?.likedAdd);
-  console.log(likedArray);
   const { id } = useParams();
 
   const onAddLike = () => {
@@ -25,7 +24,6 @@ const LikedAdd = () => {
         .then((res) => res.json())
         .then((data) => {
           if (data.success) {
-            console.log(data.response);
             dispatch(user.actions.setLikedAdd(data.response));
           } else {
             dispatch(user.actions.setLikedAdd(null));
@@ -33,24 +31,80 @@ const LikedAdd = () => {
           }
         });
     } else {
-      return alert("You already liked that one, biatch!");
+      fetch(API_URL(`adds/${id}/unlike/${userId}`), options)
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.success) {
+            dispatch(user.actions.setLikedAdd(data.response));
+          } else {
+            dispatch(user.actions.setLikedAdd(null));
+            dispatch(user.actions.setError(data.response));
+          }
+        });
     }
   };
 
   return (
     <>
-      <Fab
-        sx={{
-          marginRight: 5,
-          "&:hover": { color: "#F8C53A" },
-          "&:clicked": { color: "#F8C53A" },
-        }}
-        onClick={onAddLike}
-      >
-        <BookmarkRoundedIcon />
-      </Fab>
-
-      {/* <button onClick={onAddLike}>Like</button> */}
+      {likedArray?.includes(id) ? (
+        <Box>
+          <Divider
+            variant="middle"
+            sx={{ marginLeft: 7, marginRight: 7, marginBottom: 2 }}
+          >
+            <Typography
+              sx={{
+                fontFamily: "secondary.fontFamily",
+                padding: 0,
+                marginTop: 0.5,
+              }}
+            >
+              Add saved
+            </Typography>
+          </Divider>
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
+            <Fab
+              sx={{
+                "&:hover": { color: "#F8C53A" },
+                color: "#F8C53A",
+              }}
+              onClick={onAddLike}
+            >
+              <BookmarkRoundedIcon />
+            </Fab>
+          </Box>
+        </Box>
+      ) : (
+        <>
+          <Box>
+            <Divider
+              variant="middle"
+              sx={{ marginLeft: 7, marginRight: 7, marginBottom: 2 }}
+            >
+              <Typography
+                sx={{
+                  fontFamily: "secondary.fontFamily",
+                  padding: 0,
+                  marginTop: 0.5,
+                }}
+              >
+                Save add
+              </Typography>
+            </Divider>
+            <Box sx={{ display: "flex", justifyContent: "center" }}>
+              <Fab
+                sx={{
+                  "&:hover": { color: "#F8C53A" },
+                  color: "#4C4C4C",
+                }}
+                onClick={onAddLike}
+              >
+                <BookmarkRoundedIcon />
+              </Fab>
+            </Box>
+          </Box>
+        </>
+      )}
     </>
   );
 };

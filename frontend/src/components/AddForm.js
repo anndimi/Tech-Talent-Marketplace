@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch, batch } from "react-redux";
 import add from "../reducers/add";
+import { useSelector, useDispatch, batch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { API_URL } from "../utils/constants";
 import styled from "styled-components";
 import closeIcon from "../assets/icons/close.png";
-import { useNavigate } from "react-router-dom";
 import { ModalWrapper, ModalCard, ModalHeader } from "./elements/Modal";
 import {
   Typography,
@@ -15,7 +15,6 @@ import {
   FormControl,
   Select,
   Button,
-  Input,
   Radio,
   RadioGroup,
   FormControlLabel,
@@ -30,76 +29,11 @@ const Section = styled.section`
   }
 `;
 
-const AddModal = styled.div`
-  &.modal-active {
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
-      rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-    padding: 0 0 10px 0;
-    z-index: 10;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    gap: 50px;
-    align-items: center;
-    position: absolute;
-    top: 18%;
-    background: #212427;
-    color: #ffff;
-    height: 80%;
-    border-radius: 15px;
-    overflow-y: scroll;
-    label {
-      font-weight: 600;
-    }
-  }
-  &.modal-inactive {
-    display: none;
-  }
-  form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 20px;
-    width: 60%;
-  }
-`;
-
-const LabelInput = styled.div`
-  display: flex;
-  flex-direction: column;
-  input,
-  select {
-    height: 30px;
-  }
-  textarea {
-    resize: none;
-    height: 100px;
-    padding-top: 10px;
-  }
-  select,
-  input,
-  textarea {
-    font-family: "Spartan", sans-serif;
-    font-weight: 500;
-    padding-left: 10px;
-    border: 2px solid #212427;
-    border-radius: 5px;
-  }
-`;
-
-const RadioButtonsContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 5px;
-  margin-bottom: 20px;
-`;
-
 const AddForm = ({ isModalActive, onClose, toggleModal }) => {
   const id = useSelector((store) => store.user.userId);
   const accessToken = useSelector((store) => store.user.accessToken);
   const [typeOf, setTypeOf] = useState("Join");
   const [info, setInfo] = useState({
-    // typeOf: "",
     title: "",
     description: "",
     budget: "",
@@ -110,10 +44,8 @@ const AddForm = ({ isModalActive, onClose, toggleModal }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const onFormSubmit = () => {
-    // window.location.reload(true);
-    // event.preventDefault();
-
+  const onFormSubmit = (event) => {
+    event.preventDefault();
     const options = {
       method: "POST",
       headers: {
@@ -129,31 +61,23 @@ const AddForm = ({ isModalActive, onClose, toggleModal }) => {
     fetch(API_URL(`adds/${id}`), options)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data, "this is data");
         batch(() => {
-          dispatch(add.actions.setAddId(data.response._id));
-          dispatch(add.actions.setTypeOf(data.response.typeOf));
-          dispatch(add.actions.setTitle(data.response.title));
-          dispatch(add.actions.setDescription(data.response.description));
-          dispatch(add.actions.setBudget(data.response.budget));
-          dispatch(add.actions.setCurrency(data.response.currency));
-          dispatch(add.actions.setUser(data.response.user));
-          dispatch(add.actions.setCategory(data.response.category));
+          dispatch(add.actions.addItem(data.response));
           dispatch(add.actions.setError(null));
         });
       })
       .catch((error) => {
-        console.log(error.response);
         dispatch(add.actions.setError(error.response));
+      })
+      .finally(() => {
+        setInfo({
+          title: "",
+          description: "",
+          budget: "",
+          currency: "",
+          category: "",
+        });
       });
-
-    setInfo({
-      title: "",
-      description: "",
-      budget: "",
-      currency: "",
-      category: "",
-    });
     onClose();
   };
 

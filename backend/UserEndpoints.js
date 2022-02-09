@@ -4,7 +4,6 @@ import mongoose from "mongoose";
 
 const User = mongoose.model("User", UserSchema);
 const Image = mongoose.model("Image", ImageSchema);
-// const Add = mongoose.model("Add", AddSchema);
 
 export const GetSingleUser = async (req, res) => {
   const { id } = req.params;
@@ -12,7 +11,8 @@ export const GetSingleUser = async (req, res) => {
   try {
     const queriedUser = await User.findById(id)
       .populate("add")
-      .populate("image");
+      .populate("image")
+      .populate("likedAdd");
     if (queriedUser) {
       res.status(201).json({ response: queriedUser, success: true });
     } else {
@@ -58,21 +58,6 @@ export const DeleteUser = async (req, res) => {
     res.status(400).json({ error: "User id not found!", success: false });
   }
 };
-
-// export const PostImage = async (req, res) => {
-//   const { id } = req.params;
-//   try {
-//     const userImage = await new Image({
-//       imageUrl: req.file.path,
-//     }).save();
-//     const updatedUser = await User.findByIdAndUpdate(id, {
-//       $push: { image: userImage },
-//     });
-//     res.status(200).json({ response: userImage, success: true });
-//   } catch (error) {
-//     res.status(400).json({ error: error, succcess: false });
-//   }
-// };
 
 export const PostImage = async (req, res) => {
   const { id } = req.params;

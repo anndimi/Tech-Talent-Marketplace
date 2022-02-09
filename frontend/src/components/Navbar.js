@@ -8,7 +8,6 @@ import logoImg from "../assets/icons/logo.png";
 import { useSelector } from "react-redux";
 import { SignOutButton } from "./elements/StyledButtons";
 import { Typography } from "@mui/material";
-// import AddForm from "./AddForm";
 
 const HeaderContainer = styled.div`
   display: flex;

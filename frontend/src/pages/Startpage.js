@@ -6,7 +6,7 @@ import teamImg from "../assets/images/team-image.jpg";
 import img1 from "../assets/images/img1.jpg";
 import img2 from "../assets/images/img2.jpg";
 import img3 from "../assets/images/img3.jpg";
-import { UpArrow } from "../components/elements/UpArrow";
+import UpArrow from "../components/elements/UpArrow";
 
 import EmojiObjectsOutlinedIcon from "@mui/icons-material/EmojiObjectsOutlined";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
@@ -180,7 +180,7 @@ const StartPageSection = styled.div`
   }
 `;
 
-export const Startpage = () => {
+const Startpage = () => {
   return (
     <>
       <div style={{ display: "flex", flexDirection: "column" }}>
@@ -265,3 +265,5 @@ export const Startpage = () => {
     </>
   );
 };
+
+export default Startpage;

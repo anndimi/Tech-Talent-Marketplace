@@ -6,20 +6,10 @@ import { useSelector } from "react-redux";
 import { API_URL } from "../utils/constants";
 import IconSwitcher from "./IconSwitcher";
 import { ModalWrapper, ModalCard, ModalHeader } from "./elements/Modal";
-import {
-  Divider,
-  Box,
-  Card,
-  CardActions,
-  CardContent,
-  Button,
-  Typography,
-} from "@mui/material";
+import { Divider, Box, CardContent, Button, Typography } from "@mui/material";
 import userIcon from "../assets/icons/user-icon.png";
 import mailIcon from "../assets/icons/mail-icon.png";
 import LikedAdd from "./LikedAdd";
-
-let humanize = require("humanize-number");
 
 const SingleAddModal = () => {
   const [add, setAdd] = useState({});
@@ -114,14 +104,14 @@ const SingleAddModal = () => {
             </Typography>
             <Divider variant="middle">
               <Typography sx={{ fontFamily: "secondary.fontFamily" }}>
-                Contact Details{" "}
+                Contact Details
               </Typography>
             </Divider>
             <Box
               sx={{
                 display: "flex",
                 justifyContent: "space-around",
-                paddingBottom: 4,
+                paddingBottom: 1,
               }}
             >
               <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -135,6 +125,7 @@ const SingleAddModal = () => {
                 <Typography sx={{ fontFamily: "secondary.fontFamily" }}>
                   {accessToken ? (
                     <a
+                      target="_blank"
                       href={`mailto:${add.user?.email}`}
                       style={{ pointer: "cursor" }}
                     >
@@ -146,7 +137,7 @@ const SingleAddModal = () => {
                 </Typography>
               </Box>
             </Box>
-            <Box sx={{ display: "flex", justifyContent: "end" }}>
+            <Box>
               <LikedAdd />
             </Box>
           </CardContent>

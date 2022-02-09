@@ -8,12 +8,13 @@ import styled from "styled-components";
 import user from "../reducers/user";
 import linkedinIcon from "../assets/icons/linkedin-icon.png";
 import githubIcon from "../assets/icons/github-icon.png";
-import { EditProfile } from "./EditProfile";
-import { UploadImg } from "./UploadImg";
-import { MyAdds } from "./MyAdds";
-import { UpArrow } from "./elements/UpArrow";
-import { StyledHeaderImage } from "./elements/HeroImage";
-import DeleteUser from "./elements/DeleteUser";
+import EditProfile from "../components/EditProfile";
+import UploadImg from "../components/UploadImg";
+import MyAdds from "../components/MyAdds";
+import SavedAdds from "../components/SavedAdds";
+import UpArrow from "../components/elements/UpArrow";
+import { StyledHeaderImage } from "../components/elements/HeroImage";
+import DeleteUser from "../components/elements/DeleteUser";
 import dummyUser from "../assets/icons/dummy-user.png";
 
 import {
@@ -34,7 +35,7 @@ import {
 import EditIcon from "@mui/icons-material/Edit";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 
-const ProfileContainer = styled.div`
+export const ProfileContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -49,7 +50,7 @@ const ProfileContainer = styled.div`
   }
 `;
 
-const ProfileWrapper = styled.div`
+export const ProfileWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -60,7 +61,7 @@ const ProfileWrapper = styled.div`
   }
 `;
 
-const ProfileInfo = styled.div`
+export const ProfileInfo = styled.div`
   margin-top: 4px;
   text-align: center;
   z-index: 3;
@@ -71,7 +72,7 @@ const ProfileInfo = styled.div`
   }
 `;
 
-const ProfileInfoText = styled.p`
+export const ProfileInfoText = styled.p`
   font-family: Spartan, sans-serif;
   font-weight: 700;
   font-size: 28px;
@@ -90,7 +91,7 @@ const ProfileInfoText = styled.p`
   }
 `;
 
-export const UserProfile = () => {
+const UserProfile = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
   const username = useSelector((store) => store.user.username);
   const name = useSelector((store) => store.user.name);
@@ -108,8 +109,6 @@ export const UserProfile = () => {
   const [isImageModalActive, setImageModalActive] = useState(false);
   const [myImage, setMyImage] = useState("");
   const { id } = useParams();
-  console.log(id, "id");
-  console.log(accessToken, "accesstoken");
 
   const toggleEditModal = () => {
     setEditModalActive(!isEditModalActive);
@@ -128,8 +127,6 @@ export const UserProfile = () => {
   const onButtonClick = () => {
     dispatch(user.actions.setAccessToken(null));
   };
-
-  const matches = useMediaQuery((theme) => theme.breakpoints.up("tablet"));
 
   const createData = (key, value) => {
     return { key, value };
@@ -175,7 +172,7 @@ export const UserProfile = () => {
                 Member since {moment(created).format("MMMM Do YYYY")}
               </ProfileInfoText>
             </ProfileInfo>
-            <div style={{ marginTop: 1, marginBottom: 2, marginLeft: 20 }}>
+            <div>
               <Fab
                 onClick={() => {
                   navigate("edit");
@@ -251,30 +248,48 @@ export const UserProfile = () => {
                     <TableCell
                       component="th"
                       scope="row"
-                      sx={{ wordBreak: "break-word" }}
+                      sx={{
+                        fontWeight: 600,
+                        fontFamily: "secondary.fontFamily",
+                        fontSize: 18,
+                      }}
                     >
                       {row.key}
                     </TableCell>
 
-                    <TableCell align="center" sx={{ wordBreak: "break-word" }}>
+                    <TableCell
+                      align="left"
+                      sx={{
+                        wordBreak: "break-word",
+                        fontFamily: "secondary.fontFamily",
+                        fontSize: 16,
+                      }}
+                    >
                       {row.value}
                     </TableCell>
                   </TableRow>
                 ))}
-                <TableCell align="left">
-                  <a href={linkedIn} target="_blank" rel="noopener noreferrer">
-                    <img src={linkedinIcon} alt="linkedin-icon" />
-                  </a>
-                  <a href={gitHub} target="_blank" rel="noopener noreferrer">
-                    <img src={githubIcon} alt="github-icon" />
-                  </a>
-                </TableCell>
+                <TableRow>
+                  <TableCell align="left">
+                    <a
+                      href={linkedIn}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <img src={linkedinIcon} alt="linkedin-icon" />
+                    </a>
+                    <a href={gitHub} target="_blank" rel="noopener noreferrer">
+                      <img src={githubIcon} alt="github-icon" />
+                    </a>
+                  </TableCell>
+                </TableRow>
               </TableBody>
             </Table>
           </TableContainer>
         </Box>
       </section>
       <MyAdds />
+      <SavedAdds />
       <Divider variant="middle">
         <Typography sx={{ fontFamily: "secondary.fontFamily", fontSize: 20 }}>
           Manage account
@@ -298,3 +313,5 @@ export const UserProfile = () => {
     </>
   );
 };
+
+export default UserProfile;

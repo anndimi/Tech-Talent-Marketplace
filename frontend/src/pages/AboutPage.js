@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { UpArrow } from "../components/elements/UpArrow";
+import UpArrow from "../components/elements/UpArrow";
 import { StyledHeaderImage } from "../components/elements/HeroImage";
 
 const AboutContainer = styled.div`

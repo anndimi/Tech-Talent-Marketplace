@@ -1,8 +1,6 @@
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
-import crypto from "crypto";
-import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 import cloudinaryFramework from "cloudinary";
 import multer from "multer";
@@ -20,7 +18,6 @@ import {
   DeleteAdd,
   GetAllAdds,
   likedAdd,
-  deleteLike,
   unlikedAdd,
 } from "./AddsEndpoints";
 import {
@@ -62,9 +59,6 @@ const storage = new CloudinaryStorage({
 });
 
 const parser = multer({ storage });
-
-const Image = mongoose.model("Image", ImageSchema);
-const Add = mongoose.model("Add", AddSchema);
 const User = mongoose.model("User", UserSchema);
 
 const authenticateUser = async (req, res, next) => {
@@ -102,12 +96,6 @@ app.get("/", (req, res) => {
 //, parser.single("image") DENNA SKA IN  INNAN ASYNC
 app.post("/signup", SignupUser);
 app.post("/signin", SigninUser);
-
-//Profile image endpoint
-// app.post("/userprofile/image", parser.single("image"), async (req, res) => {
-//   res.json({ imageUrl: req.file.path, imageId: req.file.filename });
-// });
-
 app.post("/userprofile/:id/image", parser.single("image"), PostImage);
 
 // app.patch("/userprofile/:id/image", parser.single("image"), PatchImage);
@@ -117,7 +105,6 @@ app.get("/userprofile/:id/image", GetImage);
 //Post a new add
 // app.post("/adds/:id", authenticateUser);
 app.post("/adds/:id", authenticateUser, PostAdd);
-
 app.patch("/adds/:id/edit", EditAdd);
 
 //Search single add
@@ -125,21 +112,6 @@ app.get("/adds/:id", GetSingleAdd);
 
 //Delete single add
 app.delete("/adds/:id/delete", DeleteAdd);
-
-// app.delete("/adds", async (req, res) => {
-//   const { createdAt } = req.body;
-
-//   try {
-//     const allDeletedAdds = await Add.findOneAndDelete(createdAt);
-//     const time = createdAt + 2592000000
-//     const time = createdAt + 60000;
-//     if (time < Date.now()) {
-//       allDeletedAdds;
-//     }
-//   } catch (error) {
-//     res.status(400).json({ error: "Add id not found!", success: false });
-//   }
-// });
 
 //Search all adds
 app.get("/adds", GetAllAdds);
@@ -151,10 +123,8 @@ app.get("/userprofile/:id", GetSingleUser);
 //Deletes the user with the id
 app.patch("/userprofile/:id/edit", EditUser);
 app.delete("/userprofile/:id/delete", DeleteUser);
-
 app.post("/adds/:addId/like/:userId", likedAdd);
 app.post("/adds/:addId/unlike/:userId", unlikedAdd);
-app.delete("/adds/:addId/deletelike/:userId", deleteLike);
 
 // Start the server
 app.listen(port, () => {

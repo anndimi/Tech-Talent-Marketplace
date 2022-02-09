@@ -3,47 +3,11 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { API_URL } from "../utils/constants";
 import user from "../reducers/user";
-import styled from "styled-components";
 import closeIcon from "../assets/icons/close.png";
 import { ModalWrapper, ModalCard, ModalHeader } from "./elements/Modal";
 import { Button, Box, Typography } from "@mui/material";
 
-const EditModal = styled.div`
-  &.edit-modal-active {
-    padding: 0 0 10px 0;
-    z-index: 10;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    gap: 50px;
-    align-items: center;
-    position: absolute;
-    top: 20%;
-    background: #212427;
-    color: #ffffff;
-    width: 50%;
-    height: 90%;
-    border-radius: 15px;
-    overflow-y: scroll;
-  }
-  &.edit-modal-inactive {
-    display: none;
-  }
-  /* form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 20px;
-    width: 60%;
-  } */
-`;
-
-export const UploadImg = ({
-  isImageModalActive,
-  toggleImageModal,
-  onClose,
-}) => {
-  const [image, setImage] = useState("");
+const UploadImg = ({ isImageModalActive, toggleImageModal, onClose }) => {
   const { id } = useParams();
   const fileInput = useRef();
   const navigate = useNavigate();
@@ -69,6 +33,7 @@ export const UploadImg = ({
       <>
         <ModalWrapper>
           <ModalCard
+            sx={{ height: 400 }}
             className={
               isImageModalActive ? "edit-modal-active" : "edit-modal-inactive"
             }
@@ -84,16 +49,6 @@ export const UploadImg = ({
               >
                 Edit your profile image
               </Typography>
-
-              {/* <CloseButton
-                onClick={() => {
-                  navigate(`/userprofile/${id}`);
-                  toggleImageModal();
-                }}
-              >
-                <img src={closeIcon} alt="close window" />
-              </CloseButton> */}
-
               <Button
                 sx={{ alignSelf: "flex-start", paddingTop: 1.5 }}
                 onClick={() => {
@@ -114,12 +69,28 @@ export const UploadImg = ({
                   display: "flex",
                   flexDirection: "column",
                   gap: 2.5,
-                  margin: 4,
+                  margin: 7,
+                  marginTop: 10,
+                  gap: 5,
                 }}
               >
-                <label style={{ fontWeight: 600 }}>
-                  Upload profile Image.
-                  <input type="file" ref={fileInput} />
+                <label
+                  style={{
+                    fontWeight: 600,
+                    textAlign: "center",
+                  }}
+                >
+                  Upload profile image: {""}
+                  <input
+                    type="file"
+                    ref={fileInput}
+                    style={{
+                      marginTop: 10,
+                      fontFamily: "inherit",
+                      width: 200,
+                      fontWeight: 500,
+                    }}
+                  />
                 </label>
                 <Button
                   variant="contained"
@@ -127,7 +98,6 @@ export const UploadImg = ({
                   sx={{
                     fontFamily: "secondary.fontFamily",
                     letterSpacing: 1.3,
-
                     margin: 1,
                   }}
                 >
@@ -144,3 +114,5 @@ export const UploadImg = ({
     return null;
   }
 };
+
+export default UploadImg;

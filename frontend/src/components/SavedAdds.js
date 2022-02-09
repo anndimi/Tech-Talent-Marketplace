@@ -9,13 +9,15 @@ import { Card } from "@mui/material";
 import IconSwitcher from "./IconSwitcher";
 import moment from "moment";
 import { CardContent, Divider } from "@mui/material";
-import LikedAdd from "./LikedAdd";
+import user from "../reducers/user";
 
 let humanize = require("humanize-number");
 
-const MyAdds = () => {
+const SavedAdds = () => {
   const userId = useSelector((store) => store.user.userId);
-  const [myAdds, setMyAdds] = useState([]);
+  //   const likedAdds = useSelector((store) => store.user.likedAdd);
+  //   console.log(likedAdds);
+  const [myLikedAdds, setMyLikedAdds] = useState([]);
   const { id } = useParams();
 
   useEffect(() => {
@@ -25,15 +27,16 @@ const MyAdds = () => {
     fetch(API_URL(`userprofile/${id}`), options)
       .then((res) => res.json())
       .then((data) => {
-        setMyAdds(data.response.add);
+        setMyLikedAdds(data.response.likedAdd);
+        console.log(data.response.likedAdd);
       });
-  }, [id, myAdds._id]);
+  }, [id, myLikedAdds._id]);
 
   return (
     <>
       <Divider variant="middle">
         <Typography sx={{ fontFamily: "secondary.fontFamily", fontSize: 20 }}>
-          Created adds
+          Saved adds
         </Typography>
       </Divider>
       <Box
@@ -47,7 +50,7 @@ const MyAdds = () => {
           paddingBottom: 4,
         }}
       >
-        {myAdds.map((add) => (
+        {myLikedAdds.map((add) => (
           <Card
             sx={{
               display: "flex",
@@ -59,7 +62,7 @@ const MyAdds = () => {
               marginBottom: 2,
               fontFamily: "secondary.fontFamily",
             }}
-            key={add._id}
+            key={add.description}
           >
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
               <Box>
@@ -117,8 +120,6 @@ const MyAdds = () => {
                 Budget: {humanize(add.budget)} {add.currency}
               </Typography>
             </CardContent>
-            {id === userId && <DeleteAdd myAddsId={add._id} />}
-            {id !== userId && <LikedAdd addId={add._id} />}
           </Card>
         ))}
       </Box>
@@ -126,4 +127,4 @@ const MyAdds = () => {
   );
 };
 
-export default MyAdds;
+export default SavedAdds;

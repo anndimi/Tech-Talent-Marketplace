@@ -1,7 +1,7 @@
 import React from "react";
 import UserBg from "../assets/images/user-bg.jpg";
 import styled, { keyframes } from "styled-components";
-import { UpArrow } from "../components/elements/UpArrow";
+import UpArrow from "../components/elements/UpArrow";
 import ArticleImg1 from "../assets/images/team-image.jpg";
 import ArticleImg2 from "../assets/images/img1.jpg";
 import ArticleImg3 from "../assets/images/img2.jpg";

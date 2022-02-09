@@ -8,26 +8,23 @@ import {
   compose,
   applyMiddleware,
 } from "@reduxjs/toolkit";
-
-import { UserProfile } from "./components/UserProfile";
 import user from "./reducers/user";
 import add from "./reducers/add";
-import { Startpage } from "./pages/Startpage";
-import SignUp from "./components/SignUp";
-import AddsList from "./components/AddsList";
-import AddForm from "./components/AddForm";
-import NotFound from "./components/NotFound";
-import Navbar from "./components/Navbar";
+import UserProfile from "./pages/UserProfile";
+import VisitUserProfile from "./pages/VisitUserProfile";
+import Startpage from "./pages/Startpage";
 import ContactPage from "./pages/ContactPage";
 import AboutPage from "./pages/AboutPage";
-import { VisitUserProfile } from "./components/VisitUserProfile";
 import Inspiration from "./pages/Inspiration";
+import SignUp from "./components/SignUp";
+import AddsList from "./pages/AddsList";
+import AddForm from "./components/AddForm";
+import NotFound from "./pages/NotFound";
+import Navbar from "./components/Navbar";
 import SingleAddModal from "./components/SingleAddModal";
-import { EditProfile } from "./components/EditProfile";
-import { UploadImg } from "./components/UploadImg";
-import { Footer } from "./components/Footer";
-
-import Box from "@mui/material/Box";
+import EditProfile from "./components/EditProfile";
+import UploadImg from "./components/UploadImg";
+import Footer from "./components/Footer";
 
 const reducer = combineReducers({
   user: user.reducer,
