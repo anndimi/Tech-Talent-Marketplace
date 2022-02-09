@@ -243,7 +243,7 @@ const AddsList = () => {
                       fontFamily: "secondary.fontFamily",
                     }}
                   >
-                    Budget is {humanize(item.budget)}
+                    Budget is {item.budget}
                     {item.currency}
                   </Typography>
                 </CardContent>
