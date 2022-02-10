@@ -9,7 +9,7 @@ const PageContainer = styled.div`
   flex-direction: column;
   align-items: center;
   color: #212427;
-  margin-top: 100px;
+  margin-top: 200px;
   margin-bottom: 100px;
 `;
 

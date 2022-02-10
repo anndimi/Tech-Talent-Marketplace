@@ -46,7 +46,7 @@ const HeadingContainer = styled.div`
 `;
 
 const Title = styled.h2`
-  color: #704462;
+  color: #f8c53a;
   font-size: 30px;
   margin: 30px 0px 0px 0px;
   font-weight: 600;

@@ -30,7 +30,6 @@ const InspirationContainer = styled.div`
   justify-content: center;
   align-items: center;
   margin-top: 110px;
-  width: 400px;
   h1 {
     color: #704462;
     font-size: 40px;
