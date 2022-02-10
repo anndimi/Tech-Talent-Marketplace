@@ -9,6 +9,7 @@ import UserBg from "../../assets/images/user-bg.jpg";
 export const StyledHeaderImage = styled.div`
   background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
     url(${UserBg});
+  background-color: #342c42;
   height: 200px;
   background-position: center;
   background-repeat: no-repeat;
