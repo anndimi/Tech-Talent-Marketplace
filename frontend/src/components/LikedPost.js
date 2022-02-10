@@ -12,6 +12,7 @@ const LikedPost = () => {
   const dispatch = useDispatch();
   const userId = useSelector((store) => store.user.userId);
   const likedArray = useSelector((store) => store.user.likedPost?.likedPost);
+
   const { id } = useParams();
 
   const onPostLike = () => {

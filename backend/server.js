@@ -49,7 +49,7 @@ const storage = new CloudinaryStorage({
   cloudinary,
   params: {
     folder: "profileimage",
-    allowedFormats: ["jpg", "png", "jpeg", "gif"],
+    allowedFormats: ["jpg", "png", "jpeg"],
     transformation: [{ width: 500, height: 500, crop: "limit" }],
   },
 });

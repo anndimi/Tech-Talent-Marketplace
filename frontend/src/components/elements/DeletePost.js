@@ -10,7 +10,8 @@ const DeletePost = ({ myPostsId }) => {
   const [setDeleteAPost] = useState({});
   const dispatch = useDispatch();
 
-  const onDeleteClick = () => {
+  const onDeleteClick = (event) => {
+    event.preventDefault();
     swal({
       title: "Are you sure?",
       text: "Once deleted, you will not be able to recover this post!",

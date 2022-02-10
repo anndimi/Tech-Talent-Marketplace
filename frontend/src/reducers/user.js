@@ -19,9 +19,8 @@ const user = createSlice({
   },
   reducers: {
     setLikedPost: (store, action) => {
-      store.likedAdd = action.payload;
+      store.likedPost = action.payload;
     },
-
     setUserId: (store, action) => {
       store.userId = action.payload;
     },
