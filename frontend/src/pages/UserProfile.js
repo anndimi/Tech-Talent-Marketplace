@@ -101,6 +101,7 @@ const UserProfile = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+
   const [isEditModalActive, setEditModalActive] = useState(false);
   const [isImageModalActive, setImageModalActive] = useState(false);
   const { id } = useParams();

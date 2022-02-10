@@ -31,7 +31,6 @@ const SignUp = () => {
     fetch(API_URL(mode), options)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.response);
         if (data.success) {
           batch(() => {
             dispatch(user.actions.setUserId(data.response.id));
@@ -43,7 +42,6 @@ const SignUp = () => {
             dispatch(user.actions.setLinkedIn(data.response.linkedIn));
             dispatch(user.actions.setGithub(data.response.github));
             dispatch(user.actions.setAccessToken(data.response.accessToken));
-            dispatch(user.actions.setImage(data.response.imageUrl));
             dispatch(user.actions.setCreated(data.response.created));
             dispatch(user.actions.setLikedPost(data.response.likedPost));
             dispatch(user.actions.setError(null));
@@ -60,9 +58,7 @@ const SignUp = () => {
             dispatch(user.actions.setCreated(null));
             dispatch(user.actions.setLinkedIn(null));
             dispatch(user.actions.setGithub(null));
-            dispatch(user.actions.setImage(null));
             dispatch(user.actions.setBio(null));
-            dispatch(user.actions.setImage(null));
             dispatch(user.actions.setLikedPost(null));
             dispatch(user.actions.setError(data.error));
           });
