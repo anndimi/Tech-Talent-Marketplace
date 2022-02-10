@@ -56,7 +56,6 @@ const LikedPost = () => {
             <Typography
               sx={{
                 fontFamily: "secondary.fontFamily",
-                padding: 2,
               }}
             >
               Post saved
@@ -84,8 +83,6 @@ const LikedPost = () => {
               <Typography
                 sx={{
                   fontFamily: "secondary.fontFamily",
-                  padding: 0,
-                  marginTop: 0.5,
                 }}
               >
                 Save post
