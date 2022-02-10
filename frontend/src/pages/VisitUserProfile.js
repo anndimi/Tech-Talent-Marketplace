@@ -126,12 +126,23 @@ const VisitUserProfile = () => {
                     <TableCell
                       component="th"
                       scope="row"
-                      sx={{ wordBreak: "break-word" }}
+                      sx={{
+                        fontWeight: 600,
+                        fontFamily: "secondary.fontFamily",
+                        fontSize: 18,
+                      }}
                     >
                       {row.key}
                     </TableCell>
 
-                    <TableCell align="left" sx={{ wordBreak: "break-word" }}>
+                    <TableCell
+                      align="left"
+                      sx={{
+                        wordBreak: "break-word",
+                        fontFamily: "secondary.fontFamily",
+                        fontSize: 16,
+                      }}
+                    >
                       {row.value}
                     </TableCell>
                   </TableRow>
