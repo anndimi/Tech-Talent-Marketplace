@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { API_URL } from "../utils/constants";
 import { useParams } from "react-router-dom";
 import { Box } from "@mui/system";
