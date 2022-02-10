@@ -8,8 +8,6 @@ import IconSwitcher from "../elements/IconSwitcher";
 import moment from "moment";
 import { CardContent, Divider } from "@mui/material";
 
-let humanize = require("humanize-number");
-
 const SavedPosts = () => {
   const [myLikedPosts, setMyLikedPosts] = useState([]);
   const { id } = useParams();
@@ -110,7 +108,7 @@ const SavedPosts = () => {
                   padding: 0,
                 }}
               >
-                Budget: {humanize(post.budget)} {post.currency}
+                Budget: {post.budget} {post.currency}
               </Typography>
             </CardContent>
           </Card>

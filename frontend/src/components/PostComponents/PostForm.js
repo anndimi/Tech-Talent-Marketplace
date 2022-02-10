@@ -57,7 +57,7 @@ const PostForm = ({ isModalActive, onClose, toggleModal }) => {
         typeOf,
       }),
     };
-    console.log(info, "info");
+ 
     fetch(API_URL(`posts/${id}`), options)
       .then((res) => res.json())
       .then((data) => {

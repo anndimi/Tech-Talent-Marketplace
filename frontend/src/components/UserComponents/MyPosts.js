@@ -11,8 +11,6 @@ import moment from "moment";
 import { CardContent, Divider } from "@mui/material";
 import LikedPost from "../PostComponents/LikedPost";
 
-let humanize = require("humanize-number");
-
 const MyPosts = () => {
   const userId = useSelector((store) => store.user.userId);
   const [myPosts, setMyPosts] = useState([]);
@@ -114,7 +112,7 @@ const MyPosts = () => {
                   padding: 0,
                 }}
               >
-                Budget: {humanize(post.budget)} {post.currency}
+                Budget: {post.budget} {post.currency}
               </Typography>
             </CardContent>
             {id === userId && <DeletePost myPostsId={post._id} />}

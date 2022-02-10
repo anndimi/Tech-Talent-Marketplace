@@ -23,8 +23,6 @@ import {
 } from "@mui/material";
 import _ from "lodash";
 
-let humanize = require("humanize-number");
-
 const PostListSection = styled.section``;
 
 const PostWrapper = styled.div`
@@ -239,7 +237,7 @@ const PostsList = () => {
                       fontFamily: "secondary.fontFamily",
                     }}
                   >
-                    Budget is {humanize(item.budget)}
+                    Budget is {item.budget}
                     {item.currency}
                   </Typography>
                 </CardContent>
