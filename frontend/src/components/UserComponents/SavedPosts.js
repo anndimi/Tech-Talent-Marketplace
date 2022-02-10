@@ -48,7 +48,7 @@ const SavedPosts = () => {
             sx={{
               display: "flex",
               flexDirection: "column",
-              justifyContent: "space-between",
+              justifyContent: "space-around",
               width: 300,
               height: 350,
               padding: 2,
