@@ -2,8 +2,8 @@ import { Divider, Typography } from "@mui/material";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import user from "../reducers/user";
-import { API_URL } from "../utils/constants";
+import user from "../../reducers/user";
+import { API_URL } from "../../utils/constants";
 import { Fab } from "@mui/material";
 import BookmarkRoundedIcon from "@mui/icons-material/BookmarkRounded";
 import { Box } from "@mui/system";
@@ -56,8 +56,7 @@ const LikedPost = () => {
             <Typography
               sx={{
                 fontFamily: "secondary.fontFamily",
-                padding: 0,
-                marginTop: 0.5,
+                padding: 2,
               }}
             >
               Post saved

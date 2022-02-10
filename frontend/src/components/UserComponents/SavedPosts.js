@@ -1,21 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { API_URL } from "../utils/constants";
+import { API_URL } from "../../utils/constants";
 import { useParams } from "react-router-dom";
-import DeletePost from "./elements/DeletePost";
 import { Box } from "@mui/system";
 import { Typography } from "@mui/material";
 import { Card } from "@mui/material";
-import IconSwitcher from "./IconSwitcher";
+import IconSwitcher from "../elements/IconSwitcher";
 import moment from "moment";
 import { CardContent, Divider } from "@mui/material";
-import LikedPost from "./LikedPost";
 
 let humanize = require("humanize-number");
 
-const MyPosts = () => {
-  const userId = useSelector((store) => store.user.userId);
-  const [myPosts, setMyPosts] = useState([]);
+const SavedPosts = () => {
+  const [myLikedPosts, setMyLikedPosts] = useState([]);
   const { id } = useParams();
 
   useEffect(() => {
@@ -25,15 +21,15 @@ const MyPosts = () => {
     fetch(API_URL(`userprofile/${id}`), options)
       .then((res) => res.json())
       .then((data) => {
-        setMyPosts(data.response.post);
+        setMyLikedPosts(data.response.likedPost);
       });
-  }, [id, myPosts._id]);
+  }, [id, myLikedPosts._id]);
 
   return (
     <>
       <Divider variant="middle">
         <Typography sx={{ fontFamily: "secondary.fontFamily", fontSize: 20 }}>
-          Created posts
+          Saved posts
         </Typography>
       </Divider>
       <Box
@@ -47,7 +43,7 @@ const MyPosts = () => {
           paddingBottom: 4,
         }}
       >
-        {myPosts.map((post) => (
+        {myLikedPosts.map((post) => (
           <Card
             sx={{
               display: "flex",
@@ -59,7 +55,7 @@ const MyPosts = () => {
               marginBottom: 2,
               fontFamily: "secondary.fontFamily",
             }}
-            key={post._id}
+            key={post.description}
           >
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
               <Box>
@@ -117,8 +113,6 @@ const MyPosts = () => {
                 Budget: {humanize(post.budget)} {post.currency}
               </Typography>
             </CardContent>
-            {id === userId && <DeletePost myPostsId={post._id} />}
-            {id !== userId && <LikedPost postId={post._id} />}
           </Card>
         ))}
       </Box>
@@ -126,4 +120,4 @@ const MyPosts = () => {
   );
 };
 
-export default MyPosts;
+export default SavedPosts;

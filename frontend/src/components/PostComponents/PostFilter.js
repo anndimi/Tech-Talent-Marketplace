@@ -93,6 +93,7 @@ const PostFilter = ({
       <Button
         sx={{
           alignSelf: "center",
+          marginTop: "10px",
         }}
         variant="contained"
         onClick={onFilterReset}

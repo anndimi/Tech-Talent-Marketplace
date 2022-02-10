@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { useDispatch, batch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
-import user from "../reducers/user";
-import { API_URL } from "../utils/constants";
-import "../signup.css";
-import { StyledHeaderImage } from "./elements/HeroImage";
+import user from "../../reducers/user";
+import { API_URL } from "../../utils/constants";
+import "../../signup.css";
+import { StyledHeaderImage } from "../elements/HeroImage";
 
 const SignUp = () => {
   const [username, setUsername] = useState("");

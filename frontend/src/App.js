@@ -16,15 +16,15 @@ import Startpage from "./pages/Startpage";
 import ContactPage from "./pages/ContactPage";
 import AboutPage from "./pages/AboutPage";
 import Inspiration from "./pages/Inspiration";
-import SignUp from "./components/SignUp";
+import SignUp from "./components/UserComponents/SignUp";
 import PostsList from "./pages/PostsList";
-import PostForm from "./components/PostForm";
+import PostForm from "./components/PostComponents/PostForm";
 import NotFound from "./pages/NotFound";
-import Navbar from "./components/Navbar";
-import SinglePostModal from "./components/SinglePostModal";
-import EditProfile from "./components/EditProfile";
-import UploadImg from "./components/UploadImg";
-import Footer from "./components/Footer";
+import Navbar from "./components/elements/Navbar";
+import SinglePostModal from "./components/PostComponents/SinglePostModal";
+import EditProfile from "./components/UserComponents/EditProfile";
+import UploadImg from "./components/UserComponents/UploadImg";
+import Footer from "./components/elements/Footer";
 
 const reducer = combineReducers({
   user: user.reducer,

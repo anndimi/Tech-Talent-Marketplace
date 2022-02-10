@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import Open from "../assets/icons/menu.png";
-import Close from "../assets/icons/close.png";
-import logoImg from "../assets/icons/logo.png";
-
+import Open from "../../assets/icons/menu.png";
+import Close from "../../assets/icons/close.png";
+import logoImg from "../../assets/icons/logo.png";
 import { useSelector } from "react-redux";
-import { SignOutButton } from "./elements/StyledButtons";
+import { SignOutButton } from "./StyledButtons";
 import { Typography } from "@mui/material";
 
 const HeaderContainer = styled.div`
@@ -52,6 +51,8 @@ const HamburgerNav = styled.div`
   }
   &.toggle-active {
     background-image: url(${Close});
+    position: fixed;
+    right: 0;
     z-index: 30;
   }
 `;
@@ -83,8 +84,9 @@ const PopUpNav = styled.nav`
 const StyledLink = styled(Link)`
   text-decoration: none;
   color: #fff;
-  font-size: 20px;
+  font-size: 22px;
   padding: 10px;
+  margin: 10px;
   &:hover {
     text-decoration: underline;
     color: #f8c53a;

@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import user from "../reducers/user";
+import user from "../../reducers/user";
 import { useParams } from "react-router-dom";
-import { API_URL } from "../utils/constants";
+import { API_URL } from "../../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
-import closeIcon from "../assets/icons/close.png";
+import closeIcon from "../../assets/icons/close.png";
 import { useNavigate } from "react-router-dom";
 import { Box, Button, Typography, TextField } from "@mui/material";
-import { ModalWrapper, ModalCard, ModalHeader } from "./elements/Modal";
+import { ModalWrapper, ModalCard, ModalHeader } from "../elements/Modal";
 
 const EditProfile = ({ isEditModalActive, toggleEditModal, onClose }) => {
   const { id } = useParams();

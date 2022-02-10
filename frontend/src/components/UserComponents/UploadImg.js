@@ -1,10 +1,10 @@
 import React, { useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { API_URL } from "../utils/constants";
-import user from "../reducers/user";
-import closeIcon from "../assets/icons/close.png";
-import { ModalWrapper, ModalCard, ModalHeader } from "./elements/Modal";
+import { API_URL } from "../../utils/constants";
+import user from "../../reducers/user";
+import closeIcon from "../../assets/icons/close.png";
+import { ModalWrapper, ModalCard, ModalHeader } from "../elements/Modal";
 import { Button, Box, Typography } from "@mui/material";
 
 const UploadImg = ({ isImageModalActive, toggleImageModal, onClose }) => {

@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import moment from "moment";
-import MyPosts from "../components/MyPosts";
+import MyPosts from "../components/UserComponents/MyPosts";
 import { API_URL } from "../utils/constants";
 import dummyUser from "../assets/icons/dummy-user.png";
 import {

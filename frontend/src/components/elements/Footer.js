@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import logo from "../assets/icons/logo.png";
+import logo from "../../assets/icons/logo.png";
 import { Link } from "react-router-dom";
 
 const FooterWrapper = styled.div`
@@ -26,7 +26,7 @@ const LinkWrapper = styled.div`
 
 const Links = styled.a`
   color: white;
-  font-size: 10px;
+  font-size: 12px;
   text-decoration: none;
   margin: 10px;
   &:hover {
@@ -37,7 +37,7 @@ const Links = styled.a`
 const StyledLink = styled(Link)`
   text-decoration: none;
   color: white;
-  font-size: 10px;
+  font-size: 12px;
   margin: 10px;
   &:hover {
     text-decoration: underline;
@@ -60,7 +60,7 @@ const Title = styled.h2`
 const Year = styled.p`
   margin: 10px 0px 0px 0px;
   padding: 0;
-  font-size: 10px;
+  font-size: 13px;
 `;
 
 const LogoTitleAligner = styled.div`
@@ -115,7 +115,10 @@ const Footer = () => {
             <Links href="#">Github</Links>
           </GroupWrapper>
         </LinkWrapper>
-        <Year>© 2022</Year>
+        <Year>
+          TTM<span style={{ verticalAlign: "super", fontSize: "10px" }}>©</span>{" "}
+          2022
+        </Year>
       </FooterWrapper>
     </div>
   );

@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { API_URL } from "../utils/constants";
+import { useSelector } from "react-redux";
+import { API_URL } from "../../utils/constants";
 import { useParams } from "react-router-dom";
+import DeletePost from "../elements/DeletePost";
 import { Box } from "@mui/system";
 import { Typography } from "@mui/material";
 import { Card } from "@mui/material";
-import IconSwitcher from "./elements/IconSwitcher";
+import IconSwitcher from "../elements/IconSwitcher";
 import moment from "moment";
 import { CardContent, Divider } from "@mui/material";
+import LikedPost from "../PostComponents/LikedPost";
 
 let humanize = require("humanize-number");
 
-const SavedPosts = () => {
-  const [myLikedPosts, setMyLikedPosts] = useState([]);
+const MyPosts = () => {
+  const userId = useSelector((store) => store.user.userId);
+  const [myPosts, setMyPosts] = useState([]);
   const { id } = useParams();
 
   useEffect(() => {
@@ -21,15 +25,15 @@ const SavedPosts = () => {
     fetch(API_URL(`userprofile/${id}`), options)
       .then((res) => res.json())
       .then((data) => {
-        setMyLikedPosts(data.response.likedPost);
+        setMyPosts(data.response.post);
       });
-  }, [id, myLikedPosts._id]);
+  }, [id, myPosts._id]);
 
   return (
     <>
       <Divider variant="middle">
         <Typography sx={{ fontFamily: "secondary.fontFamily", fontSize: 20 }}>
-          Saved posts
+          Created posts
         </Typography>
       </Divider>
       <Box
@@ -43,7 +47,7 @@ const SavedPosts = () => {
           paddingBottom: 4,
         }}
       >
-        {myLikedPosts.map((post) => (
+        {myPosts.map((post) => (
           <Card
             sx={{
               display: "flex",
@@ -55,7 +59,7 @@ const SavedPosts = () => {
               marginBottom: 2,
               fontFamily: "secondary.fontFamily",
             }}
-            key={post.description}
+            key={post._id}
           >
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
               <Box>
@@ -113,6 +117,8 @@ const SavedPosts = () => {
                 Budget: {humanize(post.budget)} {post.currency}
               </Typography>
             </CardContent>
+            {id === userId && <DeletePost myPostsId={post._id} />}
+            {id !== userId && <LikedPost postId={post._id} />}
           </Card>
         ))}
       </Box>
@@ -120,4 +126,4 @@ const SavedPosts = () => {
   );
 };
 
-export default SavedPosts;
+export default MyPosts;

@@ -42,7 +42,7 @@ const StyledSignOutButton = styled.button`
   background-color: transparent;
   border: none;
   color: #fff;
-  font-size: 20px;
+  font-size: 22px;
   padding: 10px;
   font-family: "Spartan", sans-serif;
   font-weight: bold;

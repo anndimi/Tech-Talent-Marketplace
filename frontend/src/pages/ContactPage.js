@@ -30,6 +30,12 @@ const ContactText = styled.h2`
   color: #4c4c4c;
 `;
 
+const StyledLink = styled.a`
+  margin: 0;
+  text-decoration: none;
+  color: #4c4c4c;
+`;
+
 const DeveloperInfo = [
   {
     name: "Johanna Mannestål",
@@ -119,6 +125,7 @@ const ContactPage = () => {
                     sx={{
                       fontFamily: "primary.fontFamily",
                       fontWeight: 700,
+                      marginLeft: 2,
                     }}
                   >
                     {item.name}
@@ -160,8 +167,7 @@ const ContactPage = () => {
                   }}
                 >
                   <GitHubIcon sx={{ color: "#342C42", fontSize: 25 }} />
-                  <a
-                    style={{ margin: 0 }}
+                  <StyledLink
                     href={item.github}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -180,7 +186,7 @@ const ContactPage = () => {
                     >
                       {item.github}
                     </Typography>
-                  </a>
+                  </StyledLink>
                 </Box>
                 <Box
                   sx={{
@@ -189,8 +195,7 @@ const ContactPage = () => {
                   }}
                 >
                   <ColorLensIcon sx={{ color: "#342C42", fontSize: 25 }} />
-                  <a
-                    style={{ margin: 0 }}
+                  <StyledLink
                     href={item.portfolio}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -209,7 +214,7 @@ const ContactPage = () => {
                     >
                       {item.portfolio}
                     </Typography>
-                  </a>
+                  </StyledLink>
                 </Box>
               </CardContent>
             </Card>

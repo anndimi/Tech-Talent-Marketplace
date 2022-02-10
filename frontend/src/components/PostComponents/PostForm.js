@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import post from "../reducers/post";
+import post from "../../reducers/post";
 import { useSelector, useDispatch, batch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { API_URL } from "../utils/constants";
+import { API_URL } from "../../utils/constants";
 import styled from "styled-components";
-import closeIcon from "../assets/icons/close.png";
-import { ModalWrapper, ModalCard, ModalHeader } from "./elements/Modal";
+import closeIcon from "../../assets/icons/close.png";
+import { ModalWrapper, ModalCard, ModalHeader } from "../elements/Modal";
 import {
   Typography,
   TextField,

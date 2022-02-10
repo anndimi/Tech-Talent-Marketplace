@@ -5,10 +5,10 @@ import moment from "moment";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import user from "../reducers/user";
-import EditProfile from "../components/EditProfile";
-import UploadImg from "../components/UploadImg";
-import MyPosts from "../components/MyPosts";
-import SavedPosts from "../components/SavedPosts";
+import EditProfile from "../components/UserComponents/EditProfile";
+import UploadImg from "../components/UserComponents/UploadImg";
+import MyPosts from "../components/UserComponents/MyPosts";
+import SavedPosts from "../components/UserComponents/SavedPosts";
 import UpArrow from "../components/elements/UpArrow";
 import { StyledHeaderImage } from "../components/elements/HeroImage";
 import DeleteUser from "../components/elements/DeleteUser";
@@ -64,7 +64,7 @@ export const ProfileInfo = styled.div`
   @media (min-width: 768px) {
     margin-left: 10px;
     text-align: left;
-    margin-top: 50px;
+    margin-top: 40px;
   }
 `;
 

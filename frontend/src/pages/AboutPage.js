@@ -35,7 +35,7 @@ const HeadingContainer = styled.div`
     margin: 0 auto;
     text-align: left;
     width: 100%;
-    padding: 0px 0px 0px 20px;
+    padding: 10px 20px 0px 20px;
   }
   @media (min-width: 768px) {
     flex-direction: row;
@@ -48,7 +48,7 @@ const HeadingContainer = styled.div`
 const Title = styled.h2`
   color: #f8c53a;
   font-size: 30px;
-  margin: 30px 0px 0px 0px;
+  margin: 30px 0px 0px 10px;
   font-weight: 600;
   @media (min-width: 768px) {
     font-size: 35px;
@@ -59,7 +59,7 @@ const Title = styled.h2`
 
 const Text = styled.p`
   font-size: 15px;
-  margin: 0;
+  margin-top: 30px;
 `;
 
 const InfoContainer = styled.div`
