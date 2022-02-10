@@ -62,9 +62,9 @@ const VisitUserProfile = () => {
     createData("Fullname", visitInfo.name),
     createData("Email", visitInfo.email),
     createData("Location", visitInfo.location),
-    createData("Bio", visitInfo.userBio),
+    createData("Bio", visitInfo.bio),
     createData("LinkedIn", visitInfo.linkedIn),
-    createData("GitHub", visitInfo.gitHub),
+    createData("GitHub", visitInfo.github),
   ];
 
   return (
