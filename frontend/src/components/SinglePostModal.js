@@ -9,10 +9,10 @@ import { ModalWrapper, ModalCard, ModalHeader } from "./elements/Modal";
 import { Divider, Box, CardContent, Button, Typography } from "@mui/material";
 import userIcon from "../assets/icons/user-icon.png";
 import mailIcon from "../assets/icons/mail-icon.png";
-import LikedAdd from "./LikedAdd";
+import LikedPost from "./LikedPost";
 
-const SingleAddModal = () => {
-  const [add, setAdd] = useState({});
+const SinglePostModal = () => {
+  const [post, setPost] = useState({});
   const navigate = useNavigate();
   const accessToken = useSelector((store) => store.user.accessToken);
 
@@ -20,9 +20,9 @@ const SingleAddModal = () => {
 
   useEffect(() => {
     if (id)
-      fetch(API_URL(`adds/${id}`))
+      fetch(API_URL(`posts/${id}`))
         .then((res) => res.json())
-        .then((data) => setAdd(data.response));
+        .then((data) => setPost(data.response));
   }, [id]);
 
   if (id) {
@@ -43,7 +43,7 @@ const SingleAddModal = () => {
                   fontWeight: 700,
                 }}
               >
-                {add.typeOf} {add.category}
+                {post.typeOf} {post.category}
               </Typography>
               <Typography
                 sx={{
@@ -54,12 +54,12 @@ const SingleAddModal = () => {
                   fontWeight: 600,
                 }}
               >
-                {moment(add.createdAt).fromNow()}
+                {moment(post.createdAt).fromNow()}
               </Typography>
             </Box>
             <Button
               sx={{ alignSelf: "flex-start" }}
-              onClick={() => navigate("/adds")}
+              onClick={() => navigate("/posts")}
             >
               <img
                 src={closeIcon}
@@ -78,7 +78,7 @@ const SingleAddModal = () => {
             >
               <img
                 style={{ width: 70, height: 70 }}
-                src={IconSwitcher(add.category)}
+                src={IconSwitcher(post.category)}
               />
             </Box>
 
@@ -92,15 +92,15 @@ const SingleAddModal = () => {
                 wordBreak: "break-word",
               }}
             >
-              {add.title}
+              {post.title}
             </Typography>
 
             <Typography sx={{ fontFamily: "secondary.fontFamily" }}>
-              {add.description}
+              {post.description}
             </Typography>
             <Typography sx={{ fontFamily: "secondary.fontFamily" }}>
-              Budget is {add.budget}
-              {add.currency}
+              Budget is {post.budget}
+              {post.currency}
             </Typography>
             <Divider variant="middle">
               <Typography sx={{ fontFamily: "secondary.fontFamily" }}>
@@ -117,7 +117,7 @@ const SingleAddModal = () => {
               <Box sx={{ display: "flex", alignItems: "center" }}>
                 <img src={userIcon} style={{ height: 20, width: 20 }} />
                 <Typography sx={{ fontFamily: "secondary.fontFamily" }}>
-                  {add.user?.username}
+                  {post.user?.username}
                 </Typography>
               </Box>
               <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -126,10 +126,10 @@ const SingleAddModal = () => {
                   {accessToken ? (
                     <a
                       target="_blank"
-                      href={`mailto:${add.user?.email}`}
+                      href={`mailto:${post.user?.email}`}
                       style={{ pointer: "cursor" }}
                     >
-                      {add.user?.email}
+                      {post.user?.email}
                     </a>
                   ) : (
                     `Sign in to get contact details`
@@ -138,7 +138,7 @@ const SingleAddModal = () => {
               </Box>
             </Box>
             <Box>
-              <LikedAdd />
+              <LikedPost />
             </Box>
           </CardContent>
         </ModalCard>
@@ -149,4 +149,4 @@ const SingleAddModal = () => {
   }
 };
 
-export default SingleAddModal;
+export default SinglePostModal;

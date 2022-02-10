@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import add from "../reducers/add";
+import post from "../reducers/post";
 import { useSelector, useDispatch, batch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../utils/constants";
@@ -29,7 +29,7 @@ const Section = styled.section`
   }
 `;
 
-const AddForm = ({ isModalActive, onClose, toggleModal }) => {
+const PostForm = ({ isModalActive, onClose, toggleModal }) => {
   const id = useSelector((store) => store.user.userId);
   const accessToken = useSelector((store) => store.user.accessToken);
   const [typeOf, setTypeOf] = useState("Join");
@@ -58,16 +58,16 @@ const AddForm = ({ isModalActive, onClose, toggleModal }) => {
       }),
     };
     console.log(info, "info");
-    fetch(API_URL(`adds/${id}`), options)
+    fetch(API_URL(`posts/${id}`), options)
       .then((res) => res.json())
       .then((data) => {
         batch(() => {
-          dispatch(add.actions.addItem(data.response));
-          dispatch(add.actions.setError(null));
+          dispatch(post.actions.postItem(data.response));
+          dispatch(post.actions.setError(null));
         });
       })
       .catch((error) => {
-        dispatch(add.actions.setError(error.response));
+        dispatch(post.actions.setError(error.response));
       })
       .finally(() => {
         setInfo({
@@ -114,7 +114,7 @@ const AddForm = ({ isModalActive, onClose, toggleModal }) => {
                     fontWeight: 700,
                   }}
                 >
-                  Create add
+                  Create post
                 </Typography>
                 <Button
                   sx={{ alignSelf: "flex-start" }}
@@ -282,4 +282,4 @@ const AddForm = ({ isModalActive, onClose, toggleModal }) => {
     </>
   );
 };
-export default AddForm;
+export default PostForm;

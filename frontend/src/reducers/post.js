@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const add = createSlice({
-  name: "add",
+const post = createSlice({
+  name: "post",
   initialState: {
     items: [],
     _id: null,
@@ -20,10 +20,10 @@ const add = createSlice({
     setItems: (store, action) => {
       store.items = action.payload;
     },
-    addItem: (store, action) => {
+    postItem: (store, action) => {
       store.items = [action.payload, ...store.items];
     },
-    setAddId: (store, action) => {
+    setPostId: (store, action) => {
       store.addId = action.payload;
     },
     setTitle: (store, action) => {
@@ -62,10 +62,10 @@ const add = createSlice({
       );
       store.items = filterAdd;
     },
-    deleteAdd: (store, action) => {
+    deletePost: (store, action) => {
       store.items = store.items.filter((item) => item._id !== action.payload);
     },
   },
 });
 
-export default add;
+export default post;

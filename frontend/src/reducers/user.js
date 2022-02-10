@@ -15,10 +15,10 @@ const user = createSlice({
     linkedIn: null,
     github: null,
     image: null,
-    likedAdd: [],
+    likedPost: [],
   },
   reducers: {
-    setLikedAdd: (store, action) => {
+    setLikedPost: (store, action) => {
       store.likedAdd = action.payload;
     },
 

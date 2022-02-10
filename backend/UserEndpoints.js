@@ -10,9 +10,9 @@ export const GetSingleUser = async (req, res) => {
 
   try {
     const queriedUser = await User.findById(id)
-      .populate("add")
+      .populate("post")
       .populate("image")
-      .populate("likedAdd");
+      .populate("likedPost");
     if (queriedUser) {
       res.status(201).json({ response: queriedUser, success: true });
     } else {

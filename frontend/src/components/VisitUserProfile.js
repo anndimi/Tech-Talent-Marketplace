@@ -1,17 +1,20 @@
 import React from "react";
+import user from "../reducers/user";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import moment from "moment";
 import linkedinIcon from "../assets/icons/linkedin-icon.png";
 import githubIcon from "../assets/icons/github-icon.png";
-import MyPosts from "../components/MyPosts";
+import { MyAdds } from "./MyPosts";
 import { API_URL } from "../utils/constants";
 import dummyUser from "../assets/icons/dummy-user.png";
+import UserBg from "../assets/images/user-bg.jpg";
 import {
   Typography,
   Divider,
   Box,
+  useMediaQuery,
   Table,
   TableBody,
   TableCell,
@@ -20,26 +23,12 @@ import {
   Paper,
 } from "@mui/material";
 import styled from "styled-components";
-import { StyledHeaderImage } from "../components/elements/HeroImage";
-import {
-  ProfileContainer,
-  ProfileWrapper,
-  ProfileInfoText,
-} from "./UserProfile";
+import { StyledHeaderImage } from "./elements/HeroImage";
 
-const ProfileInfo = styled.div`
-  margin-top: 4px;
-  text-align: center;
-  z-index: 3;
-  @media (min-width: 768px) {
-    margin-left: 10px;
-    text-align: left;
-  }
-`;
-
-const VisitUserProfile = () => {
+export const VisitUserProfile = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [visitInfo, setVisitInfo] = useState("");
   const { id } = useParams();
 
@@ -55,6 +44,8 @@ const VisitUserProfile = () => {
       .then((data) => setVisitInfo(data.response));
     console.log(visitInfo);
   }, []);
+
+  const matches = useMediaQuery((theme) => theme.breakpoints.up("tablet"));
 
   const createData = (key, value) => {
     return { key, value };
@@ -75,7 +66,7 @@ const VisitUserProfile = () => {
         <Box
           sx={{ display: "flex", justifyContent: "center", margin: 2 }}
         ></Box>
-        <ProfileContainer>
+        <Box sx={{ display: "flex" }}>
           <img
             style={{
               width: "150px",
@@ -84,6 +75,7 @@ const VisitUserProfile = () => {
               objectFit: "cover",
               backgroundPosition: "center",
               border: "solid 5px #faf8f8",
+              marginLeft: "10%",
               marginTop: "25px",
               zIndex: 3,
               outline: 0,
@@ -93,15 +85,34 @@ const VisitUserProfile = () => {
             alt="User Profile image"
             alt="profile"
           />
-          <ProfileWrapper>
-            <ProfileInfo>
-              <ProfileInfoText>{visitInfo.username}</ProfileInfoText>
-              <ProfileInfoText className="member-since">
+          <Box sx={{ zIndex: 4, marginLeft: 2 }}>
+            <Box sx={{ marginTop: 4 }}>
+              <Typography
+                sx={{
+                  fontFamily: "primary.fontFamily",
+                  fontWeight: "700",
+                  fontSize: 30,
+                  padding: 0,
+                  alignSelf: "end",
+                  zIndex: 3,
+                  color: "white",
+                  wordBreak: "break-word",
+                }}
+              >
+                {visitInfo.username}
+              </Typography>
+              <Typography
+                sx={{
+                  padding: 0,
+                  fontFamily: "primary.fontFamily",
+                  color: "white",
+                }}
+              >
                 Member since {moment(visitInfo.created).format("MMMM Do YYYY")}
-              </ProfileInfoText>
-            </ProfileInfo>
-          </ProfileWrapper>
-        </ProfileContainer>
+              </Typography>
+            </Box>
+          </Box>
+        </Box>
       </Box>
 
       <section>
@@ -161,9 +172,7 @@ const VisitUserProfile = () => {
           </TableContainer>
         </Box>
       </section>
-      <MyPosts />
+      <MyAdds />
     </>
   );
 };
-
-export default VisitUserProfile;

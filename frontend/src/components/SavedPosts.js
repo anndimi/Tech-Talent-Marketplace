@@ -2,20 +2,20 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { API_URL } from "../utils/constants";
 import { useParams } from "react-router-dom";
-import DeleteAdd from "./elements/DeleteAdd";
 import { Box } from "@mui/system";
 import { Typography } from "@mui/material";
 import { Card } from "@mui/material";
 import IconSwitcher from "./IconSwitcher";
 import moment from "moment";
 import { CardContent, Divider } from "@mui/material";
-import LikedAdd from "./LikedAdd";
 
 let humanize = require("humanize-number");
 
-const MyAdds = () => {
+const SavedPosts = () => {
   const userId = useSelector((store) => store.user.userId);
-  const [myAdds, setMyAdds] = useState([]);
+  //   const likedPosts = useSelector((store) => store.user.likedPost);
+  //   console.log(likedPosts);
+  const [myLikedPosts, setMyLikedPosts] = useState([]);
   const { id } = useParams();
 
   useEffect(() => {
@@ -25,15 +25,16 @@ const MyAdds = () => {
     fetch(API_URL(`userprofile/${id}`), options)
       .then((res) => res.json())
       .then((data) => {
-        setMyAdds(data.response.add);
+        setMyLikedPosts(data.response.likedPost);
+        console.log(data.response.likedPost);
       });
-  }, [id, myAdds._id]);
+  }, [id, myLikedPosts._id]);
 
   return (
     <>
       <Divider variant="middle">
         <Typography sx={{ fontFamily: "secondary.fontFamily", fontSize: 20 }}>
-          Created adds
+          Saved posts
         </Typography>
       </Divider>
       <Box
@@ -47,7 +48,7 @@ const MyAdds = () => {
           paddingBottom: 4,
         }}
       >
-        {myAdds.map((add) => (
+        {myLikedPosts.map((post) => (
           <Card
             sx={{
               display: "flex",
@@ -59,14 +60,14 @@ const MyAdds = () => {
               marginBottom: 2,
               fontFamily: "secondary.fontFamily",
             }}
-            key={add._id}
+            key={post.description}
           >
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
               <Box>
                 <Typography
                   sx={{ padding: 0, fontFamily: "secondary.fontFamily" }}
                 >
-                  {add.typeOf} {add.category}
+                  {post.typeOf} {post.category}
                 </Typography>
                 <Typography
                   sx={{
@@ -76,11 +77,11 @@ const MyAdds = () => {
                     fontStyle: "italic",
                   }}
                 >
-                  {moment(add.createdAt).fromNow()}
+                  {moment(post.createdAt).fromNow()}
                 </Typography>
               </Box>
               <img
-                src={IconSwitcher(add.category)}
+                src={IconSwitcher(post.category)}
                 style={{ width: 38, height: 38 }}
                 alt="icon"
               />
@@ -95,7 +96,7 @@ const MyAdds = () => {
                   marginBottom: 1,
                 }}
               >
-                {add.title}
+                {post.title}
               </Typography>
               <Typography
                 sx={{
@@ -105,7 +106,7 @@ const MyAdds = () => {
                   marginBottom: 2,
                 }}
               >
-                {add.description}
+                {post.description}
               </Typography>
 
               <Typography
@@ -114,11 +115,9 @@ const MyAdds = () => {
                   padding: 0,
                 }}
               >
-                Budget: {humanize(add.budget)} {add.currency}
+                Budget: {humanize(post.budget)} {post.currency}
               </Typography>
             </CardContent>
-            {id === userId && <DeleteAdd myAddsId={add._id} />}
-            {id !== userId && <LikedAdd addId={add._id} />}
           </Card>
         ))}
       </Box>
@@ -126,4 +125,4 @@ const MyAdds = () => {
   );
 };
 
-export default MyAdds;
+export default SavedPosts;

@@ -20,7 +20,7 @@ export const SearchBar = ({ searchValue, setSearchValue }) => {
       <TextField
         sx={{ maxWidth: "400px", width: "70%" }}
         id="standard-basic"
-        label="🔎 Search adds"
+        label="🔎 Search posts"
         variant="standard"
         value={searchValue}
         onChange={(event) => setSearchValue(event.target.value)}

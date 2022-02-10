@@ -8,13 +8,13 @@ import styled from "styled-components";
 import user from "../reducers/user";
 import linkedinIcon from "../assets/icons/linkedin-icon.png";
 import githubIcon from "../assets/icons/github-icon.png";
-import EditProfile from "../components/EditProfile";
-import UploadImg from "../components/UploadImg";
-import MyPosts from "../components/MyPosts";
-import SavedPosts from "../components/SavedPosts";
-import UpArrow from "../components/elements/UpArrow";
-import { StyledHeaderImage } from "../components/elements/HeroImage";
-import DeleteUser from "../components/elements/DeleteUser";
+import { EditProfile } from "./EditProfile";
+import { UploadImg } from "./UploadImg";
+import { MyAdds } from "./MyPosts";
+import { SavedAdds } from "./SavedPosts";
+import { UpArrow } from "./elements/UpArrow";
+import { StyledHeaderImage } from "./elements/HeroImage";
+import DeleteUser from "./elements/DeleteUser";
 import dummyUser from "../assets/icons/dummy-user.png";
 
 import {
@@ -35,7 +35,7 @@ import {
 import EditIcon from "@mui/icons-material/Edit";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 
-export const ProfileContainer = styled.div`
+const ProfileContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -50,7 +50,7 @@ export const ProfileContainer = styled.div`
   }
 `;
 
-export const ProfileWrapper = styled.div`
+const ProfileWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -61,7 +61,7 @@ export const ProfileWrapper = styled.div`
   }
 `;
 
-export const ProfileInfo = styled.div`
+const ProfileInfo = styled.div`
   margin-top: 4px;
   text-align: center;
   z-index: 3;
@@ -72,7 +72,7 @@ export const ProfileInfo = styled.div`
   }
 `;
 
-export const ProfileInfoText = styled.p`
+const ProfileInfoText = styled.p`
   font-family: Spartan, sans-serif;
   font-weight: 700;
   font-size: 28px;
@@ -91,7 +91,7 @@ export const ProfileInfoText = styled.p`
   }
 `;
 
-const UserProfile = () => {
+export const UserProfile = () => {
   const accessToken = useSelector((store) => store.user.accessToken);
   const username = useSelector((store) => store.user.username);
   const name = useSelector((store) => store.user.name);
@@ -109,6 +109,8 @@ const UserProfile = () => {
   const [isImageModalActive, setImageModalActive] = useState(false);
   const [myImage, setMyImage] = useState("");
   const { id } = useParams();
+  // console.log(id, "id");
+  // console.log(accessToken, "accesstoken");
 
   const toggleEditModal = () => {
     setEditModalActive(!isEditModalActive);
@@ -127,6 +129,8 @@ const UserProfile = () => {
   const onButtonClick = () => {
     dispatch(user.actions.setAccessToken(null));
   };
+
+  const matches = useMediaQuery((theme) => theme.breakpoints.up("tablet"));
 
   const createData = (key, value) => {
     return { key, value };
@@ -288,8 +292,8 @@ const UserProfile = () => {
           </TableContainer>
         </Box>
       </section>
-      <MyPosts />
-      <SavedPosts />
+      <MyAdds />
+      {/* <SavedAdds /> */}
       <Divider variant="middle">
         <Typography sx={{ fontFamily: "secondary.fontFamily", fontSize: 20 }}>
           Manage account
@@ -313,5 +317,3 @@ const UserProfile = () => {
     </>
   );
 };
-
-export default UserProfile;

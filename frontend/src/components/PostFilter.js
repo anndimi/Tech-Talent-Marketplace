@@ -20,7 +20,7 @@ const FilterContainer = styled.div`
   }
 `;
 
-const AddFilter = ({
+const PostFilter = ({
   filter,
   type,
   sort,
@@ -104,4 +104,4 @@ const AddFilter = ({
   );
 };
 
-export default AddFilter;
+export default PostFilter;

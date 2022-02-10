@@ -9,7 +9,7 @@ import {
   applyMiddleware,
 } from "@reduxjs/toolkit";
 import user from "./reducers/user";
-import add from "./reducers/add";
+import post from "./reducers/post";
 import UserProfile from "./pages/UserProfile";
 import VisitUserProfile from "./pages/VisitUserProfile";
 import Startpage from "./pages/Startpage";
@@ -17,18 +17,18 @@ import ContactPage from "./pages/ContactPage";
 import AboutPage from "./pages/AboutPage";
 import Inspiration from "./pages/Inspiration";
 import SignUp from "./components/SignUp";
-import AddsList from "./pages/AddsList";
-import AddForm from "./components/AddForm";
+import PostsList from "./pages/PostsList";
+import PostForm from "./components/PostForm";
 import NotFound from "./pages/NotFound";
 import Navbar from "./components/Navbar";
-import SingleAddModal from "./components/SingleAddModal";
+import SinglePostModal from "./components/SinglePostModal";
 import EditProfile from "./components/EditProfile";
 import UploadImg from "./components/UploadImg";
 import Footer from "./components/Footer";
 
 const reducer = combineReducers({
   user: user.reducer,
-  add: add.reducer,
+  post: post.reducer,
 });
 const persistedStateJSON = localStorage.getItem("userReduxState");
 let persistedState = {};
@@ -62,9 +62,9 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Startpage />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/adds" element={<AddsList />}>
-            <Route path=":id" element={<SingleAddModal />} />
-            <Route path="create" element={<AddForm />} />
+          <Route path="/posts" element={<PostsList />}>
+            <Route path=":id" element={<SinglePostModal />} />
+            <Route path="create" element={<PostForm />} />
           </Route>
           <Route path="/userprofile/:id" element={<UserProfile />}>
             <Route path="edit" element={<EditProfile />} />
@@ -72,7 +72,7 @@ const App = () => {
           </Route>
 
           <Route
-            path="adds/userprofile/:id/visit"
+            path="posts/userprofile/:id/visit"
             element={<VisitUserProfile />}
           />
 

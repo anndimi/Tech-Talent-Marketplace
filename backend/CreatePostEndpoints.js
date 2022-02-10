@@ -1,14 +1,12 @@
 import { UserSchema } from "./Schemas/user";
-import { AddSchema } from "./Schemas/add";
+import { PostSchema } from "./Schemas/post";
 import mongoose from "mongoose";
 
 const User = mongoose.model("User", UserSchema);
-const Add = mongoose.model("Add", AddSchema);
+const Post = mongoose.model("Post", PostSchema);
 
-export const PostAdd = async (req, res) => {
+export const CreatePost = async (req, res) => {
   const { id } = req.params;
-  console.log(req.user);
-  console.log(req.user._id);
   const {
     title,
     description,
@@ -20,7 +18,7 @@ export const PostAdd = async (req, res) => {
     typeOf,
   } = req.body;
   try {
-    const newAdd = await new Add({
+    const newPost = await new Post({
       title,
       description,
       budget,
@@ -32,9 +30,9 @@ export const PostAdd = async (req, res) => {
       user: req.user,
     }).save();
     const updatedUser = await User.findByIdAndUpdate(id, {
-      $push: { add: newAdd },
+      $push: { post: newPost },
     });
-    res.status(201).json({ response: newAdd, success: true });
+    res.status(201).json({ response: newPost, success: true });
   } catch (error) {
     res.status(400).json({ response: error, success: false });
   }

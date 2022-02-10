@@ -2,22 +2,20 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { API_URL } from "../utils/constants";
 import { useParams } from "react-router-dom";
-import DeleteAdd from "./elements/DeleteAdd";
+import DeletePost from "./elements/DeletePost";
 import { Box } from "@mui/system";
 import { Typography } from "@mui/material";
 import { Card } from "@mui/material";
 import IconSwitcher from "./IconSwitcher";
 import moment from "moment";
 import { CardContent, Divider } from "@mui/material";
-import user from "../reducers/user";
+import LikedPost from "./LikedPost";
 
 let humanize = require("humanize-number");
 
-const SavedAdds = () => {
+const MyPosts = () => {
   const userId = useSelector((store) => store.user.userId);
-  //   const likedAdds = useSelector((store) => store.user.likedAdd);
-  //   console.log(likedAdds);
-  const [myLikedAdds, setMyLikedAdds] = useState([]);
+  const [myPosts, setMyPosts] = useState([]);
   const { id } = useParams();
 
   useEffect(() => {
@@ -27,16 +25,15 @@ const SavedAdds = () => {
     fetch(API_URL(`userprofile/${id}`), options)
       .then((res) => res.json())
       .then((data) => {
-        setMyLikedAdds(data.response.likedAdd);
-        console.log(data.response.likedAdd);
+        setMyPosts(data.response.post);
       });
-  }, [id, myLikedAdds._id]);
+  }, [id, myPosts._id]);
 
   return (
     <>
       <Divider variant="middle">
         <Typography sx={{ fontFamily: "secondary.fontFamily", fontSize: 20 }}>
-          Saved adds
+          Created posts
         </Typography>
       </Divider>
       <Box
@@ -50,7 +47,7 @@ const SavedAdds = () => {
           paddingBottom: 4,
         }}
       >
-        {myLikedAdds.map((add) => (
+        {myPosts.map((post) => (
           <Card
             sx={{
               display: "flex",
@@ -62,14 +59,14 @@ const SavedAdds = () => {
               marginBottom: 2,
               fontFamily: "secondary.fontFamily",
             }}
-            key={add.description}
+            key={post._id}
           >
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
               <Box>
                 <Typography
                   sx={{ padding: 0, fontFamily: "secondary.fontFamily" }}
                 >
-                  {add.typeOf} {add.category}
+                  {post.typeOf} {post.category}
                 </Typography>
                 <Typography
                   sx={{
@@ -79,11 +76,11 @@ const SavedAdds = () => {
                     fontStyle: "italic",
                   }}
                 >
-                  {moment(add.createdAt).fromNow()}
+                  {moment(post.createdAt).fromNow()}
                 </Typography>
               </Box>
               <img
-                src={IconSwitcher(add.category)}
+                src={IconSwitcher(post.category)}
                 style={{ width: 38, height: 38 }}
                 alt="icon"
               />
@@ -98,7 +95,7 @@ const SavedAdds = () => {
                   marginBottom: 1,
                 }}
               >
-                {add.title}
+                {post.title}
               </Typography>
               <Typography
                 sx={{
@@ -108,7 +105,7 @@ const SavedAdds = () => {
                   marginBottom: 2,
                 }}
               >
-                {add.description}
+                {post.description}
               </Typography>
 
               <Typography
@@ -117,9 +114,11 @@ const SavedAdds = () => {
                   padding: 0,
                 }}
               >
-                Budget: {humanize(add.budget)} {add.currency}
+                Budget: {humanize(post.budget)} {post.currency}
               </Typography>
             </CardContent>
+            {id === userId && <DeletePost myPostsId={post._id} />}
+            {id !== userId && <LikedPost postId={post._id} />}
           </Card>
         ))}
       </Box>
@@ -127,4 +126,4 @@ const SavedAdds = () => {
   );
 };
 
-export default SavedAdds;
+export default MyPosts;

@@ -8,36 +8,36 @@ import { Fab } from "@mui/material";
 import BookmarkRoundedIcon from "@mui/icons-material/BookmarkRounded";
 import { Box } from "@mui/system";
 
-const LikedAdd = () => {
+const LikedPost = () => {
   const dispatch = useDispatch();
   const userId = useSelector((store) => store.user.userId);
-  const likedArray = useSelector((store) => store.user.likedAdd?.likedAdd);
+  const likedArray = useSelector((store) => store.user.likedPost?.likedPost);
   const { id } = useParams();
 
-  const onAddLike = () => {
+  const onPostLike = () => {
     const options = {
       method: "POST",
     };
 
     if (!likedArray?.includes(id)) {
-      fetch(API_URL(`adds/${id}/like/${userId}`), options)
+      fetch(API_URL(`posts/${id}/like/${userId}`), options)
         .then((res) => res.json())
         .then((data) => {
           if (data.success) {
-            dispatch(user.actions.setLikedAdd(data.response));
+            dispatch(user.actions.setLikedPost(data.response));
           } else {
-            dispatch(user.actions.setLikedAdd(null));
+            dispatch(user.actions.setLikedPost(null));
             dispatch(user.actions.setError(data.response));
           }
         });
     } else {
-      fetch(API_URL(`adds/${id}/unlike/${userId}`), options)
+      fetch(API_URL(`posts/${id}/unlike/${userId}`), options)
         .then((res) => res.json())
         .then((data) => {
           if (data.success) {
-            dispatch(user.actions.setLikedAdd(data.response));
+            dispatch(user.actions.setLikedPost(data.response));
           } else {
-            dispatch(user.actions.setLikedAdd(null));
+            dispatch(user.actions.setLikedPost(null));
             dispatch(user.actions.setError(data.response));
           }
         });
@@ -59,7 +59,7 @@ const LikedAdd = () => {
                 marginTop: 0.5,
               }}
             >
-              Add saved
+              Post saved
             </Typography>
           </Divider>
           <Box sx={{ display: "flex", justifyContent: "center" }}>
@@ -68,7 +68,7 @@ const LikedAdd = () => {
                 "&:hover": { color: "#F8C53A" },
                 color: "#F8C53A",
               }}
-              onClick={onAddLike}
+              onClick={onPostLike}
             >
               <BookmarkRoundedIcon />
             </Fab>
@@ -88,7 +88,7 @@ const LikedAdd = () => {
                   marginTop: 0.5,
                 }}
               >
-                Save add
+                Save post
               </Typography>
             </Divider>
             <Box sx={{ display: "flex", justifyContent: "center" }}>
@@ -97,7 +97,7 @@ const LikedAdd = () => {
                   "&:hover": { color: "#F8C53A" },
                   color: "#4C4C4C",
                 }}
-                onClick={onAddLike}
+                onClick={onPostLike}
               >
                 <BookmarkRoundedIcon />
               </Fab>
@@ -109,4 +109,4 @@ const LikedAdd = () => {
   );
 };
 
-export default LikedAdd;
+export default LikedPost;

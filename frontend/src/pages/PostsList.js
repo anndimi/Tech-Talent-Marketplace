@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import add from "../reducers/add";
+import post from "../reducers/post";
 import UpArrow from "../components/elements/UpArrow";
 import { API_URL } from "../utils/constants";
-import AddForm from "../components/AddForm";
-import AddFilter from "../components/AddFilter";
-import SingleAddModal from "../components/SingleAddModal";
+import PostForm from "../components/PostForm";
+import PostFilter from "../components/PostFilter";
+import SinglePostModal from "../components/SinglePostModal";
 import { SearchBar } from "../components/SearchBar";
 import IconSwitcher from "../components/IconSwitcher";
 import { StyledHeaderImage } from "../components/elements/HeroImage";
@@ -25,9 +25,9 @@ import _ from "lodash";
 
 let humanize = require("humanize-number");
 
-const AddListSection = styled.section``;
+const PostListSection = styled.section``;
 
-const AddWrapper = styled.div`
+const PostWrapper = styled.div`
   word-wrap: break-word;
   display: flex;
   flex-direction: row;
@@ -35,21 +35,21 @@ const AddWrapper = styled.div`
   flex-wrap: wrap;
 `;
 
-const AddFilterContainer = styled.div`
+const PostFilterContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
 
-const AddsList = () => {
+const PostsList = () => {
   const [filter, setFilter] = useState("");
   const [sort, setSort] = useState("");
   const [type, setType] = useState("");
   const [searchValue, setSearchValue] = useState("");
   const [isModalActive, setModalActive] = useState(false);
 
-  const addItems = useSelector((store) => store.add.items);
+  const postItems = useSelector((store) => store.post.items);
   const userId = useSelector((store) => store.user.userId);
   const accessToken = useSelector((store) => store.user.accessToken);
 
@@ -74,17 +74,17 @@ const AddsList = () => {
     setSort(event.target.value);
   };
 
-  const sortedList = (adds) => {
+  const sortedList = (posts) => {
     console.log(sort);
     if (sort === "Old") {
       const sortedArray = _.orderBy(
-        adds,
+        posts,
         [(obj) => new Date(obj.createdAt)],
         ["asc"]
       );
       return sortedArray;
     } else {
-      return adds;
+      return posts;
     }
   };
 
@@ -94,8 +94,7 @@ const AddsList = () => {
     setType("");
   };
 
-  //Kanske filteredAddItems.sort (vi tar det på måndag)
-  const filteredAddItems = addItems.filter((item) => {
+  const filteredPostItems = postItems.filter((item) => {
     if (type && filter) {
       return item.typeOf === type && item.category === filter;
     }
@@ -112,15 +111,15 @@ const AddsList = () => {
     const options = {
       method: "GET",
     };
-    fetch(API_URL(`adds?title=${searchValue}`), options)
+    fetch(API_URL(`posts?title=${searchValue}`), options)
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
-          dispatch(add.actions.setItems(data.response));
-          dispatch(add.actions.setError(null));
+          dispatch(post.actions.setItems(data.response));
+          dispatch(post.actions.setError(null));
         } else {
-          dispatch(add.actions.setItems(null));
-          dispatch(add.actions.setError(data.response));
+          dispatch(post.actions.setItems(null));
+          dispatch(post.actions.setError(data.response));
         }
       });
   }, [searchValue, dispatch]);
@@ -128,7 +127,7 @@ const AddsList = () => {
   return (
     <>
       <StyledHeaderImage />
-      <AddFilterContainer>
+      <PostFilterContainer>
         <SearchBar setSearchValue={setSearchValue} searchValue={searchValue} />
         <Box
           sx={{
@@ -139,7 +138,7 @@ const AddsList = () => {
             marginTop: 2,
           }}
         >
-          <AddFilter
+          <PostFilter
             filter={filter}
             sort={sort}
             type={type}
@@ -149,7 +148,7 @@ const AddsList = () => {
             onSortByTimeChange={onSortByTimeChange}
           />
         </Box>
-      </AddFilterContainer>
+      </PostFilterContainer>
       <Box sx={{ display: "flex", justifyContent: "center" }}>
         {accessToken && (
           <Button
@@ -161,30 +160,30 @@ const AddsList = () => {
             }}
           >
             <Typography sx={{ fontFamily: "secondary.fontFamily" }}>
-              Create add
+              Create post
             </Typography>
           </Button>
         )}
       </Box>
 
-      <AddListSection onClick={() => setModalActive(false)}>
-        <SingleAddModal />
+      <PostListSection onClick={() => setModalActive(false)}>
+        <SinglePostModal />
 
         <div>
-          <AddForm
+          <PostForm
             toggleModal={toggleModal}
             onClose={() => setModalActive(false)}
             isModalActive={isModalActive}
-            filteredAddItems={filteredAddItems}
+            filteredPostItems={filteredPostItems}
           />
         </div>
-        <AddWrapper>
-          {filteredAddItems.length === 0 ? (
+        <PostWrapper>
+          {filteredPostItems.length === 0 ? (
             <div style={{ marginTop: "40px" }}>
-              <h1>No adds</h1>
+              <h1>No posts found</h1>
             </div>
           ) : (
-            sortedList(filteredAddItems).map((item) => (
+            sortedList(filteredPostItems).map((item) => (
               <Card
                 key={item._id}
                 sx={{ width: 350, margin: 2, cursor: "pointer" }}
@@ -281,11 +280,11 @@ const AddsList = () => {
               </Card>
             ))
           )}
-        </AddWrapper>
-      </AddListSection>
+        </PostWrapper>
+      </PostListSection>
       <UpArrow />
     </>
   );
 };
 
-export default AddsList;
+export default PostsList;

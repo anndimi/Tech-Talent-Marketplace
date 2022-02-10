@@ -7,19 +7,17 @@ import multer from "multer";
 import { CloudinaryStorage } from "multer-storage-cloudinary";
 import listEndpoints from "express-list-endpoints";
 import { UserSchema } from "./Schemas/user";
-import { AddSchema } from "./Schemas/add";
-import { ImageSchema } from "./Schemas/image";
 import { SignupUser } from "./SignupEndpoints";
 import { SigninUser } from "./SigninEndpoints";
-import { PostAdd } from "./PostAddEndpoints";
+import { CreatePost } from "./CreatePostEndpoints";
 import {
-  EditAdd,
-  GetSingleAdd,
-  DeleteAdd,
-  GetAllAdds,
-  likedAdd,
-  unlikedAdd,
-} from "./AddsEndpoints";
+  EditPost,
+  GetSinglePost,
+  DeletePost,
+  GetAllPosts,
+  likedPost,
+  unlikedPost,
+} from "./PostsEndpoints";
 import {
   EditUser,
   DeleteUser,
@@ -32,11 +30,9 @@ const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/auth";
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.Promise = Promise;
 
-//   PORT=9000 npm start
 const port = process.env.PORT || 8080;
 const app = express();
 
-// Add middlewares to enable cors and json body parsing
 app.use(cors());
 app.use(express.json());
 dotenv.config();
@@ -53,7 +49,7 @@ const storage = new CloudinaryStorage({
   cloudinary,
   params: {
     folder: "profileimage",
-    allowedFormats: ["jpg", "png", "jpeg"],
+    allowedFormats: ["jpg", "png", "jpeg", "gif"],
     transformation: [{ width: 500, height: 500, crop: "limit" }],
   },
 });
@@ -86,47 +82,27 @@ const authenticateUser = async (req, res, next) => {
   }
 };
 
-// Start defining your routes here
 app.get("/", (req, res) => {
   res.send(listEndpoints(app));
 });
 
-//All these keys & values are available but not required when signed in
-// REQUIRED: username, password, email
-//, parser.single("image") DENNA SKA IN  INNAN ASYNC
 app.post("/signup", SignupUser);
 app.post("/signin", SigninUser);
+
 app.post("/userprofile/:id/image", parser.single("image"), PostImage);
-
-// app.patch("/userprofile/:id/image", parser.single("image"), PatchImage);
-
 app.get("/userprofile/:id/image", GetImage);
-
-//Post a new add
-// app.post("/adds/:id", authenticateUser);
-app.post("/adds/:id", authenticateUser, PostAdd);
-app.patch("/adds/:id/edit", EditAdd);
-
-//Search single add
-app.get("/adds/:id", GetSingleAdd);
-
-//Delete single add
-app.delete("/adds/:id/delete", DeleteAdd);
-
-//Search all adds
-app.get("/adds", GetAllAdds);
-
-//Search single user  authenticateUser, SKA IN I , async,
 app.get("/userprofile/:id", GetSingleUser);
-
-//Updates the user info that are edited. Ignores the other key & values with the $set operator
-//Deletes the user with the id
 app.patch("/userprofile/:id/edit", EditUser);
 app.delete("/userprofile/:id/delete", DeleteUser);
-app.post("/adds/:addId/like/:userId", likedAdd);
-app.post("/adds/:addId/unlike/:userId", unlikedAdd);
 
-// Start the server
+app.post("/posts/:id", authenticateUser, CreatePost);
+app.patch("/posts/:id/edit", EditPost);
+app.get("/posts/:id", GetSinglePost);
+app.delete("/posts/:id/delete", DeletePost);
+app.get("/posts", GetAllPosts);
+app.post("/posts/:postId/like/:userId", likedPost);
+app.post("/posts/:postId/unlike/:userId", unlikedPost);
+
 app.listen(port, () => {
   // eslint-disable-next-line
   console.log(`Server running on http://localhost:${port}`);

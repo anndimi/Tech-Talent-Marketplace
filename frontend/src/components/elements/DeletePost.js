@@ -1,20 +1,19 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import swal from "sweetalert";
-
-import add from "../../reducers/add";
+import post from "../../reducers/post";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { API_URL } from "../../utils/constants";
 
-const DeleteAdd = ({ myAddsId }) => {
-  const [setDeleteAnAdd] = useState({});
+const DeletePost = ({ myPostsId }) => {
+  const [setDeleteAPost] = useState({});
   const dispatch = useDispatch();
 
   const onDeleteClick = () => {
     swal({
       title: "Are you sure?",
-      text: "Once deleted, you will not be able to recover this add!",
+      text: "Once deleted, you will not be able to recover this post!",
       icon: "warning",
       buttons: true,
       dangerMode: true,
@@ -26,15 +25,15 @@ const DeleteAdd = ({ myAddsId }) => {
             // Authorization: accessToken,
           },
         };
-        fetch(API_URL(`adds/${myAddsId}/delete`), options).then(() => {
-          dispatch(add.actions.deleteAdd(myAddsId));
+        fetch(API_URL(`posts/${myPostsId}/delete`), options).then(() => {
+          dispatch(post.actions.deletePost(myPostsId));
         });
 
-        swal("Poof! Your add has been deleted!", {
+        swal("Poof! Your post has been deleted!", {
           icon: "success",
         });
       } else {
-        swal("Your add is safe!");
+        swal("Your post is safe!");
       }
     });
   };
@@ -46,9 +45,9 @@ const DeleteAdd = ({ myAddsId }) => {
       onClick={onDeleteClick}
       startIcon={<DeleteIcon />}
     >
-      Delete Add
+      Delete Post
     </Button>
   );
 };
 
-export default DeleteAdd;
+export default DeletePost;
