@@ -18,8 +18,9 @@ const ErrorCode = styled.h1`
 `;
 
 const LottieContainer = styled.div`
-  margin-top: -100px;
-  width: 400px;
+  margin-top: -90px;
+  width: 80%;
+  max-width: 400px;
 `;
 
 const NotFound = () => {
