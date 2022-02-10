@@ -60,6 +60,7 @@ export const SignOutButton = () => {
 
   const onSignOutClick = () => {
     dispatch(user.actions.setAccessToken(null));
+    localStorage.clear();
     navigate("/signup");
   };
 
