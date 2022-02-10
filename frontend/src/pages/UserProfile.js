@@ -23,7 +23,6 @@ import {
   Typography,
   Divider,
   Button,
-  useMediaQuery,
   Table,
   TableBody,
   TableCell,
@@ -107,7 +106,6 @@ const UserProfile = () => {
 
   const [isEditModalActive, setEditModalActive] = useState(false);
   const [isImageModalActive, setImageModalActive] = useState(false);
-  const [myImage, setMyImage] = useState("");
   const { id } = useParams();
 
   const toggleEditModal = () => {
@@ -162,8 +160,7 @@ const UserProfile = () => {
               backgroundColor: "#F8C53A",
             }}
             src={image || dummyUser}
-            alt="User Profile image"
-            alt="profile"
+            alt="User Profile"
           />
           <ProfileWrapper>
             <ProfileInfo>

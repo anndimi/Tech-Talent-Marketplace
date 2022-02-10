@@ -112,6 +112,7 @@ const ContactPage = () => {
                       borderRadius: 50,
                       objectFit: "cover",
                     }}
+                    alt="profile"
                   />
 
                   <Typography

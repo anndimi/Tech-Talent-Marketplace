@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import moment from "moment";
 import linkedinIcon from "../assets/icons/linkedin-icon.png";
@@ -53,8 +53,7 @@ const VisitUserProfile = () => {
     fetch(API_URL(`userprofile/${id}`))
       .then((res) => res.json())
       .then((data) => setVisitInfo(data.response));
-    console.log(visitInfo);
-  }, []);
+  }, [id]);
 
   const createData = (key, value) => {
     return { key, value };
@@ -90,8 +89,7 @@ const VisitUserProfile = () => {
               backgroundColor: "#F8C53A",
             }}
             src={visitInfo.image?.imageUrl || dummyUser}
-            alt="User Profile image"
-            alt="profile"
+            alt="User Profile"
           />
           <ProfileWrapper>
             <ProfileInfo>

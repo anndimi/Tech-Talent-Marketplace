@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import swal from "sweetalert";
 import post from "../../reducers/post";
@@ -7,7 +7,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { API_URL } from "../../utils/constants";
 
 const DeletePost = ({ myPostsId }) => {
-  const [setDeleteAPost] = useState({});
   const dispatch = useDispatch();
 
   const onDeleteClick = (event) => {

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Typography, Box, Button } from "@mui/material";
 import heroBg from "../../assets/images/hero-image.jpg";
 import UserBg from "../../assets/images/user-bg.jpg";

@@ -1,13 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-
 import HeroImage from "../components/elements/HeroImage";
-import teamImg from "../assets/images/team-image.jpg";
 import img1 from "../assets/images/img1.jpg";
 import img2 from "../assets/images/img2.jpg";
 import img3 from "../assets/images/img3.jpg";
 import UpArrow from "../components/elements/UpArrow";
-
 import EmojiObjectsOutlinedIcon from "@mui/icons-material/EmojiObjectsOutlined";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
@@ -223,7 +220,7 @@ const Startpage = () => {
               </p>
             </CardTextContainer>
             <CardImageContainer>
-              <img src={img3} />
+              <img src={img3} alt="start-page-img" />
             </CardImageContainer>
           </StartPageCard>
           <StartPageCard className="second-card">
@@ -236,7 +233,7 @@ const Startpage = () => {
               </p>
             </CardTextContainer>
             <CardImageContainer>
-              <img src={img1} />
+              <img src={img1} alt="start-page-img" />
             </CardImageContainer>
           </StartPageCard>
 
@@ -257,7 +254,7 @@ const Startpage = () => {
               where people can join forces and set their creativity free. Come
               as you are, take what you like and leave the rest!
             </p>
-            <img src={img2} />
+            <img src={img2} alt="start-page-img" />
           </StartPageSection>
         </StartPageContainer>
       </div>

@@ -12,9 +12,6 @@ import { CardContent, Divider } from "@mui/material";
 let humanize = require("humanize-number");
 
 const SavedPosts = () => {
-  const userId = useSelector((store) => store.user.userId);
-  //   const likedPosts = useSelector((store) => store.user.likedPost);
-  //   console.log(likedPosts);
   const [myLikedPosts, setMyLikedPosts] = useState([]);
   const { id } = useParams();
 

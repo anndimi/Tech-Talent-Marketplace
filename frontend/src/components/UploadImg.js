@@ -68,7 +68,6 @@ const UploadImg = ({ isImageModalActive, toggleImageModal, onClose }) => {
                 sx={{
                   display: "flex",
                   flexDirection: "column",
-                  gap: 2.5,
                   margin: 7,
                   marginTop: 10,
                   gap: 5,

@@ -13,12 +13,9 @@ export const ModalWrapper = styled(Box)({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  height: "100%",
-  width: "100%",
 });
 
 export const ModalCard = styled(Card)({
-  width: 500,
   zIndex: 11,
   height: "615px",
   position: "fixed",

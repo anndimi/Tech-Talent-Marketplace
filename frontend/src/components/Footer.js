@@ -86,7 +86,7 @@ const Footer = () => {
     >
       <FooterWrapper>
         <LogoTitleAligner>
-          <img src={logo} style={{ width: 75, height: 75 }} />
+          <img src={logo} style={{ width: 75, height: 75 }} alt="logo" />
           <Title>Tech Talent Marketplace</Title>
         </LogoTitleAligner>
 

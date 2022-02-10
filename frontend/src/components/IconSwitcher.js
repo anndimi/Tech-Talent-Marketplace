@@ -1,4 +1,3 @@
-import React from "react";
 import analyticsIcon from "../assets/icons/analytics-icon.png";
 import appIcon from "../assets/icons/app-icon.png";
 import backendIcon from "../assets/icons/backend-icon.png";

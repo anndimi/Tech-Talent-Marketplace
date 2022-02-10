@@ -79,6 +79,7 @@ const SinglePostModal = () => {
               <img
                 style={{ width: 70, height: 70 }}
                 src={IconSwitcher(post.category)}
+                alt="category-icon"
               />
             </Box>
 
@@ -115,17 +116,26 @@ const SinglePostModal = () => {
               }}
             >
               <Box sx={{ display: "flex", alignItems: "center" }}>
-                <img src={userIcon} style={{ height: 20, width: 20 }} />
+                <img
+                  src={userIcon}
+                  style={{ height: 20, width: 20 }}
+                  alt="user-icon"
+                />
                 <Typography sx={{ fontFamily: "secondary.fontFamily" }}>
                   {post.user?.username}
                 </Typography>
               </Box>
               <Box sx={{ display: "flex", alignItems: "center" }}>
-                <img src={mailIcon} style={{ height: 20, width: 20 }} />
+                <img
+                  src={mailIcon}
+                  style={{ height: 20, width: 20 }}
+                  alt="mail-icon"
+                />
                 <Typography sx={{ fontFamily: "secondary.fontFamily" }}>
                   {accessToken ? (
                     <a
                       target="_blank"
+                      rel="noreferrer"
                       href={`mailto:${post.user?.email}`}
                       style={{ pointer: "cursor" }}
                     >

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import post from "../reducers/post";
 import UpArrow from "../components/elements/UpArrow";
 import { API_URL } from "../utils/constants";
@@ -53,10 +53,8 @@ const PostsList = () => {
   const userId = useSelector((store) => store.user.userId);
   const accessToken = useSelector((store) => store.user.accessToken);
 
-  // const accessToken = useSelector((store) => store.user.accessToken);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { id } = useParams();
 
   const toggleModal = () => {
     setModalActive(!isModalActive);
@@ -242,7 +240,7 @@ const PostsList = () => {
                       fontFamily: "secondary.fontFamily",
                     }}
                   >
-                    Budget is {item.budget}
+                    Budget is {humanize(item.budget)}
                     {item.currency}
                   </Typography>
                 </CardContent>

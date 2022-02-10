@@ -6,7 +6,7 @@ const UpArrow = () => {
   return (
     <Box sx={{ display: "flex", justifyContent: "center", marginTop: 6 }}>
       <Link href="#">
-        <img src={upArrow} />
+        <img src={upArrow} alt="up-arrow-icon" />
       </Link>
     </Box>
   );

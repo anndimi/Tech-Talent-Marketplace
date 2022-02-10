@@ -1,5 +1,4 @@
 import React from "react";
-import UserBg from "../assets/images/user-bg.jpg";
 import styled, { keyframes } from "styled-components";
 import UpArrow from "../components/elements/UpArrow";
 import ArticleImg1 from "../assets/images/team-image.jpg";
