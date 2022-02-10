@@ -3,8 +3,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import moment from "moment";
-import linkedinIcon from "../assets/icons/linkedin-icon.png";
-import githubIcon from "../assets/icons/github-icon.png";
 import MyPosts from "../components/MyPosts";
 import { API_URL } from "../utils/constants";
 import dummyUser from "../assets/icons/dummy-user.png";
@@ -65,6 +63,8 @@ const VisitUserProfile = () => {
     createData("Email", visitInfo.email),
     createData("Location", visitInfo.location),
     createData("Bio", visitInfo.userBio),
+    createData("LinkedIn", visitInfo.linkedIn),
+    createData("GitHub", visitInfo.gitHub),
   ];
 
   return (
@@ -136,24 +136,6 @@ const VisitUserProfile = () => {
                     </TableCell>
                   </TableRow>
                 ))}
-                <TableRow>
-                  <TableCell align="left">
-                    <a
-                      href={visitInfo.linkedIn}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <img src={linkedinIcon} alt="linkedin-icon" />
-                    </a>
-                    <a
-                      href={visitInfo.gitHub}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <img src={githubIcon} alt="github-icon" />
-                    </a>
-                  </TableCell>
-                </TableRow>
               </TableBody>
             </Table>
           </TableContainer>

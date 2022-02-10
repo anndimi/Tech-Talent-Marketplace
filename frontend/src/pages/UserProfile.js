@@ -4,10 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import moment from "moment";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-
 import user from "../reducers/user";
-import linkedinIcon from "../assets/icons/linkedin-icon.png";
-import githubIcon from "../assets/icons/github-icon.png";
 import EditProfile from "../components/EditProfile";
 import UploadImg from "../components/UploadImg";
 import MyPosts from "../components/MyPosts";
@@ -136,6 +133,8 @@ const UserProfile = () => {
     createData("Email", email),
     createData("Location", location),
     createData("Bio", userBio),
+    createData("LinkedIn", linkedIn),
+    createData("GitHub", gitHub),
   ];
 
   return (
@@ -266,20 +265,6 @@ const UserProfile = () => {
                     </TableCell>
                   </TableRow>
                 ))}
-                <TableRow>
-                  <TableCell align="left">
-                    <a
-                      href={linkedIn}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <img src={linkedinIcon} alt="linkedin-icon" />
-                    </a>
-                    <a href={gitHub} target="_blank" rel="noopener noreferrer">
-                      <img src={githubIcon} alt="github-icon" />
-                    </a>
-                  </TableCell>
-                </TableRow>
               </TableBody>
             </Table>
           </TableContainer>

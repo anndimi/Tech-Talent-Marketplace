@@ -25,7 +25,6 @@ const user = createSlice({
       store.userId = action.payload;
     },
     setUsername: (store, action) => {
-      console.log(action.payload);
       store.username = action.payload;
     },
     setAccessToken: (store, action) => {
@@ -38,15 +37,12 @@ const user = createSlice({
       store.email = action.payload;
     },
     setLocation: (store, action) => {
-      console.log("location:", action.payload);
       store.location = action.payload;
     },
     setName: (store, action) => {
-      console.log("name:", action.payload);
       store.name = action.payload;
     },
     setCreated: (store, action) => {
-      console.log("createdAt", action.payload);
       store.created = action.payload;
     },
     setBio: (store, action) => {

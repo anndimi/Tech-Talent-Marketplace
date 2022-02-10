@@ -22,7 +22,6 @@ const SavedPosts = () => {
       .then((res) => res.json())
       .then((data) => {
         setMyLikedPosts(data.response.likedPost);
-        console.log(data.response.likedPost);
       });
   }, [id, myLikedPosts._id]);
 

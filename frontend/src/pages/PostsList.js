@@ -73,7 +73,6 @@ const PostsList = () => {
   };
 
   const sortedList = (posts) => {
-    console.log(sort);
     if (sort === "Old") {
       const sortedArray = _.orderBy(
         posts,
