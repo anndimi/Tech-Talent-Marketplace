@@ -32,7 +32,7 @@ export const SigninUser = async (req, res) => {
           linkedIn: user.linkedIn,
           name: user.name,
           created: user.created,
-          image: user.image,
+          image: user.imageUrl,
         },
         success: true,
       });

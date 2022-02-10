@@ -53,7 +53,7 @@ export const SignupUser = async (req, res) => {
         github: newUser.github,
         created: newUser.created,
         likedPost: newUser.likedPost,
-        image: newUser.image,
+        image: newUser.imageUrl,
       },
       success: true,
     });
