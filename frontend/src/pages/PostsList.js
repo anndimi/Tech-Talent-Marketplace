@@ -237,8 +237,7 @@ const PostsList = () => {
                       fontFamily: "secondary.fontFamily",
                     }}
                   >
-                    Budget is {item.budget}
-                    {item.currency}
+                    Budget is {item.budget} {item.currency}
                   </Typography>
                 </CardContent>
                 <CardActions>
