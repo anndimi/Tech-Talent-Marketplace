@@ -102,10 +102,19 @@ const Navbar = () => {
     setActive(!isActive);
   };
 
+  const scrollWin = () => {
+    window.scrollTo(0, 0);
+  };
+
   return (
     <>
       <HeaderContainer>
-        <Logo onClick={() => navigate("/")}>
+        <Logo
+          onClick={() => {
+            navigate("/");
+            scrollWin();
+          }}
+        >
           <LogoImage src={logoImg} />
           <div>
             <Typography
@@ -141,23 +150,114 @@ const Navbar = () => {
         >
           {accessToken ? (
             <>
-              <StyledLink to="/">Home</StyledLink>
-              <StyledLink to="/posts">Posts</StyledLink>
-              <StyledLink to={`/userprofile/${id}`}>My Profile</StyledLink>
-              <StyledLink to="/inspiration">Inspiration</StyledLink>
-              <StyledLink to="/about">About</StyledLink>
-              <StyledLink to="/contact">Contact</StyledLink>
+              <StyledLink
+                to="/"
+                onClick={() => {
+                  scrollWin();
+                }}
+              >
+                Home
+              </StyledLink>
+              <StyledLink
+                to="/posts"
+                onClick={() => {
+                  scrollWin();
+                }}
+              >
+                Posts
+              </StyledLink>
+              <StyledLink
+                to={`/userprofile/${id}`}
+                onClick={() => {
+                  scrollWin();
+                }}
+              >
+                My Profile
+              </StyledLink>
+              <StyledLink
+                to="/inspiration"
+                onClick={() => {
+                  scrollWin();
+                }}
+              >
+                Inspiration
+              </StyledLink>
+              <StyledLink
+                to="/about"
+                onClick={() => {
+                  scrollWin();
+                }}
+              >
+                About
+              </StyledLink>
+              <StyledLink
+                to="/contact"
+                onClick={() => {
+                  scrollWin();
+                }}
+              >
+                Contact
+              </StyledLink>
               <SignOutButton />
             </>
           ) : (
             <>
-              <StyledLink to="/">Home</StyledLink>
-              <StyledLink to="/signup">Sign up/ Sign in</StyledLink>
-              <StyledLink to="/posts">Posts</StyledLink>
-              <StyledLink to={`/userprofile/${id}`}>My Profile</StyledLink>
-              <StyledLink to="/inspiration">Inspiration</StyledLink>
-              <StyledLink to="/about">About</StyledLink>
-              <StyledLink to="/contact">Contact</StyledLink>
+              <StyledLink
+                to="/"
+                onClick={() => {
+                  scrollWin();
+                }}
+              >
+                Home
+              </StyledLink>
+              <StyledLink
+                to="/signup"
+                onClick={() => {
+                  scrollWin();
+                }}
+              >
+                Sign up/ Sign in
+              </StyledLink>
+              <StyledLink
+                to="/posts"
+                onClick={() => {
+                  scrollWin();
+                }}
+              >
+                Posts
+              </StyledLink>
+              <StyledLink
+                to={`/userprofile/${id}`}
+                onClick={() => {
+                  scrollWin();
+                }}
+              >
+                My Profile
+              </StyledLink>
+              <StyledLink
+                to="/inspiration"
+                onClick={() => {
+                  scrollWin();
+                }}
+              >
+                Inspiration
+              </StyledLink>
+              <StyledLink
+                to="/about"
+                onClick={() => {
+                  scrollWin();
+                }}
+              >
+                About
+              </StyledLink>
+              <StyledLink
+                to="/contact"
+                onClick={() => {
+                  scrollWin();
+                }}
+              >
+                Contact
+              </StyledLink>
             </>
           )}
         </PopUpNav>

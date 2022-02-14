@@ -22,7 +22,10 @@ const UploadImg = ({ isImageModalActive, toggleImageModal, onClose }) => {
       body: formData,
     })
       .then((res) => res.json())
-      .then((data) => dispatch(user.actions.setImage(data.response.imageUrl)));
+      .then((data) =>
+        // console.log(data.response.imageUrl) &&
+        dispatch(user.actions.setImage(data.response.imageUrl))
+      );
 
     onClose(navigate(`/userprofile/${id}`));
   };

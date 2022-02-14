@@ -58,6 +58,7 @@ const user = createSlice({
       store.mode = action.payload;
     },
     setImage: (store, action) => {
+      // console.log(store.image, "tore.image", action.payload, "payload");
       store.image = action.payload;
     },
     clearAccessToken: (store) => {

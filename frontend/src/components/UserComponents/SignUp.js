@@ -17,6 +17,10 @@ const SignUp = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const scrollWin = () => {
+    window.scrollTo(0, 0);
+  };
+
   const onFormSubmit = (event) => {
     event.preventDefault();
 
@@ -44,6 +48,7 @@ const SignUp = () => {
             dispatch(user.actions.setAccessToken(data.response.accessToken));
             dispatch(user.actions.setCreated(data.response.created));
             dispatch(user.actions.setLikedPost(data.response.likedPost));
+            // dispatch(user.actions.setImage(data.response.image));
             dispatch(user.actions.setError(null));
             navigate(`/userprofile/${data.response.id}`);
           });
@@ -60,6 +65,7 @@ const SignUp = () => {
             dispatch(user.actions.setGithub(null));
             dispatch(user.actions.setBio(null));
             dispatch(user.actions.setLikedPost(null));
+            // dispatch(user.actions.setImage(null));
             dispatch(user.actions.setError(data.error));
           });
 
@@ -70,6 +76,7 @@ const SignUp = () => {
           });
         }
       });
+    scrollWin();
   };
 
   return (

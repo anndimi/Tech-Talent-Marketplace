@@ -6,8 +6,17 @@ const User = mongoose.model("User", UserSchema);
 
 export const SigninUser = async (req, res) => {
   try {
-    const { username, password, email, location, bio, github, linkedIn, name } =
-      req.body;
+    const {
+      username,
+      password,
+      email,
+      location,
+      bio,
+      github,
+      linkedIn,
+      name,
+      // image,
+    } = req.body;
     const user = await User.findOne({ username });
 
     if (user && bcrypt.compareSync(password, user.password)) {
@@ -23,6 +32,7 @@ export const SigninUser = async (req, res) => {
           linkedIn: user.linkedIn,
           name: user.name,
           created: user.created,
+          // image: user.image,
         },
         success: true,
       });
