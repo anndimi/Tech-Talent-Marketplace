@@ -54,10 +54,6 @@ store.subscribe(() => {
   localStorage.setItem("userReduxState", JSON.stringify(store.getState()));
 });
 
-const scrollWin = () => {
-  window.scrollTo(0, 0);
-};
-
 const App = () => {
   return (
     <Provider store={store}>
