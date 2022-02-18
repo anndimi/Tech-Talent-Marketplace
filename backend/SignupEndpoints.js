@@ -16,7 +16,6 @@ export const SignupUser = async (req, res) => {
     github,
     created,
     likedPost,
-    // image,
   } = req.body;
 
   try {
@@ -37,9 +36,7 @@ export const SignupUser = async (req, res) => {
       github,
       created,
       likedPost,
-      // image,
     }).save();
-    console.log(newUser, "newuser");
 
     res.status(201).json({
       response: {
@@ -54,7 +51,6 @@ export const SignupUser = async (req, res) => {
         github: newUser.github,
         created: newUser.created,
         likedPost: newUser.likedPost,
-        // image: newUser.image,
       },
       success: true,
     });

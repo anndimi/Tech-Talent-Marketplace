@@ -97,12 +97,9 @@ const UserProfile = () => {
   const linkedIn = useSelector((store) => store.user.linkedIn);
   const gitHub = useSelector((store) => store.user.github);
   const created = useSelector((store) => store.user.created);
-  const image = useSelector(
-    (store) => console.log(store.user) && store.user.image
-  );
+  const image = useSelector((store) => store.user.image);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  console.log(image, "image", username, "user");
 
   const [isEditModalActive, setEditModalActive] = useState(false);
   const [isImageModalActive, setImageModalActive] = useState(false);
